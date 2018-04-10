@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.max5.limbus</groupId>
+		<artifactId>limbus-parent</artifactId>
+		<version>1.10.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>limbus-monitoring</artifactId>
+	<name>Limbus Monitoring</name>
+	<description>API to create and process monitoring information using extendable interfaces for consumers and producers.</description>
+	<properties>
+		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
+	</properties>
+	<dependencies>
+		<!-- Limbus API -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-engine-interfaces</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- Limbus System // The monitoring framework delivers a new Object Factory implementation that monitors usage of public components -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-system</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- Limbus Utils -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-utils</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+
+		<!-- The concrete logging framework to log through for tests -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-jdk14</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- Limbus Staging -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-staging</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Limbus Engine Impl for Staging -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-engine-impl</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Limbus JDK Logging activator for Staging -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-logging-jdk</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+</project>

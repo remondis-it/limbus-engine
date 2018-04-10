@@ -1,0 +1,99 @@
+<SystemConfiguration>
+
+	<!-- The object factory that creates monitoring information on usage of public components -->
+	<objectFactory class="org.max5.limbus.system.MonitoringObjectFactory" />
+
+	<!-- Important bootstrap components -->
+	<Component>
+		<failOnError>true</failOnError>
+		<requestType>org.max5.limbus.files.LimbusFileService</requestType>
+		<componentType>org.max5.limbus.files.FileSystemServiceImpl</componentType>
+	</Component>
+	<Component>
+		<failOnError>true</failOnError>
+		<requestType>org.max5.limbus.security.LimbusSecurity</requestType>
+		<componentType>org.max5.limbus.security.LimbusSecurityImpl</componentType>
+	</Component>
+	<Component>
+		<failOnError>true</failOnError>
+		<requestType>org.max5.limbus.logging.LogTarget</requestType>
+		<!-- <componentType>org.max5.limbus.logging.FileSystemLogTarget</componentType> -->
+		<componentType>org.max5.limbus.logging.SystemOutLogTarget</componentType>
+	</Component>
+	<Component>
+		<failOnError>true</failOnError>
+		<requestType>org.max5.limbus.SharedClasspathProvider</requestType>
+		<componentType>org.max5.limbus.EmptySharedClasspathProvider</componentType>
+	</Component>
+
+
+	<!-- (Optional) Limbus Deploy Service -->
+	<!-- If used, the Limbus Deploy Service must start before the Limbus Engine. -->
+	<Component>
+		<failOnError>true</failOnError>
+		<requestType>org.max5.limbus.DeployService</requestType>
+		<componentType>org.max5.limbus.DeployServiceImpl</componentType>
+	</Component>
+
+	<!-- Limbus Engine: No-Op for simple Limbus Container features -->
+	<Component>
+		<failOnError>true</failOnError>
+		<requestType>org.max5.limbus.LimbusEngine</requestType>
+		<componentType>org.max5.limbus.NoOpEngine</componentType>
+	</Component>
+
+	<!-- Limbus Core components -->
+	<Component>
+		<failOnError>true</failOnError>
+		<requestType>org.max5.limbus.actions.ActionService</requestType>
+		<componentType>org.max5.limbus.actions.LimbusActionService</componentType>
+	</Component>
+
+	<!-- Limbus Maintenance Console -->
+	<Component>
+		<failOnError>true</failOnError>
+		<requestType>org.max5.limbus.LimbusMaintenanceConsole</requestType>
+		<componentType>org.max5.limbus.LimbusMaintenanceConsoleImpl</componentType>
+	</Component>
+
+	<!-- Periodic task scheduler -->
+	<Component>
+		<failOnError>true</failOnError>
+		<requestType>org.max5.limbus.tasks.TaskScheduler</requestType>
+		<componentType>org.max5.limbus.tasks.TaskSchedulerImpl</componentType>
+	</Component>
+
+	<!-- Limbus Maintenance Components (private) -->
+	<Component>
+		<failOnError>false</failOnError>
+		<componentType>org.max5.limbus.maintenance.ShowEnvironment</componentType>
+	</Component>
+	<Component>
+		<failOnError>false</failOnError>
+		<componentType>org.max5.limbus.maintenance.ShowComponents</componentType>
+	</Component>
+	<Component>
+		<failOnError>false</failOnError>
+		<componentType>org.max5.limbus.maintenance.ShowTasks</componentType>
+	</Component>
+	<Component>
+		<failOnError>false</failOnError>
+		<componentType>org.max5.limbus.maintenance.ShowVersions</componentType>
+	</Component>
+	<Component>
+		<failOnError>false</failOnError>
+		<componentType>org.max5.limbus.maintenance.LogFileViewer</componentType>
+	</Component>
+	<Component>
+		<failOnError>false</failOnError>
+		<componentType>org.max5.limbus.maintenance.ShowSharedClassPath</componentType>
+	</Component>
+	<Component>
+		<failOnError>false</failOnError>
+		<componentType>org.max5.limbus.maintenance.ShowPluginClassPaths</componentType>
+	</Component>
+	<Component>
+		<failOnError>false</failOnError>
+		<componentType>org.max5.limbus.maintenance.ShowDeployService</componentType>
+	</Component>
+</SystemConfiguration>

@@ -1,0 +1,7 @@
+grant {
+    permission java.security.AllPermission;
+};
+
+grant codebase "file:${java.home}/lib/tools.jar" {
+   permission java.security.AllPermission;
+};

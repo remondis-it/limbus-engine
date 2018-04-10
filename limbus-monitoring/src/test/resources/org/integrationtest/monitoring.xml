@@ -1,0 +1,16 @@
+<configuration>
+	<processing>
+		<maxThreads>4</maxThreads>
+		<coreThreads>2</coreThreads>
+		<threadKeepAliveUnit>SECONDS</threadKeepAliveUnit>
+		<threadKeepAlive>30</threadKeepAlive>
+	</processing>
+	<publisher id="message-console">
+		<instance class="org.integrationtest.ConsolePublisherImpl" />
+	</publisher>
+
+	<monitor pattern="org.integrationtest">
+		<publisherRef>message-console</publisherRef>
+	</monitor>
+
+</configuration>

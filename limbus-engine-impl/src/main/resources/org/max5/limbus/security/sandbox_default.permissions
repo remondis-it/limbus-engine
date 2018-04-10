@@ -1,0 +1,36 @@
+# This is the file to grant permissions for Limbus Plugins. This file enumerates those permissions
+# that are granted by default for every plugin. Alter this file with care! Accidently granted per-
+# missions is very dangerous.
+#
+# If a permission grants access to add a JVM shutdown hook for example, the pluging performing this
+# action may fail to undeploy completely. The shutdown hook is a reference to a thread holding a
+# plugin-object. This results in not garbage collecting the PluginClassloader.
+#
+# Syntax of this file:
+# To grant a permission use the following syntax:
+#	permissionClass | name | actions <NEW-LINE>
+#   permissionClass | name | actions <NEW-LINE>
+#   ...
+#
+# Lines starting with # are interpreted to be comments and will be ignored completely.
+
+# Grant permission to read all system properties
+java.util.PropertyPermission 		| *																			| read
+
+# For JasperReports grant creating classloaders
+#java.lang.RuntimePermission			| createClassLoader
+#java.lang.RuntimePermission			| getClassLoader
+#java.lang.RuntimePermission			| accessClassInPackage.com.sun.org.apache.xerces.internal.util
+#java.lang.RuntimePermission			| accessClassInPackage.sun.misc
+#java.lang.reflect.ReflectPermission | suppressAccessChecks
+#java.lang.RuntimePermission         | getProtectionDomain
+#java.lang.RuntimePermission         | modifyThread
+#java.io.FilePermission              | net\sf\jasperreports\-                                                    | read
+#java.io.FilePermission				| ${file.separator}${java.home}${file.separator}lib${file.separator}rt.jar	| read
+#java.io.FilePermission				| jasperreports.properties													| read
+#java.io.FilePermission              | color-profiles\-                                                          | read
+#java.io.FilePermission              | ${java.io.tmpdir}\-                                                       | read,write,delete
+
+
+
+

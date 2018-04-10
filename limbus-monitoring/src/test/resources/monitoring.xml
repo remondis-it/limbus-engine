@@ -1,0 +1,26 @@
+<configuration>
+	<processing>
+		<maxThreads>4</maxThreads>
+		<coreThreads>2</coreThreads>
+		<threadKeepAliveUnit>SECONDS</threadKeepAliveUnit>
+		<threadKeepAlive>30</threadKeepAlive>
+	</processing>
+	<publisher id="message-console">
+		<instance class="org.max5.limbus.monitoring.publisher.ConsoleMessagePublisherImpl" />
+	</publisher>
+	<publisher id="message-console-timed">
+		<instance class="org.max5.limbus.monitoring.publisher.DecoratedConsoleMessagePublisherImpl" />
+	</publisher>
+	<publisher id="other">
+		<instance class="org.max5.limbus.monitoring.publisher.SomeOtherPublisherImpl" />
+	</publisher>
+
+	<monitor pattern="org.testclient">
+		<publisherRef>message-console</publisherRef>
+		<publisherRef>other</publisherRef>
+	</monitor>
+
+	<monitor pattern="org.testclient.packageA">
+		<publisherRef>message-console-timed</publisherRef>
+	</monitor>
+</configuration>

@@ -1,0 +1,12 @@
+node {
+	shape: freeplane;
+	size-mode: fit;
+	fill-mode: none;
+	text-color: black;
+	text-size: 16;
+}
+
+node.private {
+	stroke-color: green;
+	text-color: green;
+}

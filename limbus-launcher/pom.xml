@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.max5.limbus</groupId>
+		<artifactId>limbus-parent</artifactId>
+		<version>1.10.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>limbus-launcher</artifactId>
+	<name>Limbus Launcher</name>
+	<description>A small framework for running abstract engines. Provides bootstrap and shutdown sequences and thread cleaning features for controlled termination.</description>
+	<properties>
+		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
+	</properties>
+	<dependencies>
+
+		<!-- Limbus Interfaces -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-engine-interfaces</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- Limbus System -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-system</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- Limbus Utils -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-utils</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Logging Facade -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<!-- Apache Command Line Interface -->
+		<dependency>
+			<groupId>commons-cli</groupId>
+			<artifactId>commons-cli</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+
+	</dependencies>
+</project>

@@ -1,0 +1,167 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.max5.limbus</groupId>
+		<artifactId>limbus-parent</artifactId>
+		<version>1.10.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>limbus-showcase-launcher</artifactId>
+
+	<name>Limbus Showcase Launcher</name>
+	<description>This module is an example on how to start an instance of Max5 Limbus Engine and how to deploy artifacts on it.
+	Use the launcher class to start the example.
+
+	Note: This project is the host for a Limbus Engine. Therefore the dependency to limbus-engine-impl is needed.
+	If you just want to develop a Limbus Plugin the dependency limbus-engine-api only is needed.
+	</description>
+
+	<properties>
+		<!-- Service name (without spaces!) -->
+		<engine.service.name>LimbusShowcaseLauncher</engine.service.name>
+		<!-- Engine Final JAR name (without spaces!) -->
+		<engine.deploy.finalName>limbus-showcase-launcher</engine.deploy.finalName>
+		<!-- Engine Launcher Main Class -->
+		<engine.launcher.mainClass>org.max5.limbus.EngineShowcaseLauncher</engine.launcher.mainClass>
+		<!-- Formatter configuration -->
+		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.10</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/bootstrap</outputDirectory>
+							<!-- "UseBaseVersion" is important in combination with the maven-jar-plugin
+								which names artifacts with their timestamped versions. The maven-dependency-plugin
+								names the artifacts with their base versions by default. -->
+							<useBaseVersion>false</useBaseVersion>
+							<includeScope>runtime</includeScope>
+							<overWriteSnapshots>true</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<!-- here the phase you need -->
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/external</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/external/</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>ant-test</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<tasks>
+								<fixcrlf srcdir="${project.build.directory}"
+									includes="engine.sh" eol="unix" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<finalName>${engine.deploy.finalName}</finalName>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>bootstrap/</classpathPrefix>
+							<mainClass>${engine.launcher.mainClass}</mainClass>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.5.3</version>
+				<configuration>
+					<descriptors>
+						<descriptor>assembly.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>create-archive</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
+	<dependencies>
+		<!-- Limbus Engine Implementation to start the showcase examples -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-engine-impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Limbus Monitoring Facade // We use the object factory delivered by
+			limbus-monitoring to monitor usage of public components -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-monitoring</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- Limbus Monitoring Facade // Publisher Implementation -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-monitoring-influx</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+
+		<!-- The concrete Logging Framework -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-logging-jdk</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+</project>

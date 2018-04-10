@@ -1,0 +1,19 @@
+<configuration>
+	<publisherRef id="Runtime">
+		<instance class="com.some.package.RuntimePublisher" />
+	</publisherRef>
+	<publisherRef id="ThreadCount">
+		<instance class="com.some.package.ThreadCounterPublisher" />
+	</publisherRef>
+	<publisherRef id="Runtime">
+		<instance class="duplicateID" />
+	</publisherRef>
+
+	<monitor pattern="com.client.app.package">
+		<publisherRef>Runtime</publisherRef>
+		<publisherRef>ThreadCount</publisherRef>
+	</monitor>
+	<monitor pattern="com.another.app.package">
+		<publisherRef>Runtime</publisherRef>
+	</monitor>
+</configuration>

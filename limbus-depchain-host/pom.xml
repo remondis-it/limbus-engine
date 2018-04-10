@@ -1,0 +1,112 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.max5.limbus</groupId>
+		<artifactId>limbus-parent</artifactId>
+		<version>1.10.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>limbus-depchain-host</artifactId>
+	<packaging>pom</packaging>
+	<name>Limbus Dependency Management for Hosts</name>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Limbus Plugin Development Libraries -->
+			<dependency>
+				<groupId>org.max5.limbus</groupId>
+				<artifactId>limbus-depchain-plugin</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- Limbus Development Library -->
+			<dependency>
+				<groupId>org.max5.limbus</groupId>
+				<artifactId>limbus-engine-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Limbus Engine Implementation -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>limbus-engine-impl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Limbus JSSE Configurator Service Component -->
+			<dependency>
+				<groupId>org.max5.limbus</groupId>
+				<artifactId>limbus-jsse</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Limbus Task Scheduler Service Component -->
+			<dependency>
+				<groupId>org.max5.limbus</groupId>
+				<artifactId>limbus-task-scheduler</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Limbus Core Component: Multicaster -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>limbus-event-multicaster</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Limbus Monitoring Facade // We use the object factory delivered by limbus-monitoring to monitor usage of public components -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>limbus-monitoring</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- Limbus Monitoring Facade // Publisher Implementation -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>limbus-monitoring-influx</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Limbus Logging Activator for JDK Logging (JUL) -->
+			<dependency>
+				<groupId>org.max5.limbus</groupId>
+				<artifactId>limbus-logging-jdk</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Limbus Logging Activator for Log4J -->
+			<dependency>
+				<groupId>org.max5.limbus</groupId>
+				<artifactId>limbus-logging-log4j</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Logging Facade -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${limbus.slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-jdk14</artifactId>
+				<version>${limbus.slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${limbus.slf4j.version}</version>
+			</dependency>
+
+			<!-- Limbus Testing Environment -->
+			<!-- Test Environment -->
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>${limbus.testing.mockito.version}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

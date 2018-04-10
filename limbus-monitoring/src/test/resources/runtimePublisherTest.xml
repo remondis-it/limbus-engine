@@ -1,0 +1,15 @@
+<configuration>
+	<processing>
+		<maxThreads>4</maxThreads>
+		<coreThreads>2</coreThreads>
+		<threadKeepAliveUnit>SECONDS</threadKeepAliveUnit>
+		<threadKeepAlive>30</threadKeepAlive>
+	</processing>
+	<publisher id="runtime">
+		<instance class="org.max5.limbus.monitoring.publisher.RuntimePublisherImpl" />
+	</publisher>
+
+	<monitor pattern="">
+		<publisherRef>runtime</publisherRef>
+	</monitor>
+</configuration>
