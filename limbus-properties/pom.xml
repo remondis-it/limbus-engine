@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.max5.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
-		<version>1.10.1-SNAPSHOT</version>
+		<version>1.10.1</version>
 	</parent>
 	<artifactId>limbus-properties</artifactId>
 	<name>Limbus Properties</name>

@@ -5,27 +5,20 @@
 	<parent>
 		<groupId>org.max5.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
-		<version>1.10.1</version>
+		<version>1.10.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>limbus-jsse</artifactId>
-	<name>Limbus JSSE</name>
-	<description>This module provides a way to setup JSSE via Limbus configuration. </description>
+	<artifactId>limbus-utils</artifactId>
+	<name>Limbus Utils</name>
+	<description>Commonly used utils for Limbus development and plugin or extension development.</description>
 	<properties>
+		<!-- Formatter configuration -->
 		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
 	</properties>
 	<dependencies>
-		<!-- Limbus Engine Implementation -->
+		<!-- XML Serializer Framework -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>limbus-engine-impl</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<!-- Limbus Properties -->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>limbus-properties</artifactId>
-			<version>${project.version}</version>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
 		</dependency>
 
 		<!-- Logging Facade -->
