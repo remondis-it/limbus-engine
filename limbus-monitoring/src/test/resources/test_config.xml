@@ -6,17 +6,17 @@
 		<threadKeepAlive>30</threadKeepAlive>
 	</processing>
 	<publisher id="message-console">
-		<instance class="org.max5.limbus.monitoring.publisher.ConsoleMessagePublisherImpl" />
+		<instance class="com.remondis.limbus.monitoring.publisher.ConsoleMessagePublisherImpl" />
 	</publisher>
 	<publisher id="message-console-timed">
-		<instance class="org.max5.limbus.monitoring.publisher.DecoratedConsoleMessagePublisherImpl" />
+		<instance class="com.remondis.limbus.monitoring.publisher.DecoratedConsoleMessagePublisherImpl" />
 	</publisher>
 
-	<monitor pattern="org.testclient">
+	<monitor pattern="com.testclient">
 		<publisherRef>message-console</publisherRef>
 	</monitor>
 
-	<monitor pattern="org.testclient.packageA">
+	<monitor pattern="com.testclient.packageA">
 		<publisherRef>message-console-timed</publisherRef>
 	</monitor>
 </configuration>

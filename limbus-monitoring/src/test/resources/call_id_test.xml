@@ -6,7 +6,7 @@
 		<threadKeepAlive>30</threadKeepAlive>
 	</processing>
 	<publisher id="clientContext">
-		<instance class="org.max5.limbus.monitoring.publisher.ClientContextTestPublisherImpl" />
+		<instance class="com.remondis.limbus.monitoring.publisher.ClientContextTestPublisherImpl" />
 	</publisher>
 
 	<monitor pattern="">

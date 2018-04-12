@@ -1,29 +1,35 @@
 <SystemConfiguration>
 
-	<!-- The object factory that creates monitoring information on usage of public components -->
-	<objectFactory class="org.max5.limbus.system.MonitoringObjectFactory" />
+	<!-- The object factory that creates monitoring information on usage of 
+		public components -->
+	<!-- <objectFactory class="com.remondis.limbus.system.MonitoringObjectFactory" 
+		/> -->
 
 	<!-- Important bootstrap components -->
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>org.max5.limbus.files.LimbusFileService</requestType>
-		<componentType>org.max5.limbus.files.FileSystemServiceImpl</componentType>
+		<requestType>com.remondis.limbus.files.LimbusFileService</requestType>
+		<componentType>com.remondis.limbus.files.FileSystemServiceImpl
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>org.max5.limbus.security.LimbusSecurity</requestType>
-		<componentType>org.max5.limbus.security.LimbusSecurityImpl</componentType>
+		<requestType>com.remondis.limbus.security.LimbusSecurity</requestType>
+		<componentType>com.remondis.limbus.security.LimbusSecurityImpl
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>org.max5.limbus.logging.LogTarget</requestType>
-		<!-- <componentType>org.max5.limbus.logging.FileSystemLogTarget</componentType> -->
-		<componentType>org.max5.limbus.logging.SystemOutLogTarget</componentType>
+		<requestType>com.remondis.limbus.logging.LogTarget</requestType>
+		<!-- <componentType>com.remondis.limbus.logging.FileSystemLogTarget</componentType> -->
+		<componentType>com.remondis.limbus.logging.SystemOutLogTarget
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>org.max5.limbus.SharedClasspathProvider</requestType>
-		<componentType>org.max5.limbus.EmptySharedClasspathProvider</componentType>
+		<requestType>com.remondis.limbus.SharedClasspathProvider</requestType>
+		<componentType>com.remondis.limbus.EmptySharedClasspathProvider
+		</componentType>
 	</Component>
 
 
@@ -31,69 +37,81 @@
 	<!-- If used, the Limbus Deploy Service must start before the Limbus Engine. -->
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>org.max5.limbus.DeployService</requestType>
-		<componentType>org.max5.limbus.DeployServiceImpl</componentType>
+		<requestType>com.remondis.limbus.DeployService</requestType>
+		<componentType>com.remondis.limbus.DeployServiceImpl</componentType>
 	</Component>
 
 	<!-- Limbus Engine: No-Op for simple Limbus Container features -->
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>org.max5.limbus.LimbusEngine</requestType>
-		<componentType>org.max5.limbus.NoOpEngine</componentType>
+		<requestType>com.remondis.limbus.LimbusEngine</requestType>
+		<componentType>com.remondis.limbus.NoOpEngine</componentType>
 	</Component>
 
 	<!-- Limbus Core components -->
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>org.max5.limbus.actions.ActionService</requestType>
-		<componentType>org.max5.limbus.actions.LimbusActionService</componentType>
+		<requestType>com.remondis.limbus.actions.ActionService</requestType>
+		<componentType>com.remondis.limbus.actions.LimbusActionService
+		</componentType>
 	</Component>
 
 	<!-- Limbus Maintenance Console -->
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>org.max5.limbus.LimbusMaintenanceConsole</requestType>
-		<componentType>org.max5.limbus.LimbusMaintenanceConsoleImpl</componentType>
+		<requestType>com.remondis.limbus.LimbusMaintenanceConsole
+		</requestType>
+		<componentType>com.remondis.limbus.LimbusMaintenanceConsoleImpl
+		</componentType>
 	</Component>
 
 	<!-- Periodic task scheduler -->
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>org.max5.limbus.tasks.TaskScheduler</requestType>
-		<componentType>org.max5.limbus.tasks.TaskSchedulerImpl</componentType>
+		<requestType>com.remondis.limbus.tasks.TaskScheduler</requestType>
+		<componentType>com.remondis.limbus.tasks.TaskSchedulerImpl
+		</componentType>
 	</Component>
 
 	<!-- Limbus Maintenance Components (private) -->
 	<Component>
 		<failOnError>false</failOnError>
-		<componentType>org.max5.limbus.maintenance.ShowEnvironment</componentType>
+		<componentType>com.remondis.limbus.maintenance.ShowEnvironment
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>false</failOnError>
-		<componentType>org.max5.limbus.maintenance.ShowComponents</componentType>
+		<componentType>com.remondis.limbus.maintenance.ShowComponents
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>false</failOnError>
-		<componentType>org.max5.limbus.maintenance.ShowTasks</componentType>
+		<componentType>com.remondis.limbus.maintenance.ShowTasks
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>false</failOnError>
-		<componentType>org.max5.limbus.maintenance.ShowVersions</componentType>
+		<componentType>com.remondis.limbus.maintenance.ShowVersions
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>false</failOnError>
-		<componentType>org.max5.limbus.maintenance.LogFileViewer</componentType>
+		<componentType>com.remondis.limbus.maintenance.LogFileViewer
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>false</failOnError>
-		<componentType>org.max5.limbus.maintenance.ShowSharedClassPath</componentType>
+		<componentType>com.remondis.limbus.maintenance.ShowSharedClassPath
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>false</failOnError>
-		<componentType>org.max5.limbus.maintenance.ShowPluginClassPaths</componentType>
+		<componentType>com.remondis.limbus.maintenance.ShowPluginClassPaths
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>false</failOnError>
-		<componentType>org.max5.limbus.maintenance.ShowDeployService</componentType>
+		<componentType>com.remondis.limbus.maintenance.ShowDeployService
+		</componentType>
 	</Component>
 </SystemConfiguration>

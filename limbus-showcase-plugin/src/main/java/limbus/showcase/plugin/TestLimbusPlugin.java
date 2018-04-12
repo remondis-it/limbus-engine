@@ -1,8 +1,8 @@
 package limbus.showcase.plugin;
 
 import org.apache.log4j.Logger;
-import org.max5.limbus.Initializable;
-import org.max5.limbus.LimbusPlugin;
+import com.remondis.limbus.Initializable;
+import com.remondis.limbus.LimbusPlugin;
 
 public class TestLimbusPlugin extends Initializable<Exception> implements LimbusPlugin {
 

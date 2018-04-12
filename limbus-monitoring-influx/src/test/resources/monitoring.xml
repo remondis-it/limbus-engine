@@ -6,7 +6,7 @@
 		<threadKeepAlive>30</threadKeepAlive>
 	</processing>
 	<publisher id="runtime">
-		<instance class="org.max5.limbus.monitoring.influx.InfluxHTTPPublisher">
+		<instance class="com.remondis.limbus.monitoring.influx.InfluxHTTPPublisher">
 			<databaseUrl>InfluxHttpURL</databaseUrl>
 			<username>Username</username>
 			<password>Password</password>

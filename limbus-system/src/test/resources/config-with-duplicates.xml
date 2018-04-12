@@ -1,27 +1,27 @@
 <SystemConfiguration>
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>org.max5.limbus.system.external.Aggregator</requestType>
-		<componentType>org.max5.limbus.system.external.AggregatorImpl</componentType>
+		<requestType>com.remondis.limbus.system.external.Aggregator</requestType>
+		<componentType>com.remondis.limbus.system.external.AggregatorImpl</componentType>
 	</Component>
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>org.max5.limbus.system.external.Consumer</requestType>
-		<componentType>org.max5.limbus.system.external.ConsumerImpl</componentType>
+		<requestType>com.remondis.limbus.system.external.Consumer</requestType>
+		<componentType>com.remondis.limbus.system.external.ConsumerImpl</componentType>
 	</Component>
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>org.max5.limbus.system.external.Aggregator</requestType>
-		<componentType>org.max5.limbus.system.external.AnotherAggregatorImpl</componentType>
+		<requestType>com.remondis.limbus.system.external.Aggregator</requestType>
+		<componentType>com.remondis.limbus.system.external.AnotherAggregatorImpl</componentType>
 	</Component>
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>org.max5.limbus.system.external.Filter</requestType>
-		<componentType>org.max5.limbus.system.external.FilterImpl</componentType>
+		<requestType>com.remondis.limbus.system.external.Filter</requestType>
+		<componentType>com.remondis.limbus.system.external.FilterImpl</componentType>
 	</Component>
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>org.max5.limbus.system.external.Producer</requestType>
-		<componentType>org.max5.limbus.system.external.ProducerImpl</componentType>
+		<requestType>com.remondis.limbus.system.external.Producer</requestType>
+		<componentType>com.remondis.limbus.system.external.ProducerImpl</componentType>
 	</Component>
 </SystemConfiguration>
