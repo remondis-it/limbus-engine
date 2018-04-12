@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.max5.limbus</groupId>
+		<groupId>com.remondis.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
 		<version>1.10.4</version>
 	</parent>
@@ -32,7 +32,7 @@
 		<!-- Engine Final JAR name (without spaces!) -->
 		<engine.deploy.finalName>limbus-engine</engine.deploy.finalName>
 		<!-- Engine Launcher Main Class -->
-		<engine.launcher.mainClass>org.max5.limbus.launcher.EngineLauncher</engine.launcher.mainClass>
+		<engine.launcher.mainClass>com.remondis.limbus.launcher.EngineLauncher</engine.launcher.mainClass>
 		<!-- Formatter configuration -->
 		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
 

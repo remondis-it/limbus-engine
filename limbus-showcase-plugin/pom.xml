@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.max5.limbus</groupId>
+		<groupId>com.remondis.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
 		<version>1.10.4</version>
 	</parent>
@@ -53,7 +53,7 @@
 			a plugin interface that is used to interact with the plugin. This interface
 			must be available. -->
 		<dependency>
-			<groupId>org.max5.limbus</groupId>
+			<groupId>com.remondis.limbus</groupId>
 			<artifactId>limbus-showcase-launcher</artifactId>
 			<version>${project.version}</version>
 			<!-- The host is available at runtime and may not be loaded by the plugin

@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.max5.limbus</groupId>
+		<groupId>com.remondis.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
 		<version>1.10.4</version>
 	</parent>
@@ -75,10 +75,10 @@
 
 The object graph is represented by an XML configuration file or can be build using the Limbus System API.
 
-This module delivers an optional system component that visualizes the object graph and its dependencies after initializing: org.max5.limbus.system.visualize.LimbusSystemVisualizer
+This module delivers an optional system component that visualizes the object graph and its dependencies after initializing: com.remondis.limbus.system.visualize.LimbusSystemVisualizer
 
  This component can be added to the Limbus System. To keep the dependencies of this module transparent and light-weight, the graph renderer is declared as an optional dependency. Add the following dependencies to your project to use the visualisation component:
-		&lt;!-- Graph Stream for Visualization feature This is an optional dependency and only required if using the org.max5.limbus.system.visualize.LimbusSystemVisualizer --&gt;
+		&lt;!-- Graph Stream for Visualization feature This is an optional dependency and only required if using the com.remondis.limbus.system.visualize.LimbusSystemVisualizer --&gt;
 		&lt;dependency&gt;
 			&lt;groupId&gt;org.graphstream&lt;/groupId&gt;
 			&lt;artifactId&gt;gs-core&lt;/artifactId&gt;

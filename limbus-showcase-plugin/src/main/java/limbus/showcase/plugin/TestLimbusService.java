@@ -1,7 +1,7 @@
 package limbus.showcase.plugin;
 
 import org.apache.log4j.Logger;
-import org.max5.limbus.LimbusServicePlugin;
+import com.remondis.limbus.LimbusServicePlugin;
 
 public class TestLimbusService extends LimbusServicePlugin {
 

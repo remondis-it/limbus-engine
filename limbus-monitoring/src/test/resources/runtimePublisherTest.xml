@@ -6,7 +6,7 @@
 		<threadKeepAlive>30</threadKeepAlive>
 	</processing>
 	<publisher id="runtime">
-		<instance class="org.max5.limbus.monitoring.publisher.RuntimePublisherImpl" />
+		<instance class="com.remondis.limbus.monitoring.publisher.RuntimePublisherImpl" />
 	</publisher>
 
 	<monitor pattern="">

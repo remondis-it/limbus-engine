@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.max5.limbus</groupId>
+		<groupId>com.remondis.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
 		<version>1.10.4</version>
 	</parent>
@@ -13,7 +13,7 @@
 		<dependencies>
 			<!-- Limbus Plugin Development Libraries -->
 			<dependency>
-				<groupId>org.max5.limbus</groupId>
+				<groupId>com.remondis.limbus</groupId>
 				<artifactId>limbus-depchain-plugin</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
@@ -22,7 +22,7 @@
 
 			<!-- Limbus Development Library -->
 			<dependency>
-				<groupId>org.max5.limbus</groupId>
+				<groupId>com.remondis.limbus</groupId>
 				<artifactId>limbus-engine-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -36,14 +36,14 @@
 
 			<!-- Limbus JSSE Configurator Service Component -->
 			<dependency>
-				<groupId>org.max5.limbus</groupId>
+				<groupId>com.remondis.limbus</groupId>
 				<artifactId>limbus-jsse</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<!-- Limbus Task Scheduler Service Component -->
 			<dependency>
-				<groupId>org.max5.limbus</groupId>
+				<groupId>com.remondis.limbus</groupId>
 				<artifactId>limbus-task-scheduler</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -70,14 +70,14 @@
 
 			<!-- Limbus Logging Activator for JDK Logging (JUL) -->
 			<dependency>
-				<groupId>org.max5.limbus</groupId>
+				<groupId>com.remondis.limbus</groupId>
 				<artifactId>limbus-logging-jdk</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<!-- Limbus Logging Activator for Log4J -->
 			<dependency>
-				<groupId>org.max5.limbus</groupId>
+				<groupId>com.remondis.limbus</groupId>
 				<artifactId>limbus-logging-log4j</artifactId>
 				<version>${project.version}</version>
 			</dependency>
