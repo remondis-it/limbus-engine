@@ -7,7 +7,7 @@
 	</processing>
 	<publisher id="runtime">
 		<instance class="com.remondis.limbus.monitoring.influx.InfluxHTTPPublisher">
-			<databaseUrl>http://de9899s64.remondis-de.local:8086</databaseUrl>
+			<databaseUrl>http://__INFLUX-URL__:__PORT__</databaseUrl>
 			<username>root</username>
 			<password>root</password>
 			<database>limbus</database>

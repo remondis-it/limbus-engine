@@ -245,9 +245,11 @@ public class LimbusSystemTest {
     List<InfoRecord> infoRecords = system.getInfoRecords();
     Class<?>[] initAndFinishOrder = new Class<?>[] {
         com.remondis.limbus.system.external.ProducerImpl.class, com.remondis.limbus.system.external.FilterImpl.class,
-        com.remondis.limbus.system.external.ConsumerImpl.class, com.remondis.limbus.system.external.AggregatorImpl.class,
-        com.remondis.limbus.system.external.AggregatorImpl.class, com.remondis.limbus.system.external.ConsumerImpl.class,
-        com.remondis.limbus.system.external.FilterImpl.class, com.remondis.limbus.system.external.ProducerImpl.class
+        com.remondis.limbus.system.external.ConsumerImpl.class,
+        com.remondis.limbus.system.external.AggregatorImpl.class,
+        com.remondis.limbus.system.external.AggregatorImpl.class,
+        com.remondis.limbus.system.external.ConsumerImpl.class, com.remondis.limbus.system.external.FilterImpl.class,
+        com.remondis.limbus.system.external.ProducerImpl.class
     };
 
     for (int i = 0; i < infoRecords.size(); i++) {

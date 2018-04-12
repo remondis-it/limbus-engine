@@ -1,29 +1,35 @@
 <SystemConfiguration>
 
-	<!-- The object factory that creates monitoring information on usage of public components -->
-	<objectFactory class="com.remondis.limbus.system.MonitoringObjectFactory" />
+	<!-- The object factory that creates monitoring information on usage of 
+		public components -->
+	<!-- <objectFactory class="com.remondis.limbus.system.MonitoringObjectFactory" 
+		/> -->
 
 	<!-- Important bootstrap components -->
 	<Component>
 		<failOnError>true</failOnError>
 		<requestType>com.remondis.limbus.security.LimbusSecurity</requestType>
-		<componentType>com.remondis.limbus.security.LimbusSecurityImpl</componentType>
+		<componentType>com.remondis.limbus.security.LimbusSecurityImpl
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>true</failOnError>
 		<requestType>com.remondis.limbus.files.LimbusFileService</requestType>
-		<componentType>com.remondis.limbus.files.FileSystemServiceImpl</componentType>
+		<componentType>com.remondis.limbus.files.FileSystemServiceImpl
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>true</failOnError>
 		<requestType>com.remondis.limbus.SharedClasspathProvider</requestType>
-		<componentType>com.remondis.limbus.EmptySharedClasspathProvider</componentType>
+		<componentType>com.remondis.limbus.EmptySharedClasspathProvider
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>true</failOnError>
 		<requestType>com.remondis.limbus.logging.LogTarget</requestType>
 		<!-- <componentType>com.remondis.limbus.logging.FileSystemLogTarget</componentType> -->
-		<componentType>com.remondis.limbus.logging.SystemOutLogTarget</componentType>
+		<componentType>com.remondis.limbus.logging.SystemOutLogTarget
+		</componentType>
 	</Component>
 
 
@@ -46,54 +52,66 @@
 	<Component>
 		<failOnError>true</failOnError>
 		<requestType>com.remondis.limbus.actions.ActionService</requestType>
-		<componentType>com.remondis.limbus.actions.LimbusActionService</componentType>
+		<componentType>com.remondis.limbus.actions.LimbusActionService
+		</componentType>
 	</Component>
 
 	<!-- Limbus Maintenance Console -->
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>com.remondis.limbus.LimbusMaintenanceConsole</requestType>
-		<componentType>com.remondis.limbus.LimbusMaintenanceConsoleImpl</componentType>
+		<requestType>com.remondis.limbus.LimbusMaintenanceConsole
+		</requestType>
+		<componentType>com.remondis.limbus.LimbusMaintenanceConsoleImpl
+		</componentType>
 	</Component>
 
 	<!-- Periodic task scheduler -->
 	<Component>
 		<failOnError>true</failOnError>
 		<requestType>com.remondis.limbus.tasks.TaskScheduler</requestType>
-		<componentType>com.remondis.limbus.tasks.TaskSchedulerImpl</componentType>
+		<componentType>com.remondis.limbus.tasks.TaskSchedulerImpl
+		</componentType>
 	</Component>
 
 	<!-- Limbus Maintenance Components (private) -->
 	<Component>
 		<failOnError>false</failOnError>
-		<componentType>com.remondis.limbus.maintenance.ShowEnvironment</componentType>
+		<componentType>com.remondis.limbus.maintenance.ShowEnvironment
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>false</failOnError>
-		<componentType>com.remondis.limbus.maintenance.ShowComponents</componentType>
+		<componentType>com.remondis.limbus.maintenance.ShowComponents
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>false</failOnError>
-		<componentType>com.remondis.limbus.maintenance.ShowTasks</componentType>
+		<componentType>com.remondis.limbus.maintenance.ShowTasks
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>false</failOnError>
-		<componentType>com.remondis.limbus.maintenance.ShowVersions</componentType>
+		<componentType>com.remondis.limbus.maintenance.ShowVersions
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>false</failOnError>
-		<componentType>com.remondis.limbus.maintenance.LogFileViewer</componentType>
+		<componentType>com.remondis.limbus.maintenance.LogFileViewer
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>false</failOnError>
-		<componentType>com.remondis.limbus.maintenance.ShowSharedClassPath</componentType>
+		<componentType>com.remondis.limbus.maintenance.ShowSharedClassPath
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>false</failOnError>
-		<componentType>com.remondis.limbus.maintenance.ShowPluginClassPaths</componentType>
+		<componentType>com.remondis.limbus.maintenance.ShowPluginClassPaths
+		</componentType>
 	</Component>
 	<Component>
 		<failOnError>false</failOnError>
-		<componentType>com.remondis.limbus.maintenance.ShowDeployService</componentType>
+		<componentType>com.remondis.limbus.maintenance.ShowDeployService
+		</componentType>
 	</Component>
 </SystemConfiguration>

@@ -12,12 +12,14 @@ import com.remondis.limbus.launcher.EngineUtil;
 import com.remondis.limbus.launcher.SystemEngine;
 
 /**
- * This class is used to launch the Limbus Showcase examples by bootstrapping a {@link LimbusEngine}.
- * The shared classpath contains the centralized Log4J dependency. The deploy folder contains the showcase plugin
- * dependency that is deployed at startup.
+ * This class is used to launch the Limbus Showcase examples by bootstrapping a
+ * {@link LimbusEngine}. The shared classpath contains the centralized Log4J
+ * dependency. The deploy folder contains the showcase plugin dependency that is
+ * deployed at startup.
  *
- * <b>Note: The Log4J library is requested by the showcase plugin for testing and compatibility demonstration purposes.
- * This does not mean that Log4J is needed for the host engine to be present.</b>
+ * <b>Note: The Log4J library is requested by the showcase plugin for testing
+ * and compatibility demonstration purposes. This does not mean that Log4J is
+ * needed for the host engine to be present.</b>
  *
  * @author schuettec
  *
@@ -26,25 +28,28 @@ public class EngineShowcaseLauncher {
 
   public static void main(String[] args) throws Exception {
     /*
-     * Before bootstrapping the engine there is a possibility to setup the shared classpath (lib classpath).
-     * This is useful if you want to setup the shared classpath with a set of URLs instead of providing a filesystem
-     * classpath.
+     * Before bootstrapping the engine there is a possibility to setup the shared
+     * classpath (lib classpath). This is useful if you want to setup the shared
+     * classpath with a set of URLs instead of providing a filesystem classpath.
      *
      * To specify a custom shared classpath use the following:
      */
 
     // Set the shared classpath provider to actually use it:
-    // Currently commented out because we provide a filesystem shared classpath which is used as default.
+    // Currently commented out because we provide a filesystem shared classpath
+    // which is used as default.
     // LimbusEngine.sharedClassPathProvider = sharedClasspathProvider;
 
     // The following call bootstraps the Limbus Engine
     EngineLauncher.bootstrapLimbusSystem();
 
     /*
-     * As a developer you may wish to have a little more control over the engines lifecycle. For JUnit tests it is
-     * possible to get the instance of LimbusContainer which is the currently running engine type. The method
-     * EngineLauncher.getEngine() delivers the current instance. It is deprecated to signal that this method should not
-     * be used by plugins running in the Limbus Engine.
+     * As a developer you may wish to have a little more control over the engines
+     * lifecycle. For JUnit tests it is possible to get the instance of
+     * LimbusContainer which is the currently running engine type. The method
+     * EngineLauncher.getEngine() delivers the current instance. It is deprecated to
+     * signal that this method should not be used by plugins running in the Limbus
+     * Engine.
      *
      * As a developer you can rely on this method to be available for test purposes.
      */
@@ -63,7 +68,8 @@ public class EngineShowcaseLauncher {
       String deployName = deployService.toDeployName("com.remondis.limbus", "limbus-showcase-plugin", null, version);
       Classpath classpath = engine.getClasspath(deployName);
 
-      // Get the first plugin instance with specified lifecycle hook. The lifecycle hook is executed on first plugin
+      // Get the first plugin instance with specified lifecycle hook. The lifecycle
+      // hook is executed on first plugin
       // request.
       String uuid = UUID.randomUUID()
           .toString();
