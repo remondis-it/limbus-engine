@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.max5.limbus</groupId>
@@ -9,6 +8,7 @@
 	<name>Limbus Engine</name>
 	<packaging>pom</packaging>
 	<description>A multi classloader hot-deploy container</description>
+	<url>https://github.com/remondis-it/limbus-engine</url>
 
 	<distributionManagement>
 		<repository>
@@ -17,7 +17,11 @@
 			<url>https://api.bintray.com/maven/schuettec/maven/com.remondis.limbus/;publish=1</url>
 		</repository>
 	</distributionManagement>
-
+	<scm>
+		<connection>scm:git:git://github.com/remondis-it/limbus-engine.git</connection>
+		<developerConnection>scm:git:ssh://github.com:remondis-it/limbus-engine.git</developerConnection>
+		<url>https://github.com/remondis-it/limbus-engine</url>
+	</scm>
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
