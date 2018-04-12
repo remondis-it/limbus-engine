@@ -6,10 +6,10 @@
 		<threadKeepAlive>30</threadKeepAlive>
 	</processing>
 	<publisher id="message-console">
-		<instance class="org.integrationtest.ConsolePublisherImpl" />
+		<instance class="com.integrationtest.ConsolePublisherImpl" />
 	</publisher>
 
-	<monitor pattern="org.integrationtest">
+	<monitor pattern="com.integrationtest">
 		<publisherRef>message-console</publisherRef>
 	</monitor>
 

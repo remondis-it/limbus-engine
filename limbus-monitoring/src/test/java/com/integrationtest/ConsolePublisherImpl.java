@@ -1,4 +1,4 @@
-package org.integrationtest;
+package com.integrationtest;
 
 public class ConsolePublisherImpl implements ConsolePublisher {
 

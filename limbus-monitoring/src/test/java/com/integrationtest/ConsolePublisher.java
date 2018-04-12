@@ -1,4 +1,4 @@
-package org.integrationtest;
+package com.integrationtest;
 
 import com.remondis.limbus.monitoring.Publisher;
 

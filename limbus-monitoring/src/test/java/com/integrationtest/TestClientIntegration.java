@@ -1,4 +1,4 @@
-package org.integrationtest;
+package com.integrationtest;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -51,7 +51,7 @@ public class TestClientIntegration {
                  .withDefaultLimbusComponents(new LimbusDefaultComponents())
                  /*
                   *  schuettec - 18.04.2017 : Add the TestEngine, because the proprietary plugin interface
-                  *  org.testclient.TestPlugin is used
+                  *  com.testclient.TestPlugin is used
                   */
                  .addComponentConfiguration(LimbusEngine.class, TestEngine.class)
                  .addPublicComponentMock(LimbusFileService.class, filesystem)

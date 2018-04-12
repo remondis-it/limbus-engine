@@ -1,4 +1,4 @@
-package org.testclient.packageB;
+package com.testclient.packageB;
 
 import java.util.UUID;
 

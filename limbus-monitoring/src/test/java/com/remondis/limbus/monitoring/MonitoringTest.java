@@ -15,7 +15,7 @@ import com.remondis.limbus.monitoring.publisher.DecoratedConsoleMessagePublisher
 import com.remondis.limbus.monitoring.publisher.MessagePublisher;
 import com.remondis.limbus.monitoring.publisher.SomeOtherPublisher;
 import com.remondis.limbus.monitoring.publisher.SomeOtherPublisherImpl;
-import org.testclient.packageB.InheritClient;
+import com.testclient.packageB.InheritClient;
 
 public class MonitoringTest {
 
@@ -30,7 +30,7 @@ public class MonitoringTest {
       Thread.currentThread()
           .setName(thisThreadName);
 
-      org.testclient.packageB.Client bClient = new org.testclient.packageB.Client();
+      com.testclient.packageB.Client bClient = new com.testclient.packageB.Client();
 
       bClient.someOtherMethod();
       bClient.callImmediately();
@@ -53,7 +53,7 @@ public class MonitoringTest {
   @Test // Happy path
   public void test_publisher() {
     // schuettec - 13.04.2017 : For this client the DecoratedConsoleMessagePublisherImpl is expected
-    org.testclient.packageA.Client aClient = new org.testclient.packageA.Client();
+    com.testclient.packageA.Client aClient = new com.testclient.packageA.Client();
 
     Set<Object> aMsgPublishers = MonitoringFactory.getPublishers(aClient.getClass(), MessagePublisher.class);
     Set<Object> aOtherPublishers = MonitoringFactory.getPublishers(aClient.getClass(), SomeOtherPublisher.class);
@@ -66,7 +66,7 @@ public class MonitoringTest {
 
     // schuettec - 13.04.2017 : For this two clients the ConsoleMessagePublisherImpl and SomeOtherPublisherImpl is
     // expected
-    org.testclient.packageB.Client bClient = new org.testclient.packageB.Client();
+    com.testclient.packageB.Client bClient = new com.testclient.packageB.Client();
     InheritClient iClient = new InheritClient();
 
     Set<Object> bMsgPublishers = MonitoringFactory.getPublishers(bClient.getClass(), MessagePublisher.class);
