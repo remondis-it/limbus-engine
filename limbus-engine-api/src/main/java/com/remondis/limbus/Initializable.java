@@ -43,7 +43,7 @@ public abstract class Initializable<E extends Exception> implements IInitializab
   /**
    * Initializes this object. This method is thread safe.
    *
-   * @throws Exception
+   * @throws E
    *         Thrown if the initialization failed.
    */
   @Override
@@ -112,7 +112,7 @@ public abstract class Initializable<E extends Exception> implements IInitializab
    * <b>Note: This method is thread safe.</b>
    * </p>
    *
-   * @throws Exception
+   * @throws E
    *         Thrown to signal that the initialization fails. If thrown this object remains uninitialized.
    */
   protected abstract void performInitialize() throws E;
