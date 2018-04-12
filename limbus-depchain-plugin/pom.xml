@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.max5.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
-		<version>1.10.3</version>
+		<version>1.10.4</version>
 	</parent>
 	<artifactId>limbus-depchain-plugin</artifactId>
 	<packaging>pom</packaging>
