@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.max5.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
-		<version>1.10.2</version>
+		<version>1.10.3</version>
 	</parent>
 	<artifactId>limbus-vfs</artifactId>
 	<properties>
