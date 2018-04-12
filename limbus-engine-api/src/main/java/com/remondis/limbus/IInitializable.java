@@ -13,7 +13,7 @@ public interface IInitializable<E extends Exception> {
   /**
    * Initializes this object. This method is thread safe.
    *
-   * @throws Exception
+   * @throws E
    *         Thrown if the initialization failed.
    */
   public void initialize() throws E;
