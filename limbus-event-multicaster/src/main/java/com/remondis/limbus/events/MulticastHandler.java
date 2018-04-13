@@ -10,9 +10,10 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import com.remondis.limbus.utils.ReflectionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.remondis.limbus.utils.ReflectionUtil;
 
 /**
  * Implementation of an {@link EventMulticaster} that uses {@link Proxy}-classes to multicast event calls to

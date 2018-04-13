@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.junit.Test;
+
 import com.remondis.limbus.monitoring.publisher.AbstractMessagePublisher;
 import com.remondis.limbus.monitoring.publisher.DecoratedConsoleMessagePublisherImpl;
 import com.remondis.limbus.monitoring.publisher.MessagePublisher;

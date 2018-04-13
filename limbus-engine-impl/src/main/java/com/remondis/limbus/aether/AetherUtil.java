@@ -1,7 +1,8 @@
 
 package com.remondis.limbus.aether;
 
-import static com.remondis.limbus.utils.Files.*;
+import static com.remondis.limbus.utils.Files.getOrFailDirectory;
+import static com.remondis.limbus.utils.Files.getOrFailFile;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -47,9 +48,10 @@ import org.eclipse.aether.util.artifact.JavaScopes;
 import org.eclipse.aether.util.filter.ScopeDependencyFilter;
 import org.eclipse.aether.util.graph.visitor.FilteringDependencyVisitor;
 import org.eclipse.aether.util.repository.AuthenticationBuilder;
-import com.remondis.limbus.exceptions.LimbusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.remondis.limbus.exceptions.LimbusException;
 
 /**
  * This class handles the access to the Maven repositories for plugin deployment. It contains methods that can access

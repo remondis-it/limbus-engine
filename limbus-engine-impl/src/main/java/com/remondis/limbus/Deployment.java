@@ -9,6 +9,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.remondis.limbus.events.EventMulticaster;
 import com.remondis.limbus.events.EventMulticasterFactory;
 import com.remondis.limbus.exceptions.IllegalTypeException;
@@ -16,8 +19,6 @@ import com.remondis.limbus.exceptions.LimbusClasspathException;
 import com.remondis.limbus.exceptions.LimbusException;
 import com.remondis.limbus.utils.Lang;
 import com.remondis.limbus.utils.ReflectionUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The Deployment provides access to all needed information for a deployed plugin to execute an action.

@@ -10,11 +10,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.SwingUtilities;
 
-import com.remondis.limbus.launcher.EngineUtil;
-import com.remondis.limbus.maintenance.Action;
-import com.remondis.limbus.maintenance.Category;
-import com.remondis.limbus.maintenance.Item;
-import com.remondis.limbus.utils.Lang;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +31,11 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.swing.TerminalEmulatorAutoCloseTrigger;
+import com.remondis.limbus.launcher.EngineUtil;
+import com.remondis.limbus.maintenance.Action;
+import com.remondis.limbus.maintenance.Category;
+import com.remondis.limbus.maintenance.Item;
+import com.remondis.limbus.utils.Lang;
 
 public class LimbusMaintenanceConsoleImpl extends Initializable<Exception> implements LimbusMaintenanceConsole {
 

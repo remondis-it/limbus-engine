@@ -4,7 +4,6 @@ import java.io.InputStream;
 
 import com.remondis.limbus.DefaultComponentsConsumer;
 import com.remondis.limbus.IInitializable;
-import com.remondis.limbus.system.LimbusSystem;
 import com.remondis.limbus.system.MockLimbusSystem;
 import com.remondis.limbus.utils.SerializeException;
 

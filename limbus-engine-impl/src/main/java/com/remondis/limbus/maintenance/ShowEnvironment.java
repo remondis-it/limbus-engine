@@ -3,13 +3,6 @@ package com.remondis.limbus.maintenance;
 import java.io.File;
 import java.util.concurrent.Callable;
 
-import com.remondis.limbus.DeployService;
-import com.remondis.limbus.LimbusMaintenanceConsole;
-import com.remondis.limbus.aether.AetherUtil;
-import com.remondis.limbus.launcher.EngineLauncher;
-import com.remondis.limbus.system.LimbusComponent;
-import com.remondis.limbus.utils.Files;
-
 import com.googlecode.lanterna.gui2.ActionListBox;
 import com.googlecode.lanterna.gui2.Borders;
 import com.googlecode.lanterna.gui2.Container;
@@ -23,6 +16,12 @@ import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogBuilder;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogButton;
+import com.remondis.limbus.DeployService;
+import com.remondis.limbus.LimbusMaintenanceConsole;
+import com.remondis.limbus.aether.AetherUtil;
+import com.remondis.limbus.launcher.EngineLauncher;
+import com.remondis.limbus.system.LimbusComponent;
+import com.remondis.limbus.utils.Files;
 
 public class ShowEnvironment extends AbstractLimbusItem {
 

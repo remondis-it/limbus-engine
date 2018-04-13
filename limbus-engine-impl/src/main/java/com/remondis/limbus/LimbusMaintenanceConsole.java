@@ -1,8 +1,7 @@
 package com.remondis.limbus;
 
-import com.remondis.limbus.maintenance.Item;
-
 import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
+import com.remondis.limbus.maintenance.Item;
 
 /**
  * This is the public interface for the Limbus maintenance console.

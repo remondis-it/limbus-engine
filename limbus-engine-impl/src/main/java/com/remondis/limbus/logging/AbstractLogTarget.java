@@ -4,10 +4,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.util.NoSuchElementException;
 
-import com.remondis.limbus.Initializable;
-import com.remondis.limbus.launcher.EngineLauncher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.remondis.limbus.Initializable;
+import com.remondis.limbus.launcher.EngineLauncher;
 
 /**
  * This is an abstract implementation of a {@link LogTarget} used by the Limbus Engine to separate logging output of

@@ -3,11 +3,12 @@ package com.remondis.limbus;
 import java.net.URL;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.remondis.limbus.exceptions.LimbusClasspathException;
 import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.system.LimbusComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This is a {@link SharedClasspathProvider} constructing a shared classpath from the lib directory. All containing

@@ -1,6 +1,7 @@
 package com.remondis.limbus_integrations;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -8,6 +9,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
+
 import com.remondis.limbus.Classpath;
 import com.remondis.limbus.DeploymentListener;
 import com.remondis.limbus.LimbusDefaultComponents;
@@ -19,7 +22,6 @@ import com.remondis.limbus.files.InMemoryFilesystemImpl;
 import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.launcher.LimbusStage;
 import com.remondis.limbus.launcher.LimbusStaging;
-import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LimbusIntegrationTest implements DeploymentListener {

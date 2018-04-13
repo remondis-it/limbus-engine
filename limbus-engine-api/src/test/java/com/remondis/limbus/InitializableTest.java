@@ -3,11 +3,14 @@
  */
 package com.remondis.limbus;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.Test;
+
 import com.remondis.limbus.exceptions.AlreadyInitializedException;
 import com.remondis.limbus.exceptions.NotInitializedException;
 

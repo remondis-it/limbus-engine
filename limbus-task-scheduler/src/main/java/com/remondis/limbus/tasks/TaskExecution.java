@@ -1,13 +1,14 @@
 package com.remondis.limbus.tasks;
 
-import static com.remondis.limbus.tasks.TaskSchedulerImpl.*;
+import static com.remondis.limbus.tasks.TaskSchedulerImpl.normalizeRate;
 
 import java.util.concurrent.ScheduledFuture;
 import java.util.function.Function;
 
-import com.remondis.limbus.utils.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.remondis.limbus.utils.StopWatch;
 
 class TaskExecution implements Runnable {
 

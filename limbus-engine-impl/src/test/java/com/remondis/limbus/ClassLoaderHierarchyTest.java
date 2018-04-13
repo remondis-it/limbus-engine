@@ -1,6 +1,9 @@
 package com.remondis.limbus;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
 
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -10,6 +13,7 @@ import java.net.URL;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import com.remondis.limbus.files.InMemoryFilesystemImpl;
 import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.utils.Lang;

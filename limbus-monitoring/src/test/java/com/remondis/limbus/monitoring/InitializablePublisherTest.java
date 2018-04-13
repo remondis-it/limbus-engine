@@ -1,10 +1,12 @@
 package com.remondis.limbus.monitoring;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Set;
 
 import org.junit.Test;
+
 import com.remondis.limbus.monitoring.publisher.InitializablePublisher;
 import com.remondis.limbus.monitoring.publisher.InitializablePublisherImpl;
 

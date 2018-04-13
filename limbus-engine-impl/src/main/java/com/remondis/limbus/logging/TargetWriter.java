@@ -1,7 +1,5 @@
 package com.remondis.limbus.logging;
 
-import java.io.OutputStream;
-
 /**
  * A {@link TargetWriter} implements calls to the write methods of {@link RoutedOutputStream} by converting the data
  * format of an {@link OutputStream} to convenient calls of the underlying target type.

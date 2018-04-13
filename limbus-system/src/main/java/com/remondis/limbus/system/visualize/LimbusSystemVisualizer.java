@@ -15,6 +15,9 @@ import org.graphstream.ui.layout.Layout;
 import org.graphstream.ui.layout.springbox.implementations.SpringBox;
 import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.view.Viewer.CloseFramePolicy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.remondis.limbus.IInitializable;
 import com.remondis.limbus.Initializable;
 import com.remondis.limbus.system.Component;
@@ -25,8 +28,6 @@ import com.remondis.limbus.system.LimbusContainer;
 import com.remondis.limbus.system.LimbusSystem;
 import com.remondis.limbus.system.LimbusSystemListener;
 import com.remondis.limbus.utils.ReflectionUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This is the visualizer component that shows the object graph that is maintained by a {@link LimbusSystem} instance.

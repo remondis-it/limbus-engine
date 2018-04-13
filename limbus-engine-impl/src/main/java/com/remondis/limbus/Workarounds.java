@@ -12,9 +12,10 @@ import java.util.Set;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.jar.JarFile;
 
-import com.remondis.limbus.utils.Lang;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.remondis.limbus.utils.Lang;
 
 /**
  * This class is a collection of workarounds that prevent classloader leaks. There are known issues out there related to

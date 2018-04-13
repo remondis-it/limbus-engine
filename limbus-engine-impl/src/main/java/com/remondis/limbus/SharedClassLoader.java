@@ -2,7 +2,6 @@ package com.remondis.limbus;
 
 import java.io.IOException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.net.URLStreamHandlerFactory;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -11,10 +10,11 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Set;
 
-import com.remondis.limbus.files.LimbusFileService;
-import com.remondis.limbus.utils.Lang;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.remondis.limbus.files.LimbusFileService;
+import com.remondis.limbus.utils.Lang;
 
 import sun.misc.CompoundEnumeration;
 

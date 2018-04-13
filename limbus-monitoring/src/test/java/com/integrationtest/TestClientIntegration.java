@@ -7,6 +7,8 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
+
 import com.remondis.limbus.Classpath;
 import com.remondis.limbus.LimbusDefaultComponents;
 import com.remondis.limbus.LimbusEngine;
@@ -15,7 +17,6 @@ import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.launcher.LimbusStage;
 import com.remondis.limbus.launcher.LimbusStaging;
 import com.remondis.limbus.monitoring.MonitoringFactory;
-import org.mockito.junit.MockitoJUnitRunner;
 
 @Ignore // schuettec - 18.04.2017 : This test actually does not perform any assertions. Therefore it is set to ignore.
 @RunWith(MockitoJUnitRunner.class)

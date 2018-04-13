@@ -2,10 +2,11 @@ package com.remondis.limbus.launcher;
 
 import java.util.concurrent.TimeUnit;
 
-import com.remondis.limbus.Initializable;
-import com.remondis.limbus.utils.Lang;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.remondis.limbus.Initializable;
+import com.remondis.limbus.utils.Lang;
 
 /**
  * This class implements core functions of a service daemon. The daemon should run until it is requested by the runtime

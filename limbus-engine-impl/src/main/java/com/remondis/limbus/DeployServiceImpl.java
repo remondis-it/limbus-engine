@@ -1,12 +1,12 @@
 package com.remondis.limbus;
 
-import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
-import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
 import static com.remondis.limbus.utils.Files.createIfMissingDirectory;
 import static com.remondis.limbus.utils.Files.getCurrentDirectory;
 import static com.remondis.limbus.utils.Files.getOrFailDirectory;
 import static com.remondis.limbus.utils.Files.isAccessibleDirectory;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
+import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -27,14 +27,15 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.resolution.ArtifactResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.remondis.limbus.aether.AetherUtil;
 import com.remondis.limbus.exceptions.LimbusException;
 import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.security.LimbusSecurity;
 import com.remondis.limbus.system.LimbusComponent;
 import com.remondis.limbus.utils.Zip;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class provides additional deploy features for a {@link LimbusEngine}. There are a few scenarios in deploying

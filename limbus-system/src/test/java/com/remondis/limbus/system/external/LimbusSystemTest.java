@@ -1,7 +1,11 @@
 package com.remondis.limbus.system.external;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.withSettings;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,6 +13,9 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Test;
+import org.mockito.InOrder;
+import org.mockito.Mockito;
+
 import com.remondis.limbus.IInitializable;
 import com.remondis.limbus.exceptions.NotInitializedException;
 import com.remondis.limbus.system.InfoRecord;
@@ -27,8 +34,6 @@ import com.remondis.limbus.system.external.circular.CircularCImpl;
 import com.remondis.limbus.system.external.circular.CircularD;
 import com.remondis.limbus.system.external.circular.CircularDImpl;
 import com.remondis.limbus.utils.SerializeException;
-import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 public class LimbusSystemTest {
 

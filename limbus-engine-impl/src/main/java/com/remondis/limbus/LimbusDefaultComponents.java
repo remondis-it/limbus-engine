@@ -1,6 +1,5 @@
 package com.remondis.limbus;
 
-import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.logging.LogTarget;
 import com.remondis.limbus.logging.SystemOutLogTarget;
 import com.remondis.limbus.security.LimbusSecurity;

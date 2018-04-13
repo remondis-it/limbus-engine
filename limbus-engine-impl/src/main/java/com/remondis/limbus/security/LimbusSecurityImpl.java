@@ -8,11 +8,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.remondis.limbus.Initializable;
 import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.system.LimbusComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class contains methods to enable the plugin sandbox security framework that manages different sets of

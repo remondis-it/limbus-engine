@@ -17,9 +17,10 @@ import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.slf4j.Logger;
+
 import com.remondis.limbus.exceptions.LimbusClasspathException;
 import com.remondis.limbus.utils.Lang;
-import org.slf4j.Logger;
 
 public final class LimbusUtil {
 

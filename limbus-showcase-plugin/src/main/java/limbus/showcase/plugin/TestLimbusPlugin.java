@@ -1,6 +1,7 @@
 package limbus.showcase.plugin;
 
 import org.apache.log4j.Logger;
+
 import com.remondis.limbus.Initializable;
 import com.remondis.limbus.LimbusPlugin;
 

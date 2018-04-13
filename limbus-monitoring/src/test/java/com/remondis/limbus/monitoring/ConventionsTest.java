@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.junit.Test;
+
 import com.remondis.limbus.monitoring.dummies.DummyPublisher;
 import com.remondis.limbus.monitoring.dummies.DummyPublisherImpl;
 import com.remondis.limbus.monitoring.dummies.DummyPublisherInheritImpl;

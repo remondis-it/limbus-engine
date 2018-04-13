@@ -4,9 +4,10 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import org.influxdb.dto.Point;
-import com.remondis.limbus.monitoring.PublisherUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.remondis.limbus.monitoring.PublisherUtils;
 
 /**
  * This is a publisher implementation to write monitoring events to an Influx database via UDP.

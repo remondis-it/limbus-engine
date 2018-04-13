@@ -3,11 +3,6 @@ package com.remondis.limbus.maintenance;
 import java.net.URL;
 import java.util.Set;
 
-import com.remondis.limbus.Classpath;
-import com.remondis.limbus.LimbusEngine;
-import com.remondis.limbus.LimbusMaintenanceConsole;
-import com.remondis.limbus.system.LimbusComponent;
-
 import com.googlecode.lanterna.gui2.ActionListBox;
 import com.googlecode.lanterna.gui2.BorderLayout;
 import com.googlecode.lanterna.gui2.Borders;
@@ -16,6 +11,10 @@ import com.googlecode.lanterna.gui2.Label;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.TextBox;
 import com.googlecode.lanterna.gui2.TextBox.Style;
+import com.remondis.limbus.Classpath;
+import com.remondis.limbus.LimbusEngine;
+import com.remondis.limbus.LimbusMaintenanceConsole;
+import com.remondis.limbus.system.LimbusComponent;
 
 public class ShowPluginClassPaths extends AbstractLimbusItem {
 

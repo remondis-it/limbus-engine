@@ -2,7 +2,6 @@ package com.remondis.limbus.monitoring.publisher;
 
 import com.remondis.limbus.monitoring.CallImmediately;
 import com.remondis.limbus.monitoring.Publisher;
-import com.remondis.limbus.utils.StopWatch;
 
 /**
  * This publisher interface defines methods to publish the runtime of a certain method. The measurement of the runtime

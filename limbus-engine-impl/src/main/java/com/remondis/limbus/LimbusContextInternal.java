@@ -1,6 +1,6 @@
 package com.remondis.limbus;
 
-import static com.remondis.limbus.LimbusUtil.*;
+import static com.remondis.limbus.LimbusUtil.getCurrentThreadLocals;
 
 import java.util.HashSet;
 import java.util.Set;

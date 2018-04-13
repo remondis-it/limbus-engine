@@ -1,6 +1,7 @@
 package com.remondis.limbus.security;
 
-import static com.remondis.limbus.security.PermissionUtil.*;
+import static com.remondis.limbus.security.PermissionUtil.arguments;
+import static com.remondis.limbus.security.PermissionUtil.replaceSystemProperties;
 
 import java.io.BufferedReader;
 import java.io.Closeable;

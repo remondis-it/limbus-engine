@@ -13,6 +13,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.remondis.limbus.IInitializable;
 import com.remondis.limbus.Initializable;
 import com.remondis.limbus.events.EventMulticaster;
@@ -21,8 +24,6 @@ import com.remondis.limbus.utils.Lang;
 import com.remondis.limbus.utils.ReflectionUtil;
 import com.remondis.limbus.utils.SerializeException;
 import com.remondis.limbus.utils.XStreamUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The Limbus System is a manager for lifecycle objects of the type {@link IInitializable}. The Limbus System manages

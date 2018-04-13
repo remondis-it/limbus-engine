@@ -10,14 +10,13 @@ import java.util.Comparator;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import com.remondis.limbus.LimbusMaintenanceConsole;
-import com.remondis.limbus.utils.Lang;
-
 import com.googlecode.lanterna.gui2.ActionListBox;
 import com.googlecode.lanterna.gui2.BorderLayout;
 import com.googlecode.lanterna.gui2.Container;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.TextBox;
+import com.remondis.limbus.LimbusMaintenanceConsole;
+import com.remondis.limbus.utils.Lang;
 
 public class LogFileViewer extends AbstractLimbusItem {
   public LogFileViewer() {

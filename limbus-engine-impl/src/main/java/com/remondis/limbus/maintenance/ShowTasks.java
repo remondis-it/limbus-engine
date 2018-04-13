@@ -3,11 +3,6 @@ package com.remondis.limbus.maintenance;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import com.remondis.limbus.LimbusMaintenanceConsole;
-import com.remondis.limbus.system.LimbusComponent;
-import com.remondis.limbus.tasks.TaskInfo;
-import com.remondis.limbus.tasks.TaskScheduler;
-
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Container;
 import com.googlecode.lanterna.gui2.Direction;
@@ -16,6 +11,10 @@ import com.googlecode.lanterna.gui2.LinearLayout;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.table.Table;
 import com.googlecode.lanterna.gui2.table.TableModel;
+import com.remondis.limbus.LimbusMaintenanceConsole;
+import com.remondis.limbus.system.LimbusComponent;
+import com.remondis.limbus.tasks.TaskInfo;
+import com.remondis.limbus.tasks.TaskScheduler;
 
 /**
  * This maintenance page shows scheduled periodic service tasks managed by {@link TaskScheduler}.

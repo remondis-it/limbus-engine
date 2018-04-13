@@ -3,9 +3,10 @@ package com.remondis.limbus.monitoring;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import com.remondis.limbus.utils.Lang;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.remondis.limbus.utils.Lang;
 
 /**
  * This is a util class for useful methods supporting the development of publisher implemnentations.

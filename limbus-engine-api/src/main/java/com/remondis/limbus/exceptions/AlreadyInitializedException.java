@@ -3,8 +3,6 @@
  */
 package com.remondis.limbus.exceptions;
 
-import com.remondis.limbus.Initializable;
-
 /**
  * This exception is thrown if the lifecycle methods of {@link Initializable} are not called in a legal order. Example:
  * This exception is thrown if an {@link Initializable} is initialized more than one time.

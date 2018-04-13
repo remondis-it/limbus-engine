@@ -6,10 +6,11 @@ import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDB.LogLevel;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.Point;
-import com.remondis.limbus.monitoring.PublisherUtils;
-import com.remondis.limbus.utils.Lang;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.remondis.limbus.monitoring.PublisherUtils;
+import com.remondis.limbus.utils.Lang;
 
 /**
  * This is a publisher implementation to write monitoring events via HTTP to an Influx database.

@@ -17,10 +17,9 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.formatter.Formatters;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+
 import com.remondis.limbus.DefaultComponents;
 import com.remondis.limbus.launcher.staging.Handler;
-import com.remondis.limbus.system.LimbusSystem;
-import com.remondis.limbus.system.MockLimbusSystem;
 import com.remondis.limbus.utils.SerializeException;
 
 /**

@@ -2,7 +2,6 @@ package com.remondis.limbus;
 
 import java.lang.ref.PhantomReference;
 import java.lang.ref.ReferenceQueue;
-import java.lang.ref.WeakReference;
 
 /**
  * This reference is an extension of {@link WeakReference}. It stores some leight-weight information about the

@@ -2,17 +2,6 @@ package com.remondis.limbus.maintenance;
 
 import java.util.Arrays;
 
-import com.remondis.limbus.Classpath;
-import com.remondis.limbus.DeployService;
-import com.remondis.limbus.LimbusEngine;
-import com.remondis.limbus.LimbusMaintenanceConsole;
-import com.remondis.limbus.UndeployVetoException;
-import com.remondis.limbus.exceptions.LimbusException;
-import com.remondis.limbus.exceptions.NoSuchDeploymentException;
-import com.remondis.limbus.security.LimbusSecurity;
-import com.remondis.limbus.system.LimbusComponent;
-import com.remondis.limbus.utils.Lang;
-
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.gui2.ActionListBox;
 import com.googlecode.lanterna.gui2.BasicWindow;
@@ -33,6 +22,16 @@ import com.googlecode.lanterna.gui2.TextBox.Style;
 import com.googlecode.lanterna.gui2.Window;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogBuilder;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogButton;
+import com.remondis.limbus.Classpath;
+import com.remondis.limbus.DeployService;
+import com.remondis.limbus.LimbusEngine;
+import com.remondis.limbus.LimbusMaintenanceConsole;
+import com.remondis.limbus.UndeployVetoException;
+import com.remondis.limbus.exceptions.LimbusException;
+import com.remondis.limbus.exceptions.NoSuchDeploymentException;
+import com.remondis.limbus.security.LimbusSecurity;
+import com.remondis.limbus.system.LimbusComponent;
+import com.remondis.limbus.utils.Lang;
 
 public class ShowDeployService extends AbstractLimbusItem {
 

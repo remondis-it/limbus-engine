@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.remondis.limbus.utils.Lang;
 import com.remondis.limbus.utils.SerializeException;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;

@@ -14,13 +14,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.remondis.limbus.Initializable;
 import com.remondis.limbus.LimbusProperties;
 import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.system.LimbusComponent;
 import com.remondis.limbus.utils.Lang;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class TaskSchedulerImpl extends Initializable<Exception> implements TaskScheduler, ThreadFactory {
 

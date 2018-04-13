@@ -3,7 +3,6 @@ package com.remondis.limbus.security;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.security.Permission;
-import java.security.Permissions;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;

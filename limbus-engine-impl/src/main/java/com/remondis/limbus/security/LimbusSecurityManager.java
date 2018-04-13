@@ -3,7 +3,6 @@ package com.remondis.limbus.security;
 import java.security.AccessController;
 import java.security.Permission;
 import java.security.PrivilegedAction;
-import java.security.ProtectionDomain;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

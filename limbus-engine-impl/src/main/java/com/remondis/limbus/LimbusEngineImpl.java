@@ -14,6 +14,9 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.remondis.limbus.events.EventMulticaster;
 import com.remondis.limbus.events.EventMulticasterFactory;
 import com.remondis.limbus.exceptions.LimbusException;
@@ -22,8 +25,6 @@ import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.logging.LogTarget;
 import com.remondis.limbus.system.LimbusComponent;
 import com.remondis.limbus.utils.Lang;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The Limbus Engine manages the lifecycle of plugins and provides a class loader hierarchy to isolate plugins

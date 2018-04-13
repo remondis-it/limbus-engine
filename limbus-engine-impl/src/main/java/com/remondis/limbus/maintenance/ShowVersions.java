@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
-import com.remondis.limbus.LimbusMaintenanceConsole;
-
 import com.googlecode.lanterna.gui2.Container;
 import com.googlecode.lanterna.gui2.Direction;
 import com.googlecode.lanterna.gui2.EmptySpace;
@@ -21,6 +19,7 @@ import com.googlecode.lanterna.gui2.LinearLayout;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.table.Table;
 import com.googlecode.lanterna.gui2.table.TableModel;
+import com.remondis.limbus.LimbusMaintenanceConsole;
 
 /**
  * This maintenance page shows information of the modules included in the running Limbus Engine. The classpath is
