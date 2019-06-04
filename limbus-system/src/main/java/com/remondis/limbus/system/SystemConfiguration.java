@@ -1,8 +1,13 @@
 package com.remondis.limbus.system;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.remondis.limbus.IInitializable;
 import com.remondis.limbus.Initializable;
@@ -30,6 +35,9 @@ final class SystemConfiguration implements Serializable {
    * Holds the object factory that is to be used.
    */
   protected ObjectFactory objectFactory;
+
+  transient Map<Class<?>, Set<Class>> publicComponents = new Hashtable<>();
+  transient Set<Class<?>> privateComponents = new HashSet<>();
 
   @XStreamImplicit
   public List<ComponentConfiguration> components;
@@ -158,6 +166,16 @@ final class SystemConfiguration implements Serializable {
           .append("\n");
     }
     return b.toString();
+  }
+
+  /**
+   * @return Returns a {@link Set} of all known request types.
+   */
+  public Set<Class> getKnownRequestTypes() {
+    return components.stream()
+        .filter(ComponentConfiguration::isPublicComponent)
+        .map(ComponentConfiguration::getRequestType)
+        .collect(Collectors.toSet());
   }
 
 }

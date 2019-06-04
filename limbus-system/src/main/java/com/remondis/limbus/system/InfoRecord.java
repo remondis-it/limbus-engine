@@ -76,6 +76,15 @@ public class InfoRecord {
         StringUtil.center(requiredCol, maxRequiredCol), requestCol, componentCol);
   }
 
+  /**
+   * @return Returns <code>true</code> if this {@link InfoRecord} represents a public component, <code>false</code>
+   *         otherwise.
+   */
+  public boolean isPublicComponent() {
+    return component.getConfiguration()
+        .isPublicComponent();
+  }
+
   /*
    * (non-Javadoc)
    *
@@ -83,9 +92,9 @@ public class InfoRecord {
    */
   @Override
   public String toString() {
-    ComponentConfiguration c = component.getConfiguration();
     String requestType = null;
-    if (c.isPublicComponent()) {
+    ComponentConfiguration c = component.getConfiguration();
+    if (isPublicComponent()) {
       requestType = c.getRequestType()
           .getName();
     } else {
