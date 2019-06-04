@@ -20,11 +20,20 @@ import com.remondis.limbus.IInitializable;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface PublicComponent {
-
+  /**
+   * @return If <code>true</code> initializing the {@link LimbusSystem} fails if this coponent fails to initialize.
+   *         Default is <code>true</code>.
+   */
   boolean failOnError() default true;
 
+  /**
+   * @return The interface that defines a public component.
+   */
   Class<? extends IInitializable<?>> requestType();
 
+  /**
+   * @return The type of the public component implementation.
+   */
   Class<? extends IInitializable<?>> type();
 
 }

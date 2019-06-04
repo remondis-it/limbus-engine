@@ -21,8 +21,15 @@ import com.remondis.limbus.IInitializable;
 @Target(ElementType.TYPE)
 public @interface PrivateComponent {
 
+  /**
+   * @return If <code>true</code> initializing the {@link LimbusSystem} fails if this coponent fails to initialize.
+   *         Default is <code>true</code>.
+   */
   boolean failOnError() default true;
 
+  /**
+   * @return The type of the private component implementation.
+   */
   Class<? extends IInitializable<?>> value();
 
 }

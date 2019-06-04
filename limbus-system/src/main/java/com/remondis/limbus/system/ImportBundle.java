@@ -18,6 +18,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface ImportBundle {
 
+  /**
+   * @return The array of bundle classes. Bundel classes use {@link LimbusBundle} to define a bundle.
+   */
   Class<?>[] value();
 
 }

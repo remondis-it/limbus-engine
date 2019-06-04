@@ -30,6 +30,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface LimbusApplication {
 
+  /**
+   * @return The type of object factory to be used, when creating objects for {@link LimbusSystem}.
+   */
   Class<? extends ObjectFactory> objectFactory() default ReflectiveObjectFactory.class;
 
 }
