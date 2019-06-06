@@ -10,6 +10,7 @@ import com.remondis.limbus.system.bundle.Bundle;
 
 @LimbusApplication
 @PublicComponent(requestType = LocalPublicComponent.class, type = PossibleLocalPublicComponentOverrideImpl.class)
+@PublicComponent(requestType = AnotherPublicComponent.class, type = AnotherPublicComponentImpl.class)
 @PrivateComponent(ExternalPrivateComponent.class)
 @ImportBundle(Bundle.class)
 public class TestApplicationWithOverridesAndBundle {

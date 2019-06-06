@@ -34,6 +34,10 @@ public class LimbusApplicationTest {
     LocalPublicComponent localPublicComponent = system.getComponent(LocalPublicComponent.class);
     assertTrue(localPublicComponent instanceof PossibleLocalPublicComponentOverrideImpl);
 
+    assertTrue(system.hasComponent(AnotherPublicComponent.class));
+    AnotherPublicComponent anotherPublicComponent = system.getComponent(AnotherPublicComponent.class);
+    assertTrue(anotherPublicComponent instanceof AnotherPublicComponentImpl);
+
     assertTrue(system.hasComponent(SubPublicComponent.class));
     SubPublicComponent subPublicComponent = system.getComponent(SubPublicComponent.class);
     assertTrue(subPublicComponent instanceof SubPublicComponentImpl);

@@ -178,4 +178,14 @@ final class SystemConfiguration implements Serializable {
         .collect(Collectors.toSet());
   }
 
+  public boolean hasPrivateComponent(Class<? extends IInitializable<?>> componentType) {
+    Lang.denyNull("componentType", componentType);
+    return containsComponentConfiguration(new ComponentConfiguration(null, componentType));
+  }
+
+  public void removePrivateComponent(Class<? extends IInitializable<?>> componentType) {
+    Lang.denyNull("componentType", componentType);
+    removeComponentConfiguration(new ComponentConfiguration(null, componentType));
+  }
+
 }

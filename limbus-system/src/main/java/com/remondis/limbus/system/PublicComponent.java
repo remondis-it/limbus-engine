@@ -1,10 +1,9 @@
 package com.remondis.limbus.system;
 
 import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
+import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 
 import com.remondis.limbus.IInitializable;
 
@@ -18,7 +17,7 @@ import com.remondis.limbus.IInitializable;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
+@Repeatable(PublicComponent.List.class)
 public @interface PublicComponent {
   /**
    * @return If <code>true</code> initializing the {@link LimbusSystem} fails if this coponent fails to initialize.
@@ -35,5 +34,19 @@ public @interface PublicComponent {
    * @return The type of the public component implementation.
    */
   Class<? extends IInitializable<?>> type();
+
+  /**
+   * Container annotation to enumerate {@link PublicComponent} declarations.
+   * 
+   * @author schuettec
+   *
+   */
+  @Documented
+  @Retention(RetentionPolicy.RUNTIME)
+  public @interface List {
+
+    PublicComponent[] value();
+
+  }
 
 }

@@ -40,7 +40,14 @@ class ApplicationBuilder {
     addComponentConfigurationFromPackage(applicationClass, configuration);
 
     getComponentConfigurationFromAnnotations(applicationClass).stream()
-        .forEach(configuration::addComponentConfiguration);
+        .forEach(compConf -> {
+          if (compConf.isPublicComponent()) {
+            if (configuration.hasPrivateComponent(compConf.getComponentType())) {
+              configuration.removePrivateComponent(compConf.getComponentType());
+            }
+            configuration.addComponentConfiguration(compConf);
+          }
+        });
 
     return new LimbusSystem(configuration);
   }

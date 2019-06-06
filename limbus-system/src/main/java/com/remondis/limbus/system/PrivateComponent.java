@@ -2,6 +2,7 @@ package com.remondis.limbus.system;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
+import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
@@ -19,6 +20,7 @@ import com.remondis.limbus.IInitializable;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
+@Repeatable(PrivateComponent.List.class)
 public @interface PrivateComponent {
 
   /**
@@ -31,5 +33,20 @@ public @interface PrivateComponent {
    * @return The type of the private component implementation.
    */
   Class<? extends IInitializable<?>> value();
+
+  /**
+   * Container annotation to enumerate {@link PublicComponent} declarations.
+   * 
+   * @author schuettec
+   *
+   */
+  @Documented
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target(ElementType.TYPE)
+  public @interface List {
+
+    PrivateComponent[] value();
+
+  }
 
 }

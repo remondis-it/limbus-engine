@@ -439,37 +439,39 @@ public class ReflectionUtil {
   public static List<String> getClassNamesFromPackage(String packageName) throws Exception {
     ClassLoader classLoader = Thread.currentThread()
         .getContextClassLoader();
-    URL packageURL;
+    Enumeration<URL> packageURLs;
     List<String> names = new LinkedList<String>();
 
     packageName = packageName.replace(".", "/");
-    packageURL = classLoader.getResource(packageName);
-
-    if (packageURL.getProtocol()
-        .equals("jar")) {
-      Enumeration<JarEntry> jarEntries;
-      // build jar file name, then loop through zipped entries
-      String jarFileName = URLDecoder.decode(packageURL.getFile(), "UTF-8");
-      jarFileName = jarFileName.substring(5, jarFileName.indexOf("!"));
-      try (JarFile jf = new JarFile(jarFileName)) {
-        jarEntries = jf.entries();
-        while (jarEntries.hasMoreElements()) {
-          String entryName = jarEntries.nextElement()
-              .getName();
-          if (entryName.startsWith(packageName) && entryName.length() > packageName.length() + 5) {
-            entryName = entryName.substring(0, entryName.lastIndexOf('.'));
-            String clsName = entryName.replaceAll("/", ".");
-            names.add(clsName);
+    packageURLs = classLoader.getResources(packageName);
+    while (packageURLs.hasMoreElements()) {
+      URL packageURL = packageURLs.nextElement();
+      if (packageURL.getProtocol()
+          .equals("jar")) {
+        Enumeration<JarEntry> jarEntries;
+        // build jar file name, then loop through zipped entries
+        String jarFileName = URLDecoder.decode(packageURL.getFile(), "UTF-8");
+        jarFileName = jarFileName.substring(5, jarFileName.indexOf("!"));
+        try (JarFile jf = new JarFile(jarFileName)) {
+          jarEntries = jf.entries();
+          while (jarEntries.hasMoreElements()) {
+            String entryName = jarEntries.nextElement()
+                .getName();
+            if (entryName.startsWith(packageName) && entryName.length() > packageName.length() + 5) {
+              entryName = entryName.substring(0, entryName.lastIndexOf('.'));
+              String clsName = entryName.replaceAll("/", ".");
+              names.add(clsName);
+            }
           }
         }
-      }
 
-      // loop through files in classpath
-    } else {
-      URI uri = new URI(packageURL.toString());
-      File folder = new File(uri.getPath());
-      File[] contenuti = folder.listFiles();
-      findClassesRecursively(packageName, names, contenuti);
+        // loop through files in classpath
+      } else {
+        URI uri = new URI(packageURL.toString());
+        File folder = new File(uri.getPath());
+        File[] contenuti = folder.listFiles();
+        findClassesRecursively(packageName, names, contenuti);
+      }
     }
     return names;
   }
@@ -481,10 +483,12 @@ public class ReflectionUtil {
         findClassesRecursively(packageName + "/" + current.getName(), names, current.listFiles());
       } else {
         entryName = current.getName();
-        int lastIndexOf = entryName.lastIndexOf('.');
-        entryName = entryName.substring(0, lastIndexOf);
-        String clsName = (packageName + "/" + entryName).replaceAll("/", ".");
-        names.add(clsName);
+        if (entryName.endsWith(".class")) {
+          int lastIndexOf = entryName.lastIndexOf('.');
+          entryName = entryName.substring(0, lastIndexOf);
+          String clsName = (packageName + "/" + entryName).replaceAll("/", ".");
+          names.add(clsName);
+        }
       }
     }
   }
