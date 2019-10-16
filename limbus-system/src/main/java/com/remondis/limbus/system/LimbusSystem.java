@@ -681,10 +681,11 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
    * {@link LimbusApplication} annotation.
    * 
    * @param applicationClass
-   * @return
+   * @return Returns a new {@link LimbusSystem} ready to be initialized.
    */
   public static LimbusSystem fromApplication(Class<?> applicationClass) throws LimbusSystemException {
-    return ApplicationBuilder.fromApplication(applicationClass);
+    SystemConfiguration configuration = ApplicationBuilder.buildConfigurationFromApplicationClass(applicationClass);
+    return new LimbusSystem(configuration);
   }
 
   protected ObjectFactory getObjectFactory() {

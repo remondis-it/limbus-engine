@@ -1,5 +1,7 @@
 package com.remondis.limbus.launcher;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +21,11 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
 import com.remondis.limbus.DefaultComponents;
+import com.remondis.limbus.IInitializable;
 import com.remondis.limbus.launcher.staging.Handler;
+import com.remondis.limbus.system.ApplicationBuilder;
+import com.remondis.limbus.system.LimbusSystemException;
+import com.remondis.limbus.system.SystemConfiguration;
 import com.remondis.limbus.utils.SerializeException;
 
 /**
@@ -39,6 +45,26 @@ import com.remondis.limbus.utils.SerializeException;
 public final class LimbusStaging {
 
   private LimbusStage stage;
+
+  class ConfigurationHolder<T extends IInitializable<?>, I extends T> {
+    private Class<T> requestType;
+    private Class<I> componentType;
+
+    ConfigurationHolder(Class<? extends IInitializable<?>> requestType, Class<?> componentType) {
+      super();
+      this.requestType = (Class<T>) requestType;
+      this.componentType = (Class<I>) componentType;
+    }
+
+    Class<T> getRequestType() {
+      return requestType;
+    }
+
+    Class<I> getComponentType() {
+      return componentType;
+    }
+
+  }
 
   private LimbusStaging(String deployName) {
     this.stage = new LimbusStage();
@@ -254,6 +280,37 @@ public final class LimbusStaging {
    */
   public LimbusSystemStaging withComponents() {
     return new LimbusSystemStaging(stage);
+  }
+
+  /**
+   * Creates a {@link LimbusSystemStaging} based on the configuration represented by the specified application class.
+   * <b>Note:</b> Be sure to override the component configurations with respective mocks.
+   * 
+   * @param applicationClass The application class defining the component configuration.
+   * @return Returns a new {@link LimbusStaging} for further component configuration.
+   * @throws LimbusSystemException Thrown if the application class cannot be analyzed.
+   */
+  public LimbusSystemStaging withComponentsFromApplication(Class<MockApplication> applicationClass)
+      throws LimbusSystemException {
+    requireNonNull(applicationClass, "Application class must not be null!");
+    SystemConfiguration systemConfiguration = ApplicationBuilder
+        .buildConfigurationFromApplicationClass(applicationClass);
+    LimbusSystemStaging staging = new LimbusSystemStaging(stage);
+    systemConfiguration.getComponents()
+        .stream()
+        .forEach(conf -> {
+          Class<? extends IInitializable<?>> componentType = conf.getComponentType();
+          if (conf.isPublicComponent()) {
+            Class<? extends IInitializable<?>> requestType = conf.getRequestType();
+            ConfigurationHolder<IInitializable<?>, IInitializable<?>> configurationHolder = new ConfigurationHolder<>(
+                requestType, componentType);
+            staging.addComponentConfiguration(configurationHolder.getRequestType(),
+                configurationHolder.getComponentType());
+          } else {
+            staging.addComponentConfiguration(componentType, conf.isFailOnError());
+          }
+        });
+    return staging;
   }
 
   /**

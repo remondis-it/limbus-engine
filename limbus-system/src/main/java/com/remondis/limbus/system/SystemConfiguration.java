@@ -24,7 +24,7 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
  *
  */
 @XStreamAlias(value = "SystemConfiguration", impl = SystemConfiguration.class)
-final class SystemConfiguration implements Serializable {
+public final class SystemConfiguration implements Serializable {
 
   /**
    *
@@ -136,7 +136,7 @@ final class SystemConfiguration implements Serializable {
   /**
    * @return the components Returns a new list containig the configured components.
    */
-  List<ComponentConfiguration> getComponents() {
+  public List<ComponentConfiguration> getComponents() {
     return new LinkedList<>(components);
   }
 

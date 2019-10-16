@@ -22,10 +22,17 @@ import com.remondis.limbus.utils.ReflectionUtil;
  * @author schuettec
  *
  */
-class ApplicationBuilder {
+public class ApplicationBuilder {
 
-  static LimbusSystem fromApplication(Class<?> applicationClass) throws LimbusSystemException {
-
+  /**
+   * Builds a {@link SystemConfiguration} to be used to create a {@link LimbusSystem} or a staging environment.
+   * 
+   * @param applicationClass The application class that defines the application configuration.
+   * @return Returns a {@link SystemConfiguration} reflecting the component configurations.
+   * @throws LimbusSystemException Thrown on any error.
+   */
+  public static SystemConfiguration buildConfigurationFromApplicationClass(Class<?> applicationClass)
+      throws LimbusSystemException {
     requireNonNull(applicationClass, "application class must not be null!");
 
     LimbusApplication application = applicationClass.getDeclaredAnnotation(LimbusApplication.class);
@@ -48,8 +55,7 @@ class ApplicationBuilder {
             configuration.addComponentConfiguration(compConf);
           }
         });
-
-    return new LimbusSystem(configuration);
+    return configuration;
   }
 
   private static void addComponentConfigurationFromPackage(Class<?> applicationClass, SystemConfiguration configuration)

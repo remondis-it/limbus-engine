@@ -1,6 +1,6 @@
 package com.remondis.limbus.logging;
 
-import static com.remondis.limbus.utils.Files.getOrFailConfigurationDirectory;
+import static com.remondis.limbus.utils.Files.getConfigurationDirectoryUnchecked;
 import static com.remondis.limbus.utils.Files.isAccessibleFile;
 
 import java.io.File;
@@ -27,7 +27,7 @@ public class JDKLoggingActivator extends Initializable<LoggingActivatorException
   protected void performInitialize() throws LoggingActivatorException {
     try {
       // First try to access the logging.properties in Limbus Engine's conf/ folder.
-      File confDir = getOrFailConfigurationDirectory();
+      File confDir = getConfigurationDirectoryUnchecked();
       File logConfigOverride = new File(confDir, LOGGING_PROPERTIES);
       boolean override = isAccessibleFile(logConfigOverride);
 
