@@ -18,7 +18,7 @@ import com.remondis.limbus.utils.ReflectionUtil;
 
 /**
  * Internal class to build a {@link LimbusSystem} from a {@link LimbusApplication} configuration.
- * 
+ *
  * @author schuettec
  *
  */
@@ -26,7 +26,7 @@ public class ApplicationBuilder {
 
   /**
    * Builds a {@link SystemConfiguration} to be used to create a {@link LimbusSystem} or a staging environment.
-   * 
+   *
    * @param applicationClass The application class that defines the application configuration.
    * @return Returns a {@link SystemConfiguration} reflecting the component configurations.
    * @throws LimbusSystemException Thrown on any error.
@@ -52,8 +52,8 @@ public class ApplicationBuilder {
             if (configuration.hasPrivateComponent(compConf.getComponentType())) {
               configuration.removePrivateComponent(compConf.getComponentType());
             }
-            configuration.addComponentConfiguration(compConf);
           }
+          configuration.addComponentConfiguration(compConf);
         });
     return configuration;
   }
@@ -91,8 +91,8 @@ public class ApplicationBuilder {
             }
           })
           .forEach(cls ->
-      // TODO: We should support failOnError. Maybe with @LimbusComponent(failOnError=...) on components.
-      configuration.addComponentConfiguration(new ComponentConfiguration(cls, true)));
+          // TODO: We should support failOnError. Maybe with @LimbusComponent(failOnError=...) on components.
+          configuration.addComponentConfiguration(new ComponentConfiguration(cls, true)));
 
     } catch (Exception e) {
       throw new LimbusSystemException("Cannot determine classes for package " + packageName, e);

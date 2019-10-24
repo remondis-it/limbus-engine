@@ -24,7 +24,9 @@ import com.remondis.limbus.DefaultComponents;
 import com.remondis.limbus.IInitializable;
 import com.remondis.limbus.launcher.staging.Handler;
 import com.remondis.limbus.system.ApplicationBuilder;
+import com.remondis.limbus.system.LimbusSystem;
 import com.remondis.limbus.system.LimbusSystemException;
+import com.remondis.limbus.system.MockLimbusSystem;
 import com.remondis.limbus.system.SystemConfiguration;
 import com.remondis.limbus.utils.SerializeException;
 
@@ -285,13 +287,12 @@ public final class LimbusStaging {
   /**
    * Creates a {@link LimbusSystemStaging} based on the configuration represented by the specified application class.
    * <b>Note:</b> Be sure to override the component configurations with respective mocks.
-   * 
+   *
    * @param applicationClass The application class defining the component configuration.
    * @return Returns a new {@link LimbusStaging} for further component configuration.
    * @throws LimbusSystemException Thrown if the application class cannot be analyzed.
    */
-  public LimbusSystemStaging withComponentsFromApplication(Class<MockApplication> applicationClass)
-      throws LimbusSystemException {
+  public LimbusSystemStaging withComponentsFromApplication(Class<?> applicationClass) throws LimbusSystemException {
     requireNonNull(applicationClass, "Application class must not be null!");
     SystemConfiguration systemConfiguration = ApplicationBuilder
         .buildConfigurationFromApplicationClass(applicationClass);
