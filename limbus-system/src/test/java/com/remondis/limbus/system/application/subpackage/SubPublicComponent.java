@@ -1,6 +1,6 @@
 package com.remondis.limbus.system.application.subpackage;
 
-import com.remondis.limbus.IInitializable;
+import com.remondis.limbus.api.IInitializable;
 import com.remondis.limbus.system.LimbusComponent;
 
 @LimbusComponent

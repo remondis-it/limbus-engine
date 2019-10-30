@@ -1,6 +1,6 @@
 package com.remondis.limbus.system.external;
 
-import com.remondis.limbus.Initializable;
+import com.remondis.limbus.api.Initializable;
 
 public class A extends Initializable<Exception> {
   public static A instance;

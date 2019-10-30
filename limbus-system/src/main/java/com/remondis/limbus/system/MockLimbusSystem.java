@@ -3,7 +3,7 @@ package com.remondis.limbus.system;
 import java.io.InputStream;
 import java.util.List;
 
-import com.remondis.limbus.IInitializable;
+import com.remondis.limbus.api.IInitializable;
 import com.remondis.limbus.utils.Lang;
 import com.remondis.limbus.utils.SerializeException;
 

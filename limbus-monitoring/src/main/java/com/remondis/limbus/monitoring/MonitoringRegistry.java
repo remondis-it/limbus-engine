@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap.KeySetView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.remondis.limbus.IInitializable;
+import com.remondis.limbus.api.IInitializable;
 import com.remondis.limbus.utils.ObjectCreateException;
 
 /**

@@ -2,6 +2,8 @@ package com.remondis.limbus;
 
 import java.io.IOException;
 
+import com.remondis.limbus.api.LimbusPlugin;
+
 /**
  * This is the {@link LimbusPlugin} type extension defining some new plugin
  * methods.

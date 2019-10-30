@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.remondis.limbus.IInitializable;
-import com.remondis.limbus.Initializable;
+import com.remondis.limbus.api.IInitializable;
+import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.utils.Lang;
 import com.remondis.limbus.utils.SerializeException;
 import com.thoughtworks.xstream.annotations.XStreamAlias;

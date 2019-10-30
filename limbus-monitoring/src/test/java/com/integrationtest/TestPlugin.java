@@ -1,6 +1,6 @@
 package com.integrationtest;
 
-import com.remondis.limbus.LimbusPlugin;
+import com.remondis.limbus.api.LimbusPlugin;
 
 public interface TestPlugin extends LimbusPlugin {
 

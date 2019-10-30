@@ -3,7 +3,7 @@ package com.remondis.limbus.system;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.remondis.limbus.IInitializable;
+import com.remondis.limbus.api.IInitializable;
 import com.remondis.limbus.utils.ObjectCreateException;
 
 /**

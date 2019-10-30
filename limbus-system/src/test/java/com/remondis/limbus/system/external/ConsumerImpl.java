@@ -1,6 +1,6 @@
 package com.remondis.limbus.system.external;
 
-import com.remondis.limbus.Initializable;
+import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.system.LimbusComponent;
 import com.remondis.limbus.utils.Lang;
 

@@ -1,6 +1,6 @@
 package com.remondis.limbus.maintenance;
 
-import com.remondis.limbus.LimbusMaintenanceConsole;
+import com.remondis.limbus.engine.LimbusMaintenanceConsole;
 import com.remondis.limbus.system.LimbusComponent;
 
 /**

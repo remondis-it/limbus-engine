@@ -1,6 +1,7 @@
 package com.remondis.limbus.maintenance;
 
-import com.remondis.limbus.IInitializable;
+import com.remondis.limbus.api.IInitializable;
+import com.remondis.limbus.engine.LimbusMaintenanceConsole;
 
 /**
  * This class defines an abstract item that implements basic methods to be used in {@link LimbusMaintenanceConsole}.

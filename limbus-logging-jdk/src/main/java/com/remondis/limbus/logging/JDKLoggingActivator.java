@@ -8,7 +8,9 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.logging.LogManager;
 
-import com.remondis.limbus.Initializable;
+import com.remondis.limbus.activators.logging.LoggingActivator;
+import com.remondis.limbus.activators.logging.LoggingActivatorException;
+import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.utils.Lang;
 
 /**

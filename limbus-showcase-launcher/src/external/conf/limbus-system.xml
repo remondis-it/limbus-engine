@@ -8,8 +8,8 @@
 	<!-- Important bootstrap components -->
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>com.remondis.limbus.security.LimbusSecurity</requestType>
-		<componentType>com.remondis.limbus.security.LimbusSecurityImpl
+		<requestType>com.remondis.limbus.engine.api.security.LimbusSecurity</requestType>
+		<componentType>com.remondis.limbus.engine.api.security.LimbusSecurityImpl
 		</componentType>
 	</Component>
 	<Component>
@@ -20,15 +20,15 @@
 	</Component>
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>com.remondis.limbus.SharedClasspathProvider</requestType>
-		<componentType>com.remondis.limbus.EmptySharedClasspathProvider
+		<requestType>com.remondis.limbus.engine.api.SharedClasspathProvider</requestType>
+		<componentType>com.remondis.limbus.engine.api.EmptySharedClasspathProvider
 		</componentType>
 	</Component>
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>com.remondis.limbus.logging.LogTarget</requestType>
-		<!-- <componentType>com.remondis.limbus.logging.FileSystemLogTarget</componentType> -->
-		<componentType>com.remondis.limbus.logging.SystemOutLogTarget
+		<requestType>com.remondis.limbus.engine.api.LogTarget</requestType>
+		<!-- <componentType>com.remondis.limbus.engine.logging.FileSystemLogTarget</componentType> -->
+		<componentType>com.remondis.limbus.engine.logging.SystemOutLogTarget
 		</componentType>
 	</Component>
 
@@ -37,15 +37,15 @@
 	<!-- If used, the Limbus Deploy Service must start before the Limbus Engine. -->
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>com.remondis.limbus.DeployService</requestType>
-		<componentType>com.remondis.limbus.DeployServiceImpl</componentType>
+		<requestType>com.remondis.limbus.engine.api.DeployService</requestType>
+		<componentType>com.remondis.limbus.engine.api.DeployServiceImpl</componentType>
 	</Component>
 
 	<!-- Limbus Engine: No-Op for simple Limbus Container features -->
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>com.remondis.limbus.LimbusEngine</requestType>
-		<componentType>com.remondis.limbus.NoOpEngine</componentType>
+		<requestType>com.remondis.limbus.engine.api.LimbusEngine</requestType>
+		<componentType>com.remondis.limbus.engine.NoOpEngine</componentType>
 	</Component>
 
 	<!-- Limbus Core components -->
@@ -59,9 +59,9 @@
 	<!-- Limbus Maintenance Console -->
 	<Component>
 		<failOnError>true</failOnError>
-		<requestType>com.remondis.limbus.LimbusMaintenanceConsole
+		<requestType>com.remondis.limbus.engine.LimbusMaintenanceConsole
 		</requestType>
-		<componentType>com.remondis.limbus.LimbusMaintenanceConsoleImpl
+		<componentType>com.remondis.limbus.engine.LimbusMaintenanceConsoleImpl
 		</componentType>
 	</Component>
 

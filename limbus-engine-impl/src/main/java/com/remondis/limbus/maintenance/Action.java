@@ -1,7 +1,7 @@
 package com.remondis.limbus.maintenance;
 
 import com.googlecode.lanterna.gui2.Container;
-import com.remondis.limbus.LimbusMaintenanceConsole;
+import com.remondis.limbus.engine.LimbusMaintenanceConsole;
 
 /**
  * An item represents a leaf in the navigation tree. Selecting an {@link Action} results in opening a new panel.

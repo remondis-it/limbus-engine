@@ -3,7 +3,7 @@ package com.remondis.limbus.launcher;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.remondis.limbus.IInitializable;
+import com.remondis.limbus.api.IInitializable;
 
 public class ThreadKillTestEngine extends SimpleEngine {
 

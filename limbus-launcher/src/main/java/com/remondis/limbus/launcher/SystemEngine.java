@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import com.remondis.limbus.IInitializable;
+import com.remondis.limbus.api.IInitializable;
 import com.remondis.limbus.system.LimbusSystem;
 import com.remondis.limbus.utils.Lang;
 import com.remondis.limbus.utils.SerializeException;

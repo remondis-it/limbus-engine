@@ -1,6 +1,6 @@
 package com.integrationtest;
 
-import com.remondis.limbus.LimbusEngineImpl;
+import com.remondis.limbus.engine.LimbusEngineImpl;
 
 public class TestEngine extends LimbusEngineImpl {
 

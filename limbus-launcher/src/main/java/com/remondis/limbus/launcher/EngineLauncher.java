@@ -19,9 +19,9 @@ import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.remondis.limbus.logging.LoggingActivator;
-import com.remondis.limbus.logging.LoggingActivatorException;
-import com.remondis.limbus.monitoring.MonitoringActivator;
+import com.remondis.limbus.activators.logging.LoggingActivator;
+import com.remondis.limbus.activators.logging.LoggingActivatorException;
+import com.remondis.limbus.activators.monitoring.MonitoringActivator;
 import com.remondis.limbus.system.LimbusSystem;
 import com.remondis.limbus.utils.ReflectionUtil;
 import com.remondis.limbus.utils.SerializeException;
@@ -102,12 +102,12 @@ public class EngineLauncher {
    * </p>
    * </b>
    */
-  protected static boolean skipSystemExit = false;
+  public static boolean skipSystemExit = false;
 
   /**
    * For test purposes, holds the wasDirty flag of the last shutdown sequence.
    */
-  protected static Boolean lastShutdownWasDirty = new Boolean(false);
+  public static Boolean lastShutdownWasDirty = new Boolean(false);
 
   public static void main(String[] args) {
     Options options = new Options();

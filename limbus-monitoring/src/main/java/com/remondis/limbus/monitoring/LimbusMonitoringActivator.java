@@ -6,6 +6,7 @@ import java.net.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.remondis.limbus.activators.monitoring.MonitoringActivator;
 import com.remondis.limbus.utils.Files;
 import com.remondis.limbus.utils.ReflectionUtil;
 

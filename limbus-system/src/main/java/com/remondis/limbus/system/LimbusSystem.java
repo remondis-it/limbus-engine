@@ -16,8 +16,8 @@ import java.util.function.Supplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.remondis.limbus.IInitializable;
-import com.remondis.limbus.Initializable;
+import com.remondis.limbus.api.IInitializable;
+import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.events.EventMulticaster;
 import com.remondis.limbus.events.EventMulticasterFactory;
 import com.remondis.limbus.utils.Lang;

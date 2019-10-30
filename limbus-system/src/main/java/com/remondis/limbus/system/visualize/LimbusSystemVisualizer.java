@@ -18,8 +18,8 @@ import org.graphstream.ui.view.Viewer.CloseFramePolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.remondis.limbus.IInitializable;
-import com.remondis.limbus.Initializable;
+import com.remondis.limbus.api.IInitializable;
+import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.system.Component;
 import com.remondis.limbus.system.ComponentConfiguration;
 import com.remondis.limbus.system.InfoRecord;

@@ -2,7 +2,7 @@ package com.remondis.limbus.system;
 
 import java.io.Serializable;
 
-import com.remondis.limbus.IInitializable;
+import com.remondis.limbus.api.IInitializable;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**

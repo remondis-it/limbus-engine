@@ -1,6 +1,6 @@
 package com.integrationtest;
 
-import com.remondis.limbus.Initializable;
+import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.monitoring.Monitoring;
 import com.remondis.limbus.monitoring.MonitoringFactory;
 

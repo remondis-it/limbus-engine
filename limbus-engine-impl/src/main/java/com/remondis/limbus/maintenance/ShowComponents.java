@@ -10,7 +10,7 @@ import com.googlecode.lanterna.gui2.LinearLayout;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.table.Table;
 import com.googlecode.lanterna.gui2.table.TableModel;
-import com.remondis.limbus.LimbusMaintenanceConsole;
+import com.remondis.limbus.engine.LimbusMaintenanceConsole;
 import com.remondis.limbus.system.Component;
 import com.remondis.limbus.system.ComponentConfiguration;
 import com.remondis.limbus.system.InfoRecord;

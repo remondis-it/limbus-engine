@@ -15,7 +15,7 @@ import com.googlecode.lanterna.gui2.BorderLayout;
 import com.googlecode.lanterna.gui2.Container;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.TextBox;
-import com.remondis.limbus.LimbusMaintenanceConsole;
+import com.remondis.limbus.engine.LimbusMaintenanceConsole;
 import com.remondis.limbus.utils.Lang;
 
 public class LogFileViewer extends AbstractLimbusItem {

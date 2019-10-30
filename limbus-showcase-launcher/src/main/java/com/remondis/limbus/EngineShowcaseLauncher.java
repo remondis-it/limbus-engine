@@ -7,20 +7,28 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import com.remondis.limbus.api.Classpath;
+import com.remondis.limbus.engine.PluginUndeployedException;
+import com.remondis.limbus.engine.api.DeployService;
+import com.remondis.limbus.engine.api.LimbusEngine;
+import com.remondis.limbus.engine.api.LimbusLifecycleHook;
 import com.remondis.limbus.launcher.EngineLauncher;
 import com.remondis.limbus.launcher.EngineUtil;
 import com.remondis.limbus.launcher.SystemEngine;
 
 /**
- * This is a demonstration of bootstrapping a Limbus Engine. It will show how to access the important components to get
- * control over the running system. The following lines will deploy a classpath with a specified set of permissions. The
- * deployment triggers the download of the plugin via Maven. Once the classpath is deployed, a
- * {@link LimbusLifecycleHook} is used to intercept the plugin initialization. After this, the main thread will
- * periodically check the presence of the plugin instance. This will demonstrate, that the plugin instance can be
- * accesses as long as the classpath is deployed.
- * 
- * You can undeploy the classpath at any time. The main thread will get a {@link PluginUndeployedException} when
- * accessing the plugin after undeployment.
+ * This is a demonstration of bootstrapping a Limbus Engine. It will show how to
+ * access the important components to get control over the running system. The
+ * following lines will deploy a classpath with a specified set of permissions.
+ * The deployment triggers the download of the plugin via Maven. Once the
+ * classpath is deployed, a {@link LimbusLifecycleHook} is used to intercept the
+ * plugin initialization. After this, the main thread will periodically check
+ * the presence of the plugin instance. This will demonstrate, that the plugin
+ * instance can be accesses as long as the classpath is deployed.
+ *
+ * You can undeploy the classpath at any time. The main thread will get a
+ * {@link PluginUndeployedException} when accessing the plugin after
+ * undeployment.
  *
  * @author schuettec
  *
@@ -45,7 +53,8 @@ public class EngineShowcaseLauncher {
       // Get the deploy service for full control over deployed classpaths
       DeployService deployService = system.getComponent(DeployService.class);
 
-      // Create a set of runtime permissions that will be granted to the plugin classpath
+      // Create a set of runtime permissions that will be granted to the plugin
+      // classpath
       Set<Permission> permissions = new HashSet<Permission>();
       permissions.add(new PropertyPermission("*", "read,write"));
       permissions.add(new java.lang.RuntimePermission("getClassLoader"));
@@ -89,7 +98,8 @@ public class EngineShowcaseLauncher {
           System.out.println("Try to undeploy the plugin via maintenance console.");
 
         } catch (PluginUndeployedException e) {
-          // This happens if the plugin gets undeployed. This exception is a runtime exception.
+          // This happens if the plugin gets undeployed. This exception is a runtime
+          // exception.
           System.out.println("The plugin was undeployed - stopping periodic plugin access.");
           run = false;
         }

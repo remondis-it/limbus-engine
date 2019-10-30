@@ -1,6 +1,6 @@
 package com.remondis.limbus.monitoring.publisher;
 
-import com.remondis.limbus.Initializable;
+import com.remondis.limbus.api.Initializable;
 
 public class InitializablePublisherImpl extends Initializable<Exception> implements InitializablePublisher {
   public int init = 0;

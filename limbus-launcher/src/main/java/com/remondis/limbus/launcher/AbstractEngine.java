@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.remondis.limbus.Initializable;
+import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.utils.Lang;
 
 /**

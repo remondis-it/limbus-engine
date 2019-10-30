@@ -2,7 +2,7 @@ package com.remondis.limbus.system;
 
 import java.lang.reflect.Proxy;
 
-import com.remondis.limbus.IInitializable;
+import com.remondis.limbus.api.IInitializable;
 
 /**
  * This object factory behaves like {@link ReflectiveObjectFactory} but creates intercepting proxy objects for public

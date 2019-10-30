@@ -16,8 +16,8 @@ import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
-import com.remondis.limbus.IInitializable;
-import com.remondis.limbus.exceptions.NotInitializedException;
+import com.remondis.limbus.api.IInitializable;
+import com.remondis.limbus.api.NotInitializedException;
 import com.remondis.limbus.system.InfoRecord;
 import com.remondis.limbus.system.LimbusCyclicException;
 import com.remondis.limbus.system.LimbusSystem;

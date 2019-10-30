@@ -12,16 +12,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.remondis.limbus.EmptySharedClasspathProvider;
-import com.remondis.limbus.LimbusEngine;
-import com.remondis.limbus.NoOpEngine;
-import com.remondis.limbus.SharedClasspathProvider;
+import com.remondis.limbus.engine.NoOpEngine;
+import com.remondis.limbus.engine.api.EmptySharedClasspathProvider;
+import com.remondis.limbus.engine.api.LimbusEngine;
+import com.remondis.limbus.engine.api.LogTarget;
+import com.remondis.limbus.engine.api.SharedClasspathProvider;
+import com.remondis.limbus.engine.api.security.LimbusSecurity;
+import com.remondis.limbus.engine.logging.FileSystemLogTarget;
+import com.remondis.limbus.engine.security.LimbusSecurityImpl;
 import com.remondis.limbus.files.InMemoryFilesystemImpl;
 import com.remondis.limbus.files.LimbusFileService;
-import com.remondis.limbus.logging.FileSystemLogTarget;
-import com.remondis.limbus.logging.LogTarget;
-import com.remondis.limbus.security.LimbusSecurity;
-import com.remondis.limbus.security.LimbusSecurityImpl;
 import com.remondis.limbus.system.LimbusSystem;
 
 public class EngineLauncherTest extends EngineLauncher {
