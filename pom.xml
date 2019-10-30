@@ -64,7 +64,7 @@
 		<!-- AssertJ Version used for testing -->
 		<limbus.testing.assertj.version>3.14.0</limbus.testing.assertj.version>
         <!-- JUnit -->
-        <limbus.testing.junit.version>4.13-rc-1</limbus.testing.junit.version>
+        <limbus.testing.junit.version>4.12</limbus.testing.junit.version>
 		<!-- Shared Directory -->
 		<sharedDirectory>${project.basedir}</sharedDirectory>
 
