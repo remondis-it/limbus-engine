@@ -58,11 +58,11 @@
 		<!-- XML Serializer Framework -->
 		<xstream.version>1.4.11.1</xstream.version>
 		<!-- SLF4J Version -->
-		<limbus.slf4j.version>1.7.20</limbus.slf4j.version>
+		<limbus.slf4j.version>2.0.0-alpha1</limbus.slf4j.version>
 		<!-- Mockito Version used for testing -->
-		<limbus.testing.mockito.version>2.7.17</limbus.testing.mockito.version>
+		<limbus.testing.mockito.version>3.1.0</limbus.testing.mockito.version>
 		<!-- AssertJ Version used for testing -->
-		<limbus.testing.assertj.version>3.12.2</limbus.testing.assertj.version>
+		<limbus.testing.assertj.version>3.14.0</limbus.testing.assertj.version>
         <!-- JUnit -->
         <limbus.testing.junit.version>4.13-rc-1</limbus.testing.junit.version>
 		<!-- Shared Directory -->
