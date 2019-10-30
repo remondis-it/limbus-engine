@@ -21,6 +21,7 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -31,8 +32,6 @@ import org.slf4j.LoggerFactory;
 import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.utils.Lang;
 
-import sun.misc.CompoundEnumeration;
-
 /**
  * The plugin class loader loads resources and classes with child-first strategy. If a request cannot be served by this
  * class loader it is forwared to the parent classloader. This class loader does not delegate directly to any JVM system
@@ -41,9 +40,6 @@ import sun.misc.CompoundEnumeration;
  * @author schuettec
  *
  */
-@SuppressWarnings("restriction") // Yes we know that we are a classloader that does some internal stuff with the class
-                                 // CompoundEnumeration. But that is used by the java.lang.ClassLoader himself and as
-                                 // long as this dude works with it, this would not be a problem here.
 public class PluginClassLoader extends URLClassLoader {
 
   private static final Logger log = LoggerFactory.getLogger(PluginClassLoader.class);
@@ -595,4 +591,39 @@ public class PluginClassLoader extends URLClassLoader {
     }
   }
 
+}
+
+/*
+ * A utility class that will enumerate over an array of enumerations.
+ */
+final class CompoundEnumeration<E> implements Enumeration<E> {
+  private final Enumeration<E>[] enums;
+  private int index;
+
+  public CompoundEnumeration(Enumeration<E>[] enums) {
+    this.enums = enums;
+  }
+
+  private boolean next() {
+    while (index < enums.length) {
+      if (enums[index] != null && enums[index].hasMoreElements()) {
+        return true;
+      }
+      index++;
+    }
+    return false;
+  }
+
+  @Override
+  public boolean hasMoreElements() {
+    return next();
+  }
+
+  @Override
+  public E nextElement() {
+    if (!next()) {
+      throw new NoSuchElementException();
+    }
+    return enums[index].nextElement();
+  }
 }
