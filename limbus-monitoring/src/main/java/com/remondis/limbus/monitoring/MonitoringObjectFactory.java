@@ -1,8 +1,11 @@
-package com.remondis.limbus.system;
+package com.remondis.limbus.monitoring;
 
 import java.lang.reflect.Proxy;
 
 import com.remondis.limbus.api.IInitializable;
+import com.remondis.limbus.system.LimbusSystem;
+import com.remondis.limbus.system.LimbusSystemListener;
+import com.remondis.limbus.system.ReflectiveObjectFactory;
 
 /**
  * This object factory behaves like {@link ReflectiveObjectFactory} but creates intercepting proxy objects for public

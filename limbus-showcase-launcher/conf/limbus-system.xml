@@ -1,8 +1,8 @@
 <SystemConfiguration>
 
-	<!-- The object factory that creates monitoring information on usage of 
+	<!-- The object factory that creates monitoring information on usage of
 		public components -->
-	<!-- <objectFactory class="com.remondis.limbus.system.MonitoringObjectFactory" 
+	<!-- <objectFactory class="com.remondis.limbus.monitoring.MonitoringObjectFactory"
 		/> -->
 
 	<!-- Important bootstrap components -->
