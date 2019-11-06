@@ -5,7 +5,7 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 
-import com.remondis.limbus.engine.LimbusMaintenanceConsoleImpl;
+import com.remondis.limbus.engine.maintenance.LimbusMaintenanceConsoleImpl;
 import com.remondis.limbus.launcher.EngineLauncher;
 
 /**

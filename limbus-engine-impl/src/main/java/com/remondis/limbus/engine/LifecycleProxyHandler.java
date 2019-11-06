@@ -9,6 +9,7 @@ import com.remondis.limbus.api.IInitializable;
 import com.remondis.limbus.api.LimbusPlugin;
 import com.remondis.limbus.engine.api.LimbusContextAction;
 import com.remondis.limbus.engine.api.LimbusLifecycleHook;
+import com.remondis.limbus.engine.api.PluginUndeployedException;
 import com.remondis.limbus.utils.Lang;
 
 /**

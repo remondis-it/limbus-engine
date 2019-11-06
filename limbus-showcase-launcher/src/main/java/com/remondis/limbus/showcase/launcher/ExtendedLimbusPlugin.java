@@ -1,4 +1,4 @@
-package com.remondis.limbus;
+package com.remondis.limbus.showcase.launcher;
 
 import java.io.IOException;
 

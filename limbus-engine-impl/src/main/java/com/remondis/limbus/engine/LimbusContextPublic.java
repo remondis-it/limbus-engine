@@ -4,6 +4,7 @@ import java.lang.ref.WeakReference;
 
 import com.remondis.limbus.engine.api.LimbusContext;
 import com.remondis.limbus.engine.api.LimbusContextAction;
+import com.remondis.limbus.engine.api.PluginUndeployedException;
 
 /**
  * This is the public implementation of {@link LimbusContext}. It can be used to provide access to the Limbus context

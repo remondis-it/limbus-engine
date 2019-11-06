@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 
-import com.remondis.limbus.ExtendedLimbusPlugin;
 import com.remondis.limbus.api.Initializable;
+import com.remondis.limbus.showcase.launcher.ExtendedLimbusPlugin;
 
 public class ExtendedLimbusPluginImpl extends Initializable<Exception> implements ExtendedLimbusPlugin {
 

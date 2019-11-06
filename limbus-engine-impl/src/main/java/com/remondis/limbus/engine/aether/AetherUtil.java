@@ -1,4 +1,3 @@
-
 package com.remondis.limbus.engine.aether;
 
 import static com.remondis.limbus.utils.Files.getOrFailDirectory;

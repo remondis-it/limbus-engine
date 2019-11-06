@@ -1,9 +1,10 @@
-package com.remondis.limbus.launcher;
+package com.remondis.limbus.launchertest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.remondis.limbus.api.LimbusServicePlugin;
+import com.remondis.limbus.launcher.EngineLauncher;
 
 /**
  * This component is for developing and testing purposes only. This component waits for a user input via System.in. On

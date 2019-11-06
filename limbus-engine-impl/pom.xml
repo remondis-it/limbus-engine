@@ -123,7 +123,12 @@
 
 
 		<!-- Lanterna is used to implement the maintenance console -->
-
+		<dependency>
+			<groupId>com.googlecode.lanterna</groupId>
+			<artifactId>lanterna</artifactId>
+			<version>3.0.0-rc1</version>
+		</dependency>
+		
 		<!-- Logging Facade -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
