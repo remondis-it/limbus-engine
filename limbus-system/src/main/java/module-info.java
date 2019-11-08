@@ -8,7 +8,7 @@ module com.remondis.limbus.system {
 
   requires org.slf4j;
   requires xstream;
-  requires gs.core;
-  requires gs.ui;
+  requires static gs.core;
+  requires static gs.ui;
   requires java.desktop;
 }

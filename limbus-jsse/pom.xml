@@ -17,7 +17,7 @@
 		<!-- Limbus Engine Implementation -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>limbus-engine-impl</artifactId>
+			<artifactId>limbus-system</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

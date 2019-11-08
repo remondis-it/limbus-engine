@@ -73,7 +73,7 @@ public class LimbusSecurityImpl extends Initializable<Exception> implements Limb
   private void grantFullApplicationAccess() {
     // Load the engine.policy to grant full access for the application
     try {
-      URL resource = LimbusSecurity.class.getResource("engine.policy");
+      URL resource = LimbusSecurityImpl.class.getResource("engine.policy");
       System.setProperty("java.security.policy", resource.toURI()
           .toURL()
           .toString());

@@ -19,7 +19,51 @@ is the entry point for this library. The features can be used in a fluent builde
 		<shrinkwrap.version>1.2.6</shrinkwrap.version>
 		<!-- Formatter configuration -->
 		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
+
+		<!-- Attention: This library is build with Java 8 level, because there
+			was no way to migrate to Java Module System while havin Shrinkwrap on board. -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+						<manifestEntries>
+							<Automatic-Module-Name>com.remondis.limbus.staging</Automatic-Module-Name>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<additionalparam>${javadoc.opts}</additionalparam>
+							<additionalJOption>-Xdoclint:none</additionalJOption>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 	<dependencies>
 		<!-- Limbus Environment Dependencies -->
 		<dependency>
@@ -54,20 +98,66 @@ is the entry point for this library. The features can be used in a fluent builde
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Shrinkwrap Dependencies -->
 		<dependency>
 			<groupId>org.jboss.shrinkwrap</groupId>
-			<artifactId>shrinkwrap-depchain</artifactId>
+			<artifactId>shrinkwrap-api</artifactId>
 			<version>${shrinkwrap.version}</version>
-			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.shrinkwrap</groupId>
+			<artifactId>shrinkwrap-spi</artifactId>
+			<version>${shrinkwrap.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.shrinkwrap</groupId>
+			<artifactId>shrinkwrap-impl-base</artifactId>
+			<version>${shrinkwrap.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.shrinkwrap.resolver</groupId>
-			<artifactId>shrinkwrap-resolver-depchain</artifactId>
-			<version>3.0.0-alpha-4</version>
-			<type>pom</type>
+			<artifactId>shrinkwrap-resolver-api</artifactId>
+			<version>${shrinkwrap.resolver.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.jboss.shrinkwrap.resolver</groupId>
+			<artifactId>shrinkwrap-resolver-spi</artifactId>
+			<version>${shrinkwrap.resolver.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.shrinkwrap.resolver</groupId>
+			<artifactId>shrinkwrap-resolver-api-maven</artifactId>
+			<version>${shrinkwrap.resolver.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.shrinkwrap.resolver</groupId>
+			<artifactId>shrinkwrap-resolver-spi-maven</artifactId>
+			<version>${shrinkwrap.resolver.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.shrinkwrap.resolver</groupId>
+			<artifactId>shrinkwrap-resolver-api-maven-archive</artifactId>
+			<version>${shrinkwrap.resolver.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.shrinkwrap.resolver</groupId>
+			<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+			<version>${shrinkwrap.resolver.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.shrinkwrap.resolver</groupId>
+			<artifactId>shrinkwrap-resolver-impl-maven-archive</artifactId>
+			<version>${shrinkwrap.resolver.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.shrinkwrap.resolver</groupId>
+			<artifactId>shrinkwrap-resolver-api-maven-embedded</artifactId>
+			<version>${shrinkwrap.resolver.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.shrinkwrap.resolver</groupId>
+			<artifactId>shrinkwrap-resolver-impl-maven-embedded</artifactId>
+			<version>${shrinkwrap.resolver.version}</version>
+		</dependency>
 
 	</dependencies>
 
