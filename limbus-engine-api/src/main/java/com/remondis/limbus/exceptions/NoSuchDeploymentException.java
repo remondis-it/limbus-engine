@@ -1,6 +1,6 @@
 package com.remondis.limbus.exceptions;
 
-public class NoSuchDeploymentException extends Exception {
+public class NoSuchDeploymentException extends RuntimeException {
 
   /**
    *
