@@ -1,8 +1,13 @@
 package com.remondis.limbus.system;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.remondis.limbus.IInitializable;
 import com.remondis.limbus.Initializable;
@@ -19,7 +24,7 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
  *
  */
 @XStreamAlias(value = "SystemConfiguration", impl = SystemConfiguration.class)
-final class SystemConfiguration implements Serializable {
+public final class SystemConfiguration implements Serializable {
 
   /**
    *
@@ -30,6 +35,9 @@ final class SystemConfiguration implements Serializable {
    * Holds the object factory that is to be used.
    */
   protected ObjectFactory objectFactory;
+
+  transient Map<Class<?>, Set<Class>> publicComponents = new Hashtable<>();
+  transient Set<Class<?>> privateComponents = new HashSet<>();
 
   @XStreamImplicit
   public List<ComponentConfiguration> components;
@@ -128,7 +136,7 @@ final class SystemConfiguration implements Serializable {
   /**
    * @return the components Returns a new list containig the configured components.
    */
-  List<ComponentConfiguration> getComponents() {
+  public List<ComponentConfiguration> getComponents() {
     return new LinkedList<>(components);
   }
 
@@ -158,6 +166,26 @@ final class SystemConfiguration implements Serializable {
           .append("\n");
     }
     return b.toString();
+  }
+
+  /**
+   * @return Returns a {@link Set} of all known request types.
+   */
+  public Set<Class> getKnownRequestTypes() {
+    return components.stream()
+        .filter(ComponentConfiguration::isPublicComponent)
+        .map(ComponentConfiguration::getRequestType)
+        .collect(Collectors.toSet());
+  }
+
+  public boolean hasPrivateComponent(Class<? extends IInitializable<?>> componentType) {
+    Lang.denyNull("componentType", componentType);
+    return containsComponentConfiguration(new ComponentConfiguration(null, componentType));
+  }
+
+  public void removePrivateComponent(Class<? extends IInitializable<?>> componentType) {
+    Lang.denyNull("componentType", componentType);
+    removeComponentConfiguration(new ComponentConfiguration(null, componentType));
   }
 
 }

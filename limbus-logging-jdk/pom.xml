@@ -12,10 +12,14 @@
 		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
 	</properties>
 	<dependencies>
-		<!-- Limbus Engine Implementation -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>limbus-engine-impl</artifactId>
+			<artifactId>limbus-engine-interfaces</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-utils</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

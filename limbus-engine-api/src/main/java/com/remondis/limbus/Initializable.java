@@ -115,7 +115,9 @@ public abstract class Initializable<E extends Exception> implements IInitializab
    * @throws E
    *         Thrown to signal that the initialization fails. If thrown this object remains uninitialized.
    */
-  protected abstract void performInitialize() throws E;
+  protected void performInitialize() throws E {
+
+  }
 
   /**
    * Performs the silent deinitialization. Implement this method for your own business.
@@ -124,7 +126,9 @@ public abstract class Initializable<E extends Exception> implements IInitializab
    * <b>Note: This method is thread safe.</b>
    * </p>
    */
-  protected abstract void performFinish();
+  protected void performFinish() {
+
+  }
 
   protected Object readResolve() {
     this.lock = new Semaphore(1);

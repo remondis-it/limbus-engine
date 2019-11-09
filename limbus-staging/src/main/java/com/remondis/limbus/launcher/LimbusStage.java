@@ -1,5 +1,7 @@
 package com.remondis.limbus.launcher;
 
+import static java.util.Objects.nonNull;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -124,17 +126,18 @@ public final class LimbusStage {
   }
 
   private void deploy() throws LimbusException, IOException {
-
-    LimbusEngine limbusEngine = system.getComponent(LimbusEngine.class);
-    List<URL> urls = new LinkedList<>();
-    List<JavaArchive> archives = new LinkedList<>(dependencies);
-    for (JavaArchive a : archives) {
-      addJavaArchiveAsURL(urls, a, null);
+    if (nonNull(deployment)) {
+      LimbusEngine limbusEngine = system.getComponent(LimbusEngine.class);
+      List<URL> urls = new LinkedList<>();
+      List<JavaArchive> archives = new LinkedList<>(dependencies);
+      for (JavaArchive a : archives) {
+        addJavaArchiveAsURL(urls, a, null);
+      }
+      addJavaArchiveAsURL(urls, deployment, null);
+      this.classpath = Classpath.create(deployName)
+          .add(urls);
+      limbusEngine.deployPlugin(classpath, permissions);
     }
-    addJavaArchiveAsURL(urls, deployment, null);
-    this.classpath = Classpath.create(deployName)
-        .add(urls);
-    limbusEngine.deployPlugin(classpath, permissions);
   }
 
   private void addJavaArchiveAsURL(List<URL> urls, JavaArchive a, String archiveName)

@@ -13,7 +13,7 @@ import com.remondis.limbus.utils.Lang;
  * post-finish hook.
  *
  * @param
- *        <P>
+ * <P>
  *        The type of the plugin interface.
  *
  * @author schuettec

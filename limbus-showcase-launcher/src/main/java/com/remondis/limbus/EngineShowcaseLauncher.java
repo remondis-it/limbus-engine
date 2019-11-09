@@ -12,14 +12,15 @@ import com.remondis.limbus.launcher.EngineUtil;
 import com.remondis.limbus.launcher.SystemEngine;
 
 /**
- * This class is used to launch the Limbus Showcase examples by bootstrapping a
- * {@link LimbusEngine}. The shared classpath contains the centralized Log4J
- * dependency. The deploy folder contains the showcase plugin dependency that is
- * deployed at startup.
- *
- * <b>Note: The Log4J library is requested by the showcase plugin for testing
- * and compatibility demonstration purposes. This does not mean that Log4J is
- * needed for the host engine to be present.</b>
+ * This is a demonstration of bootstrapping a Limbus Engine. It will show how to access the important components to get
+ * control over the running system. The following lines will deploy a classpath with a specified set of permissions. The
+ * deployment triggers the download of the plugin via Maven. Once the classpath is deployed, a
+ * {@link LimbusLifecycleHook} is used to intercept the plugin initialization. After this, the main thread will
+ * periodically check the presence of the plugin instance. This will demonstrate, that the plugin instance can be
+ * accesses as long as the classpath is deployed.
+ * 
+ * You can undeploy the classpath at any time. The main thread will get a {@link PluginUndeployedException} when
+ * accessing the plugin after undeployment.
  *
  * @author schuettec
  *
@@ -27,50 +28,38 @@ import com.remondis.limbus.launcher.SystemEngine;
 public class EngineShowcaseLauncher {
 
   public static void main(String[] args) throws Exception {
-    /*
-     * Before bootstrapping the engine there is a possibility to setup the shared
-     * classpath (lib classpath). This is useful if you want to setup the shared
-     * classpath with a set of URLs instead of providing a filesystem classpath.
-     *
-     * To specify a custom shared classpath use the following:
-     */
-
-    // Set the shared classpath provider to actually use it:
-    // Currently commented out because we provide a filesystem shared classpath
-    // which is used as default.
-    // LimbusEngine.sharedClassPathProvider = sharedClasspathProvider;
-
     // The following call bootstraps the Limbus Engine
     EngineLauncher.bootstrapLimbusSystem();
 
     /*
-     * As a developer you may wish to have a little more control over the engines
+     * As a developer you may wish to have a little more control over the engine's
      * lifecycle. For JUnit tests it is possible to get the instance of
      * LimbusContainer which is the currently running engine type. The method
-     * EngineLauncher.getEngine() delivers the current instance. It is deprecated to
-     * signal that this method should not be used by plugins running in the Limbus
-     * Engine.
-     *
-     * As a developer you can rely on this method to be available for test purposes.
+     * EngineLauncher.getEngine() delivers the current instance.
      */
     try {
+      // Get the component managing subsystem
       SystemEngine system = (SystemEngine) EngineLauncher.getEngine();
+      // Get the Limbus Engine instance
       LimbusEngine engine = system.getComponent(LimbusEngine.class);
+      // Get the deploy service for full control over deployed classpaths
       DeployService deployService = system.getComponent(DeployService.class);
 
+      // Create a set of runtime permissions that will be granted to the plugin classpath
       Set<Permission> permissions = new HashSet<Permission>();
       permissions.add(new PropertyPermission("*", "read,write"));
       permissions.add(new java.lang.RuntimePermission("getClassLoader"));
+      // Deploy the plugin provided by this version
       String version = EngineUtil.getEngineVersion();
       // Deploy Limbus Showcase Plugin Maven Artifact
       deployService.deployMavenArtifact("com.remondis.limbus", "limbus-showcase-plugin", null, version, permissions);
-      // Find the plugin's classpath which identifies the plugin.
+      // Find the deployname which identifies the plugin classpath.
       String deployName = deployService.toDeployName("com.remondis.limbus", "limbus-showcase-plugin", null, version);
+      // Get the classpath
       Classpath classpath = engine.getClasspath(deployName);
 
       // Get the first plugin instance with specified lifecycle hook. The lifecycle
-      // hook is executed on first plugin
-      // request.
+      // hook is executed on first plugin access.
       String uuid = UUID.randomUUID()
           .toString();
       ExtendedLimbusPlugin plugin = engine.getPlugin(classpath, "limbus.showcase.plugin.ExtendedLimbusPluginImpl",
@@ -91,12 +80,16 @@ public class EngineShowcaseLauncher {
       while (run) {
         try {
           Thread.sleep(2000);
+          // Demonstrate some calls to the plugin instance
           System.out.printf("Plugin is initialized for %d seconds.\n",
               TimeUnit.MILLISECONDS.toSeconds(plugin.getRuntimeInMilliseconds()));
+
+          // Demonstrate that the lifecycle hook set a reference
           System.out.println("Object reference: " + plugin.getObject());
           System.out.println("Try to undeploy the plugin via maintenance console.");
 
         } catch (PluginUndeployedException e) {
+          // This happens if the plugin gets undeployed. This exception is a runtime exception.
           System.out.println("The plugin was undeployed - stopping periodic plugin access.");
           run = false;
         }

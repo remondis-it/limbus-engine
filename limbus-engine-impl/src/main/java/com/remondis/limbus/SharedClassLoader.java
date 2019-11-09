@@ -2,6 +2,7 @@ package com.remondis.limbus;
 
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.net.URLStreamHandlerFactory;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -16,8 +17,6 @@ import org.slf4j.LoggerFactory;
 import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.utils.Lang;
 
-import sun.misc.CompoundEnumeration;
-
 /**
  * This implementation of an {@link URLClassLoader} provides class loading access to a class path specified by a set of
  * URLs. This class loader follows the default delegation scheme, but provides an entry point used by the child first
@@ -26,7 +25,6 @@ import sun.misc.CompoundEnumeration;
  * @author schuettec
  *
  */
-@SuppressWarnings("restriction")
 public class SharedClassLoader extends PluginClassLoader {
 
   private static final Logger log = LoggerFactory.getLogger(SharedClassLoader.class);

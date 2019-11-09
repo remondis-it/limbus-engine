@@ -8,6 +8,12 @@
 		<version>2.0.2</version>
 	</parent>
 	<artifactId>limbus-staging</artifactId>
+	<name>Limbus Staging</name>
+	<description>This is a library for integration test development. This library enables Limbus Plugin developers to simulate a Limbus Engine Environment, deploy their Plugin classes and assert their behaviour.
+
+The class
+com.remondis.limbus.launcher.LimbusStaging
+is the entry point for this library. The features can be used in a fluent builder style.</description>
 	<properties>
 		<shrinkwrap.resolver.version>3.0.0-alpha-4</shrinkwrap.resolver.version>
 		<shrinkwrap.version>1.2.6</shrinkwrap.version>
@@ -41,6 +47,12 @@
 			<artifactId>limbus-launcher</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-logging-jdk</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
 
 		<!-- Shrinkwrap Dependencies -->
 		<dependency>
@@ -59,10 +71,5 @@
 
 	</dependencies>
 
-	<name>Limbus Staging</name>
-	<description>This is a library for integration test development. This library enables Limbus Plugin developers to simulate a Limbus Engine Environment, deploy their Plugin classes and assert their behaviour.
 
-The class
-com.remondis.limbus.launcher.LimbusStaging
-is the entry point for this library. The features can be used in a fluent builder style.</description>
 </project>

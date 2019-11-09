@@ -1,19 +1,26 @@
 package com.remondis.limbus.utils;
 
+import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
  * This is a util class that provides useful reflective methods. <b>Intended for internal use only!</b>.
@@ -418,6 +425,70 @@ public class ReflectionUtil {
         throw (Error) cause;
       } else {
         throw new Error("Invocation of proxy threw something else than an exception or error.", cause);
+      }
+    }
+  }
+
+  /**
+   * Searches the classpath for the specified package and subpackages and determines all classes that are available.
+   * 
+   * @param packageName The name of the package.
+   * @return Returns the list of classnames available in the specified package and all of its subpackages.
+   * @throws Exception
+   */
+  public static List<String> getClassNamesFromPackage(String packageName) throws Exception {
+    ClassLoader classLoader = Thread.currentThread()
+        .getContextClassLoader();
+    Enumeration<URL> packageURLs;
+    List<String> names = new LinkedList<String>();
+
+    packageName = packageName.replace(".", "/");
+    packageURLs = classLoader.getResources(packageName);
+    while (packageURLs.hasMoreElements()) {
+      URL packageURL = packageURLs.nextElement();
+      if (packageURL.getProtocol()
+          .equals("jar")) {
+        Enumeration<JarEntry> jarEntries;
+        // build jar file name, then loop through zipped entries
+        String jarFileName = URLDecoder.decode(packageURL.getFile(), "UTF-8");
+        jarFileName = jarFileName.substring(5, jarFileName.indexOf("!"));
+        try (JarFile jf = new JarFile(jarFileName)) {
+          jarEntries = jf.entries();
+          while (jarEntries.hasMoreElements()) {
+            String entryName = jarEntries.nextElement()
+                .getName();
+            if (entryName.startsWith(packageName) && entryName.length() > packageName.length() + 5) {
+              entryName = entryName.substring(0, entryName.lastIndexOf('.'));
+              String clsName = entryName.replaceAll("/", ".");
+              names.add(clsName);
+            }
+          }
+        }
+
+        // loop through files in classpath
+      } else {
+        URI uri = new URI(packageURL.toString());
+        File folder = new File(uri.getPath());
+        File[] contenuti = folder.listFiles();
+        findClassesRecursively(packageName, names, contenuti);
+      }
+    }
+    return names;
+  }
+
+  private static void findClassesRecursively(String packageName, List<String> names, File[] contenuti) {
+    String entryName;
+    for (File current : contenuti) {
+      if (current.isDirectory()) {
+        findClassesRecursively(packageName + "/" + current.getName(), names, current.listFiles());
+      } else {
+        entryName = current.getName();
+        if (entryName.endsWith(".class")) {
+          int lastIndexOf = entryName.lastIndexOf('.');
+          entryName = entryName.substring(0, lastIndexOf);
+          String clsName = (packageName + "/" + entryName).replaceAll("/", ".");
+          names.add(clsName);
+        }
       }
     }
   }

@@ -116,7 +116,7 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     Lang.denyNull("configuration", configuration);
     this.objectFactory = configuration.getObjectFactory();
     // schuettec - 21.02.2017 : Add all items from the system configuration through the public add methods, because the
-    // system configuration can be deserialized in an invalid state.
+    // system configuration may be deserialized in an invalid state.
     addAllFromSystemConfiguration(configuration);
   }
 
@@ -451,9 +451,6 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     for (Field f : fields) {
       // schuettec - 20.02.2017 : Inject LimbusSystem dependencies
       if (f.isAnnotationPresent(LimbusContainer.class)) {
-        // schuettec - 24.04.2017 : Currently it is not possible to create a public reference for this LimbusSystem
-        // instance using the object factory's method, because there is not public interface for LimbusSystem.
-        // schuettec - 24.04.2017 : Workaround here is to monitor the public methods of LimbusSystem "manually".
         injectValue(f, instance, this);
       }
 
@@ -676,6 +673,19 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     SystemConfiguration readObject = DEFAULT_XSTREAM.readObject(SystemConfiguration.class, input);
     return new LimbusSystem(readObject);
 
+  }
+
+  /**
+   * Use this method to build a {@link LimbusSystem} from a application class that configures a Limbus application using
+   * the
+   * {@link LimbusApplication} annotation.
+   * 
+   * @param applicationClass
+   * @return Returns a new {@link LimbusSystem} ready to be initialized.
+   */
+  public static LimbusSystem fromApplication(Class<?> applicationClass) throws LimbusSystemException {
+    SystemConfiguration configuration = ApplicationBuilder.buildConfigurationFromApplicationClass(applicationClass);
+    return new LimbusSystem(configuration);
   }
 
   protected ObjectFactory getObjectFactory() {
