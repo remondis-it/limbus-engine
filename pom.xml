@@ -5,6 +5,9 @@
 	<groupId>com.remondis.limbus</groupId>
 	<artifactId>limbus-parent</artifactId>
 	<version>2.0.2</version>
+	<prerequisites>
+		<maven>3.0.5</maven>
+	</prerequisites>
 
 	<name>Limbus Engine</name>
 	<packaging>pom</packaging>
@@ -58,13 +61,13 @@
 		<!-- XML Serializer Framework -->
 		<xstream.version>1.4.11.1</xstream.version>
 		<!-- SLF4J Version -->
-		<limbus.slf4j.version>1.7.20</limbus.slf4j.version>
+		<limbus.slf4j.version>2.0.0-alpha1</limbus.slf4j.version>
 		<!-- Mockito Version used for testing -->
-		<limbus.testing.mockito.version>2.7.17</limbus.testing.mockito.version>
+		<limbus.testing.mockito.version>3.1.0</limbus.testing.mockito.version>
 		<!-- AssertJ Version used for testing -->
-		<limbus.testing.assertj.version>3.12.2</limbus.testing.assertj.version>
-        <!-- JUnit -->
-        <limbus.testing.junit.version>4.13-rc-1</limbus.testing.junit.version>
+		<limbus.testing.assertj.version>3.14.0</limbus.testing.assertj.version>
+		<!-- JUnit -->
+		<limbus.testing.junit.version>4.12</limbus.testing.junit.version>
 		<!-- Shared Directory -->
 		<sharedDirectory>${project.basedir}</sharedDirectory>
 
@@ -101,6 +104,10 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.1</version>
+				</plugin>
+				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
 					<version>3.0.1</version>
@@ -116,7 +123,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.0.0</version>
+					<version>3.1.1</version>
 					<executions>
 						<execution>
 							<id>attach-javadocs</id>
@@ -133,7 +140,6 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.4</version>
 					<configuration>
 						<archive>
 							<manifest>
