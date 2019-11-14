@@ -6,7 +6,7 @@ package com.remondis.limbus.exceptions;
  * @author schuettec
  *
  */
-public class LimbusClasspathException extends Exception {
+public class LimbusClasspathException extends RuntimeException {
 
   /**
    *
