@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Iterator;
@@ -53,7 +54,7 @@ public class LimbusProperties {
   private LimbusFileService filesystem;
 
   private Properties properties = null;
-  private String forClassName;
+  private WeakReference<Class<?>> forClass;
 
   /**
    * Shorthand for {@link #LimbusProperties(Class, true, false)}
@@ -88,15 +89,15 @@ public class LimbusProperties {
   public LimbusProperties(LimbusFileService filesystem, Class<?> forClass, boolean failOnNoDefault,
       boolean failOnNoFile) throws Exception {
     // Try to access conf directory
-    this.forClassName = forClass.getName();
+    this.forClass = new WeakReference<Class<?>>(forClass);
     this.filesystem = filesystem;
 
     // Load default.
-    Properties defaultProperties = getConfigurationDefault(failOnNoDefault, forClassName);
+    Properties defaultProperties = getConfigurationDefault(failOnNoDefault, forClass);
 
     // Load filesystem properties
     Properties fileProperties = new Properties();
-    String filePath = getFilePath(forClassName);
+    String filePath = getFilePath(forClass);
     if (filesystem.hasFile(filePath)) {
       URL file = filesystem.getFile(filePath);
       fileProperties = loadProperties(file, failOnNoFile);
@@ -120,22 +121,23 @@ public class LimbusProperties {
    *         Thrown if the configuration file cannot be written.
    */
   public void storeConfiguration() throws Exception {
-    Properties defaults = getConfigurationDefault(false, forClassName);
+    Class<?> forClass = this.forClass.get();
+    Properties defaults = getConfigurationDefault(false, forClass);
 
     Properties effectiveDifferences = getEffectiveDifferences(defaults, properties);
     if (!effectiveDifferences.isEmpty()) {
       // Only write the effective differences between the default and the effective properties
-      String filePath = getFilePath(forClassName);
+      String filePath = getFilePath(forClass);
       try (OutputStream output = filesystem.createFile(filePath)) {
-        effectiveDifferences.store(output, String.format("Current configuration of %s.", forClassName));
+        effectiveDifferences.store(output, String.format("Current configuration of %s.", forClass));
       } catch (Exception e) {
         throw new Exception(String.format("Cannot write configuration for %s.", filePath), e);
       }
     }
   }
 
-  private String getFilePath(String forClassName) {
-    String propertiesFile = String.format(FILE_PROPERIES_FORMAT, forClassName);
+  private String getFilePath(Class<?> forClass) {
+    String propertiesFile = String.format(FILE_PROPERIES_FORMAT, forClass.getName());
     return filesystem.toPath(LimbusFileService.CONFIG_DIRECTORY, propertiesFile);
   }
 
@@ -200,9 +202,9 @@ public class LimbusProperties {
     properties.put(key, value);
   }
 
-  private Properties getConfigurationDefault(boolean failOnNoDefault, String className) throws Exception {
-    String classpathResource = String.format(DEFAULT_CP_FORMAT, className);
-    URL url = LimbusProperties.class.getResource(classpathResource);
+  private Properties getConfigurationDefault(boolean failOnNoDefault, Class<?> forClass) throws Exception {
+    String classpathResource = String.format(DEFAULT_CP_FORMAT, forClass.getName());
+    URL url = forClass.getResource(classpathResource);
     Properties defaultProperties = loadProperties(url, failOnNoDefault);
     return defaultProperties;
   }

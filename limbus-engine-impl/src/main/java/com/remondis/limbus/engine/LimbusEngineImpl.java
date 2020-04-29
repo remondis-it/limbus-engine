@@ -1,6 +1,7 @@
 package com.remondis.limbus.engine;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.net.URLClassLoader;
 import java.security.Permission;
@@ -10,6 +11,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
@@ -47,6 +49,33 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
 
   private static final Logger log = LoggerFactory.getLogger(LimbusEngine.class);
 
+  private static final String UNKNOWN = "unknown";
+
+  static {
+    Properties p = new Properties();
+    InputStream inputStream = null;
+    try {
+      inputStream = LimbusEngineImpl.class.getResourceAsStream("/version.properties");
+      p.load(inputStream);
+      GROUP_ID = p.getProperty("engine.groupId", "unkown");
+      ARTIFACT_ID = p.getProperty("engine.artifactId", "unkown");
+      VERSION = p.getProperty("engine.version", "unkown");
+    } catch (Exception e) {
+      GROUP_ID = UNKNOWN;
+      ARTIFACT_ID = UNKNOWN;
+      VERSION = UNKNOWN;
+      throw new IllegalStateException(
+          "No version information available. Please place a version.properties file in the classpath's root "
+              + "of this Limbus Engine implementation.");
+    } finally {
+      Lang.closeQuietly(inputStream);
+    }
+  }
+
+  public static String GROUP_ID;
+  public static String ARTIFACT_ID;
+  public static String VERSION;
+
   @LimbusComponent
   private SharedClasspathProvider sharedClassPathProvider;
 
@@ -80,6 +109,21 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
 
   public LimbusEngineImpl() {
     super();
+  }
+
+  @Override
+  public String getEngineVersion() {
+    return VERSION;
+  }
+
+  @Override
+  public String getEngineGroupId() {
+    return GROUP_ID;
+  }
+
+  @Override
+  public String getEngineArtifactId() {
+    return ARTIFACT_ID;
   }
 
   @Override

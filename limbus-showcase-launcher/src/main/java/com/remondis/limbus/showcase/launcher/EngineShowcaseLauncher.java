@@ -13,7 +13,6 @@ import com.remondis.limbus.engine.api.LimbusEngine;
 import com.remondis.limbus.engine.api.LimbusLifecycleHook;
 import com.remondis.limbus.engine.api.PluginUndeployedException;
 import com.remondis.limbus.launcher.EngineLauncher;
-import com.remondis.limbus.launcher.EngineUtil;
 import com.remondis.limbus.launcher.SystemEngine;
 
 /**
@@ -59,7 +58,7 @@ public class EngineShowcaseLauncher {
       permissions.add(new PropertyPermission("*", "read,write"));
       permissions.add(new java.lang.RuntimePermission("getClassLoader"));
       // Deploy the plugin provided by this version
-      String version = EngineUtil.getEngineVersion();
+      String version = engine.getEngineVersion();
       // Deploy Limbus Showcase Plugin Maven Artifact
       deployService.deployMavenArtifact("com.remondis.limbus", "limbus-showcase-plugin", null, version, permissions);
       // Find the deployname which identifies the plugin classpath.

@@ -13,12 +13,13 @@ import com.remondis.limbus.system.ImportBundle;
 import com.remondis.limbus.system.ReflectiveObjectFactory;
 import com.remondis.limbus.system.api.LimbusApplication;
 import com.remondis.limbus.system.api.PublicComponent;
+import com.remondis.limbus.tasks.TaskSchedulerBundle;
 
 @LimbusApplication(objectFactory = ReflectiveObjectFactory.class)
 @PublicComponent(requestType = LimbusEngine.class, type = NoOpEngine.class)
 @ImportBundle({
     FileSystemBundle.class, LimbusSecurityBundle.class, EmptySharedClasspathBundle.class, MaintenanceBundle.class,
-    ActionsBundle.class, DeployServiceBundle.class, DefaultPluginOutputBundle.class
+    ActionsBundle.class, DeployServiceBundle.class, DefaultPluginOutputBundle.class, TaskSchedulerBundle.class
 })
 public class ShowcaseApplication {
 

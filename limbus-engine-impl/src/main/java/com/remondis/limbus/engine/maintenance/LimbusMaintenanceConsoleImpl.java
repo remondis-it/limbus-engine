@@ -32,7 +32,8 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.swing.TerminalEmulatorAutoCloseTrigger;
 import com.remondis.limbus.api.Initializable;
-import com.remondis.limbus.launcher.EngineUtil;
+import com.remondis.limbus.engine.api.LimbusEngine;
+import com.remondis.limbus.system.api.LimbusComponent;
 import com.remondis.limbus.utils.Lang;
 
 public class LimbusMaintenanceConsoleImpl extends Initializable<Exception> implements LimbusMaintenanceConsole {
@@ -82,6 +83,9 @@ public class LimbusMaintenanceConsoleImpl extends Initializable<Exception> imple
   private Thread consoleThread;
 
   private Action currentAction;
+
+  @LimbusComponent
+  private LimbusEngine limbusEngine;
 
   public LimbusMaintenanceConsoleImpl() {
     // Only object creation is done in lanterna here. No GUI Thread needed.
@@ -292,7 +296,7 @@ public class LimbusMaintenanceConsoleImpl extends Initializable<Exception> imple
     welcomeText.addLine("");
     welcomeText.addLine("Use the navigation bar on the left to select the available maintenance pages.");
     welcomeText.addLine("");
-    welcomeText.addLine("The currently running Limbus Engine version is: " + EngineUtil.getEngineVersion());
+    welcomeText.addLine("The currently running Limbus Engine version is: " + limbusEngine.getEngineVersion());
     welcomePanel.addComponent(welcomeText, BorderLayout.Location.CENTER);
     setContentPanel("Welcome", welcomePanel);
     window.setFocusedInteractable(welcomeText);
@@ -388,7 +392,7 @@ public class LimbusMaintenanceConsoleImpl extends Initializable<Exception> imple
 
           mainPanel.addComponent(breadcrumBar, BorderLayout.Location.TOP);
           mainPanel.addComponent(actionPanel.withBorder(Borders.singleLine(CATEGORIES)), BorderLayout.Location.LEFT);
-          Label versionLabel = new Label(String.format(VERSION_FORMAT, EngineUtil.getEngineVersion()));
+          Label versionLabel = new Label(String.format(VERSION_FORMAT, limbusEngine.getEngineVersion()));
           Panel versionPanel = new Panel(new BorderLayout());
           versionPanel.addComponent(versionLabel, BorderLayout.Location.RIGHT);
           mainPanel.addComponent(versionPanel, BorderLayout.Location.BOTTOM);

@@ -231,4 +231,19 @@ public interface LimbusEngine extends IInitializable<Exception> {
    *         Thrown if this classpath is not deployed on this container.
    */
   public LimbusContext getLimbusContext(Classpath classpath) throws NoSuchDeploymentException;
+
+  /**
+   * @return Returns the Maven version of this Limbus Engine.
+   */
+  public String getEngineVersion();
+
+  /**
+   * @return Returns the Maven group id of this Limbus Engine.
+   */
+  public String getEngineGroupId();
+
+  /**
+   * @return Returns the Maven artifact id of this Limbus Engine.
+   */
+  public String getEngineArtifactId();
 }

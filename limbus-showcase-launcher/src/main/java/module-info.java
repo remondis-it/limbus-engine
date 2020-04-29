@@ -9,5 +9,6 @@ module com.remondis.limbus.showcase.launcher {
   requires com.remondis.limbus.engine.interfaces;
   requires com.remondis.limbus.logging.jdk;
   requires com.remondis.limbus.vfs;
+  requires com.remondis.limbus.tasks;
 
 }
