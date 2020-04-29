@@ -130,6 +130,7 @@
 								<goal>jar</goal>
 							</goals>
 							<configuration>
+								<failOnError>false</failOnError>
 								<additionalparam>${javadoc.opts}</additionalparam>
 								<additionalJOption>-Xdoclint:none</additionalJOption>
 							</configuration>
