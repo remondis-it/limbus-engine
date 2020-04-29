@@ -1,6 +1,6 @@
 package com.remondis.limbus.engine.maintenance;
 
-import com.remondis.limbus.system.LimbusComponent;
+import com.remondis.limbus.system.api.LimbusComponent;
 
 /**
  * This class defines an abstract item that implements basic methods to be used in {@link LimbusMaintenanceConsole} and

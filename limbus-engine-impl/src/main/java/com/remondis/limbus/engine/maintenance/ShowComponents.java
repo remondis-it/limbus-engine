@@ -5,9 +5,8 @@ import java.util.List;
 import com.remondis.limbus.system.Component;
 import com.remondis.limbus.system.ComponentConfiguration;
 import com.remondis.limbus.system.InfoRecord;
-import com.remondis.limbus.system.LimbusContainer;
 import com.remondis.limbus.system.LimbusSystem;
-
+import com.remondis.limbus.system.api.LimbusContainer;
 import com.googlecode.lanterna.gui2.Container;
 import com.googlecode.lanterna.gui2.Direction;
 import com.googlecode.lanterna.gui2.EmptySpace;

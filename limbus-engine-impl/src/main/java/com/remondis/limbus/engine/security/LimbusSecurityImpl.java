@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.engine.api.security.LimbusSecurity;
 import com.remondis.limbus.files.LimbusFileService;
-import com.remondis.limbus.system.LimbusComponent;
+import com.remondis.limbus.system.api.LimbusComponent;
 
 /**
  * This class contains methods to enable the plugin sandbox security framework that manages different sets of

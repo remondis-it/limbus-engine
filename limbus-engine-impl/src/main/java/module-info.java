@@ -1,9 +1,11 @@
 module com.remondis.limbus.engine.implementation {
   exports com.remondis.limbus.engine;
+  exports com.remondis.limbus.engine.logging;
 
   requires com.remondis.limbus.launcher;
   requires com.remondis.limbus.api;
   requires com.remondis.limbus.engine.interfaces;
+  requires com.remondis.limbus.system.api;
   requires com.remondis.limbus.system;
   requires com.remondis.limbus.utils;
   requires maven.aether.provider;

@@ -37,7 +37,7 @@ public class EngineShowcaseLauncher {
 
   public static void main(String[] args) throws Exception {
     // The following call bootstraps the Limbus Engine
-    EngineLauncher.bootstrapLimbusSystem();
+    EngineLauncher.bootstrapLimbusSystem(ShowcaseApplication.class);
 
     /*
      * As a developer you may wish to have a little more control over the engine's

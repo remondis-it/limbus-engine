@@ -40,6 +40,13 @@ This module delivers an optional system component that visualizes the object gra
 			<version>${project.version}</version>
 		</dependency>
 
+		<!-- Limbus System API -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-system-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 		<!-- Limbus Event Multicaster -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>

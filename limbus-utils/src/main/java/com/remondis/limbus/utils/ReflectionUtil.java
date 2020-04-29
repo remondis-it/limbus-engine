@@ -127,7 +127,7 @@ public class ReflectionUtil {
    * @throws SecurityException
    *         Thrown if the runtime does not grant the permissions to reflectively create an object.
    */
-  public static <I> I newInstance(Class<I> implementation) throws ObjectCreateException, SecurityException {
+  public static <I> I newInstance(Class<I> implementation) throws Exception {
     return newInstance(implementation, implementation);
   }
 
@@ -144,30 +144,28 @@ public class ReflectionUtil {
    * @throws SecurityException
    *         Thrown if the runtime does not grant the permissions to reflectively create an object.
    */
-  public static <T> T newInstance(Class<T> superType, Class<?> implementation)
-      throws ObjectCreateException, SecurityException {
+  public static <T> T newInstance(Class<T> superType, Class<?> implementation) throws Exception {
     String classname = superType.getName();
     try {
       Constructor<?> constructor = implementation.getConstructor();
       Object newInstance = constructor.newInstance();
       return getAsExpectedType(newInstance, superType);
     } catch (InstantiationException e) {
-      throw new ObjectCreateException(String.format("The class %s was expected to be instantiable.", classname));
+      throw new Exception(String.format("The class %s was expected to be instantiable.", classname));
     } catch (IllegalAccessException e) {
-      throw new ObjectCreateException(
-          String.format("The constructor of class %s was expected to be public.", classname));
+      throw new Exception(String.format("The constructor of class %s was expected to be public.", classname));
     } catch (IllegalArgumentException e) {
-      throw new ObjectCreateException(String
+      throw new Exception(String
           .format("The constructor of class %s was expected to be a zero argument default constructor", classname));
     } catch (NoSuchMethodException e) {
-      throw new ObjectCreateException(String
+      throw new Exception(String
           .format("The constructor of class %s was expected to be a zero argument default constructor", classname));
     } catch (InvocationTargetException e) {
       Throwable toThrow = e;
       if (e.getCause() != null) {
         toThrow = e.getCause();
       }
-      throw new ObjectCreateException("Could not create action object.", toThrow);
+      throw new Exception("Could not create action object.", toThrow);
     }
   }
 

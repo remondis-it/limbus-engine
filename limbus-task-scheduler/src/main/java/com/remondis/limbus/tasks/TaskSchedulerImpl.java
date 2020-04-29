@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.properties.LimbusProperties;
-import com.remondis.limbus.system.LimbusComponent;
+import com.remondis.limbus.system.api.LimbusComponent;
 import com.remondis.limbus.utils.Lang;
 
 public class TaskSchedulerImpl extends Initializable<Exception> implements TaskScheduler, ThreadFactory {

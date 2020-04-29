@@ -29,7 +29,7 @@ import com.remondis.limbus.engine.api.LimbusEngine;
 import com.remondis.limbus.engine.api.NoSuchDeploymentException;
 import com.remondis.limbus.engine.api.UndeployVetoException;
 import com.remondis.limbus.engine.api.security.LimbusSecurity;
-import com.remondis.limbus.system.LimbusComponent;
+import com.remondis.limbus.system.api.LimbusComponent;
 import com.remondis.limbus.utils.Lang;
 
 public class ShowDeployService extends AbstractLimbusItem {

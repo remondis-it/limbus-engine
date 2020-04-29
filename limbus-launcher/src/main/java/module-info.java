@@ -8,4 +8,7 @@ module com.remondis.limbus.launcher {
   requires com.remondis.limbus.engine.interfaces;
   requires com.remondis.limbus.system;
   requires com.remondis.limbus.events;
+
+  uses com.remondis.limbus.activators.logging.LoggingActivator;
+  uses com.remondis.limbus.activators.monitoring.MonitoringActivator;
 }

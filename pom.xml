@@ -96,6 +96,7 @@
 		<module>limbus-depchain-plugin</module>
 		<module>limbus-depchain-host</module>
 		<module>limbus-launcher</module>
+		<module>limbus-system-api</module>
 	</modules>
 
 	<build>

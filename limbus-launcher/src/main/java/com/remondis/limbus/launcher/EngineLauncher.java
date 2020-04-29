@@ -256,10 +256,11 @@ public class EngineLauncher {
    * @throws Exception
    *         Thrown on any bootstrapping error.
    */
-  public static void bootstrapLimbusSystem() throws Exception {
+  public static void bootstrapLimbusSystem(Class<?> limbusApplicationClass) throws Exception {
     Engine engine;
     try {
-      engine = getEngineByClass(SystemEngine.class);
+      LimbusSystem limbusSystem = LimbusSystem.fromApplication(limbusApplicationClass);
+      engine = new SystemEngine(limbusSystem);
     } catch (Exception e) {
       throw new Exception(
           String.format("Cannot get engine implementation using the specified class %s", SystemEngine.class.getName()),

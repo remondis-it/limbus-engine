@@ -3,6 +3,7 @@ package com.remondis.limbus.system;
 import java.util.List;
 
 import com.remondis.limbus.api.IInitializable;
+import com.remondis.limbus.system.api.ObjectFactory;
 
 /**
  * This is a facade for {@link LimbusSystem} that should only be used in test environments to specify concrete instances

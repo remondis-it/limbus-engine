@@ -10,7 +10,7 @@ import com.googlecode.lanterna.gui2.TextBox;
 import com.googlecode.lanterna.gui2.TextBox.Style;
 import com.remondis.limbus.api.Classpath;
 import com.remondis.limbus.engine.api.LimbusEngine;
-import com.remondis.limbus.system.LimbusComponent;
+import com.remondis.limbus.system.api.LimbusComponent;
 
 public class ShowSharedClassPath extends AbstractLimbusItem {
 

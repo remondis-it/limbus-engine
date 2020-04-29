@@ -39,7 +39,7 @@ import com.remondis.limbus.engine.api.LimbusEngine;
 import com.remondis.limbus.engine.api.security.LimbusSecurity;
 import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.properties.LimbusProperties;
-import com.remondis.limbus.system.LimbusComponent;
+import com.remondis.limbus.system.api.LimbusComponent;
 import com.remondis.limbus.utils.Zip;
 
 /**

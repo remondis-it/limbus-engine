@@ -5,9 +5,8 @@ import java.lang.reflect.Method;
 
 import com.remondis.limbus.api.IInitializable;
 import com.remondis.limbus.api.Initializable;
-import com.remondis.limbus.engine.api.LimbusEngine;
-import com.remondis.limbus.system.LimbusContainer;
 import com.remondis.limbus.system.LimbusSystem;
+import com.remondis.limbus.system.api.LimbusContainer;
 import com.remondis.limbus.utils.ReflectionUtil;
 
 /**
@@ -20,7 +19,7 @@ import com.remondis.limbus.utils.ReflectionUtil;
  * @author schuettec
  *
  */
-public class LimbusActionService<T extends LimbusEngine> extends Initializable<Exception> implements ActionService {
+public class LimbusActionService extends Initializable<Exception> implements ActionService {
 
   protected static final ActionResult<Object> DENIED_RESULT = new ActionResult<Object>(ActionStatus.DENIED, null);
 

@@ -11,7 +11,7 @@ import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.api.LimbusClasspathException;
 import com.remondis.limbus.engine.api.SharedClasspathProvider;
 import com.remondis.limbus.files.LimbusFileService;
-import com.remondis.limbus.system.LimbusComponent;
+import com.remondis.limbus.system.api.LimbusComponent;
 
 /**
  * This is a {@link SharedClasspathProvider} constructing a shared classpath from the lib directory. All containing

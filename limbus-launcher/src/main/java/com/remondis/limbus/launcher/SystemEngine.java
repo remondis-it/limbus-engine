@@ -1,5 +1,7 @@
 package com.remondis.limbus.launcher;
 
+import static java.util.Objects.isNull;
+
 import com.remondis.limbus.api.IInitializable;
 import com.remondis.limbus.system.LimbusSystem;
 
@@ -42,6 +44,9 @@ public class SystemEngine extends AbstractEngine {
 
   @Override
   protected void performInitialize() throws Exception {
+    if (isNull(system)) {
+      throw new IllegalStateException("No system instance available.");
+    }
     this.system.initialize();
   }
 

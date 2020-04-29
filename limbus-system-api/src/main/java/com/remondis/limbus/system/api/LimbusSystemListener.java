@@ -1,4 +1,4 @@
-package com.remondis.limbus.system;
+package com.remondis.limbus.system.api;
 
 /**
  * This is a listener interface for subscribers that need a notification when the {@link LimbusSystem} instance was

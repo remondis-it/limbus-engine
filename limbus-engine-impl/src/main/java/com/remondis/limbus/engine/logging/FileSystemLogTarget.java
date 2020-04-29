@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.remondis.limbus.files.FileAccessException;
 import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.launcher.EngineLauncher;
-import com.remondis.limbus.system.LimbusComponent;
+import com.remondis.limbus.system.api.LimbusComponent;
 import com.remondis.limbus.utils.Lang;
 
 public class FileSystemLogTarget extends AbstractLogTarget<OutputStream> {

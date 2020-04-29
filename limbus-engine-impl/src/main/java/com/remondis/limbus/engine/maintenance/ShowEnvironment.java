@@ -19,7 +19,7 @@ import com.googlecode.lanterna.gui2.dialogs.MessageDialogButton;
 import com.remondis.limbus.engine.aether.AetherUtil;
 import com.remondis.limbus.engine.api.DeployService;
 import com.remondis.limbus.launcher.EngineLauncher;
-import com.remondis.limbus.system.LimbusComponent;
+import com.remondis.limbus.system.api.LimbusComponent;
 import com.remondis.limbus.utils.Files;
 
 public class ShowEnvironment extends AbstractLimbusItem {

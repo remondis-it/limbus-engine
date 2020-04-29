@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.remondis.limbus.api.IInitializable;
-import com.remondis.limbus.utils.ObjectCreateException;
+import com.remondis.limbus.system.api.ObjectFactory;
 
 /**
  * This {@link ObjectFactory} can be configured to be used by the {@link LimbusSystem} to inject mock instances of
@@ -33,8 +33,7 @@ public class MockObjectFactory implements ObjectFactory {
   }
 
   @Override
-  public IInitializable<?> createObject(Class<? extends IInitializable<?>> implementationType)
-      throws ObjectCreateException {
+  public IInitializable<?> createObject(Class<? extends IInitializable<?>> implementationType) throws Exception {
     if (hasPrivateObject(implementationType)) {
       return privateComponents.get(implementationType);
     } else {
@@ -48,7 +47,7 @@ public class MockObjectFactory implements ObjectFactory {
 
   @Override
   public IInitializable<?> createObject(Class<? extends IInitializable<?>> requestType,
-      Class<? extends IInitializable<?>> implementationType) throws ObjectCreateException {
+      Class<? extends IInitializable<?>> implementationType) throws Exception {
     if (hasPublicObject(requestType)) {
       return publicComponents.get(requestType);
     } else {

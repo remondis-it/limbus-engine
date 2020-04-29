@@ -5,7 +5,8 @@ import java.io.ByteArrayOutputStream;
 import com.remondis.limbus.api.IInitializable;
 
 /**
- * This interface describes a log target.
+ * This interface describes a log target for plugins std/out. The output of every plugin written to {@link System#out}
+ * and {@link System#err} can be redirected using the {@link LogTarget} interface.
  *
  * @author schuettec
  *

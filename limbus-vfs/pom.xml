@@ -19,6 +19,12 @@
 			<artifactId>limbus-engine-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- Limbus System API -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-system-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<!-- Limbus Utils -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>

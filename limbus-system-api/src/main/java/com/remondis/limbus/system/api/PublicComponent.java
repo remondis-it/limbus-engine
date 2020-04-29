@@ -1,4 +1,4 @@
-package com.remondis.limbus.system;
+package com.remondis.limbus.system.api;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Repeatable;

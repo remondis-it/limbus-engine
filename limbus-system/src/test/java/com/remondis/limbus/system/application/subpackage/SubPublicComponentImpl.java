@@ -1,6 +1,6 @@
 package com.remondis.limbus.system.application.subpackage;
 
-import com.remondis.limbus.system.LimbusComponent;
+import com.remondis.limbus.system.api.LimbusComponent;
 
 @LimbusComponent
 public class SubPublicComponentImpl implements SubPublicComponent {
