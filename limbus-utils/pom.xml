@@ -15,12 +15,6 @@
 		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
 	</properties>
 	<dependencies>
-		<!-- Logging Facade -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-
 		<!-- The concrete logging framework to log through for tests -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

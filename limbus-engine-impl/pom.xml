@@ -129,11 +129,6 @@
 			<version>3.0.0-rc1</version>
 		</dependency>
 		
-		<!-- Logging Facade -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
 
 		<!-- Aether API to access Maven -->
 		<dependency>
