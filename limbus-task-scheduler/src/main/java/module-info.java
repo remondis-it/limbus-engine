@@ -1,4 +1,4 @@
-module com.remondis.limbus.tasks {
+open module com.remondis.limbus.tasks {
   exports com.remondis.limbus.tasks;
 
   requires com.remondis.limbus.system.api;

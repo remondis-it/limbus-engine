@@ -1,4 +1,4 @@
-module com.remondis.limbus.engine.implementation {
+open module com.remondis.limbus.engine.implementation {
   exports com.remondis.limbus.engine;
   exports com.remondis.limbus.engine.logging;
 

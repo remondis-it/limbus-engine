@@ -1,4 +1,4 @@
-module com.remondis.limbus.jsse {
+open module com.remondis.limbus.jsse {
 
   requires com.remondis.limbus.properties;
   requires com.remondis.limbus.system.api;

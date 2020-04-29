@@ -1,4 +1,4 @@
-module com.remondis.limbus.vfs {
+open module com.remondis.limbus.vfs {
   exports com.remondis.limbus.files;
   exports com.remondis.limbus.files.vfs;
   exports com.remondis.limbus.files.bundles;
