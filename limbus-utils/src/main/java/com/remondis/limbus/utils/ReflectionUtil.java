@@ -151,15 +151,15 @@ public class ReflectionUtil {
       Object newInstance = constructor.newInstance();
       return getAsExpectedType(newInstance, superType);
     } catch (InstantiationException e) {
-      throw new Exception(String.format("The class %s was expected to be instantiable.", classname));
+      throw new Exception(String.format("The class %s was expected to be instantiable.", classname), e);
     } catch (IllegalAccessException e) {
-      throw new Exception(String.format("The constructor of class %s was expected to be public.", classname));
+      throw new Exception(String.format("The constructor of class %s was expected to be public.", classname), e);
     } catch (IllegalArgumentException e) {
       throw new Exception(String
-          .format("The constructor of class %s was expected to be a zero argument default constructor", classname));
+          .format("The constructor of class %s was expected to be a zero argument default constructor", classname), e);
     } catch (NoSuchMethodException e) {
       throw new Exception(String
-          .format("The constructor of class %s was expected to be a zero argument default constructor", classname));
+          .format("The constructor of class %s was expected to be a zero argument default constructor", classname), e);
     } catch (InvocationTargetException e) {
       Throwable toThrow = e;
       if (e.getCause() != null) {
