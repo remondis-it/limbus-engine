@@ -7,6 +7,6 @@ open module com.remondis.limbus.vfs {
   requires com.remondis.limbus.utils;
   requires com.remondis.limbus.api;
 
-  requires commons.io;
+  requires org.apache.commons.io;
 
 }

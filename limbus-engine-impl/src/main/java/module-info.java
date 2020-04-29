@@ -22,6 +22,7 @@ open module com.remondis.limbus.engine.implementation {
   requires com.remondis.limbus.vfs;
   requires lanterna;
   requires java.desktop;
+  requires org.apache.commons.io;
   requires com.remondis.limbus.tasks;
   requires com.remondis.limbus.properties;
   requires com.remondis.limbus.events;
