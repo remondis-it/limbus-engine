@@ -9,6 +9,25 @@
 	</parent>
 	<artifactId>limbus-system</artifactId>
 	<name>Limbus System</name>
+	<description>The Limbus System is a small light-weight CDI framework managing the Limbus Core Components.
+
+The object graph is represented by an XML configuration file or can be build using the Limbus System API.
+
+This module delivers an optional system component that visualizes the object graph and its dependencies after initializing: com.remondis.limbus.system.visualize.LimbusSystemVisualizer
+
+ This component can be added to the Limbus System. To keep the dependencies of this module transparent and light-weight, the graph renderer is declared as an optional dependency. Add the following dependencies to your project to use the visualisation component:
+		&lt;!-- Graph Stream for Visualization feature This is an optional dependency and only required if using the com.remondis.limbus.system.visualize.LimbusSystemVisualizer --&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.graphstream&lt;/groupId&gt;
+			&lt;artifactId&gt;gs-core&lt;/artifactId&gt;
+			&lt;version&gt;1.3&lt;/version&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.graphstream&lt;/groupId&gt;
+			&lt;artifactId&gt;gs-ui&lt;/artifactId&gt;
+			&lt;version&gt;1.3&lt;/version&gt;
+		&lt;/dependency&gt;</description>
+
 	<properties>
 		<!-- Formatter configuration -->
 		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
@@ -41,28 +60,6 @@
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
 
-		<!-- Graph Stream for Visualization feature -->
-		<dependency>
-			<groupId>org.graphstream</groupId>
-			<artifactId>gs-core</artifactId>
-			<version>1.3</version>
-			<scope>compile</scope>
-			<!-- Optional dependencies are not included in projects that depend on
-				Limbus System. If they want to use the feature, they have to deliver the
-				dependency themselves. -->
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.graphstream</groupId>
-			<artifactId>gs-ui</artifactId>
-			<version>1.3</version>
-			<scope>compile</scope>
-			<!-- Optional dependencies are not included in projects that depend on
-				Limbus System. If they want to use the feature, they have to deliver the
-				dependency themselves. -->
-			<optional>true</optional>
-		</dependency>
-
 		<!-- The concrete logging framework to log through for tests -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -70,23 +67,4 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<description>The Limbus System is a small light-weight CDI framework managing the Limbus Core Components.
-
-The object graph is represented by an XML configuration file or can be build using the Limbus System API.
-
-This module delivers an optional system component that visualizes the object graph and its dependencies after initializing: com.remondis.limbus.system.visualize.LimbusSystemVisualizer
-
- This component can be added to the Limbus System. To keep the dependencies of this module transparent and light-weight, the graph renderer is declared as an optional dependency. Add the following dependencies to your project to use the visualisation component:
-		&lt;!-- Graph Stream for Visualization feature This is an optional dependency and only required if using the com.remondis.limbus.system.visualize.LimbusSystemVisualizer --&gt;
-		&lt;dependency&gt;
-			&lt;groupId&gt;org.graphstream&lt;/groupId&gt;
-			&lt;artifactId&gt;gs-core&lt;/artifactId&gt;
-			&lt;version&gt;1.3&lt;/version&gt;
-		&lt;/dependency&gt;
-		&lt;dependency&gt;
-			&lt;groupId&gt;org.graphstream&lt;/groupId&gt;
-			&lt;artifactId&gt;gs-ui&lt;/artifactId&gt;
-			&lt;version&gt;1.3&lt;/version&gt;
-		&lt;/dependency&gt;</description>
 </project>

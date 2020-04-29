@@ -1,6 +1,5 @@
 package com.remondis.limbus.launcher;
 
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Iterator;
@@ -24,7 +23,6 @@ import com.remondis.limbus.activators.logging.LoggingActivatorException;
 import com.remondis.limbus.activators.monitoring.MonitoringActivator;
 import com.remondis.limbus.system.LimbusSystem;
 import com.remondis.limbus.utils.ReflectionUtil;
-import com.remondis.limbus.utils.SerializeException;
 
 /**
  * This is the main entry point for launching the runtime engine. For use as linux daemon there is a shutdown hook that
@@ -243,23 +241,6 @@ public class EngineLauncher {
    */
   public static void bootstrapLimbusSystem(LimbusSystem system) throws Exception {
     SystemEngine engine = new SystemEngine(system);
-    bootstrap(engine);
-  }
-
-  /**
-   * Bootstraps a Limbus System engine that utilizes {@link LimbusSystem} and a valid system description to create a
-   * runtime environment of components. The system descriptor is specified via {@link InputStream}.
-   *
-   * @param systemDescriptor
-   *        The input stream representing the XML system descriptor.
-   *
-   * @throws SerializeException
-   *         Thrown if the {@link LimbusSystem} cannot be created from the specified system descriptor.
-   * @throws Exception
-   *         Thrown on any error while bootstrapping.
-   */
-  public static void bootstrapLimbusSystem(InputStream systemDescriptor) throws SerializeException, Exception {
-    SystemEngine engine = new SystemEngine(systemDescriptor);
     bootstrap(engine);
   }
 

@@ -15,12 +15,6 @@
 		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
 	</properties>
 	<dependencies>
-		<!-- XML Serializer Framework -->
-		<dependency>
-			<groupId>com.thoughtworks.xstream</groupId>
-			<artifactId>xstream</artifactId>
-		</dependency>
-
 		<!-- Logging Facade -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

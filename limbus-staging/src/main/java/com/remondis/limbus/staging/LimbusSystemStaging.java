@@ -1,11 +1,8 @@
 package com.remondis.limbus.staging;
 
-import java.io.InputStream;
-
 import com.remondis.limbus.api.IInitializable;
 import com.remondis.limbus.engine.api.DefaultComponentsConsumer;
 import com.remondis.limbus.system.MockLimbusSystem;
-import com.remondis.limbus.utils.SerializeException;
 
 public class LimbusSystemStaging implements DefaultComponentsConsumer {
 
@@ -15,11 +12,6 @@ public class LimbusSystemStaging implements DefaultComponentsConsumer {
   public LimbusSystemStaging(LimbusStage stage) {
     this.stage = stage;
     this.mockSystem = new MockLimbusSystem();
-  }
-
-  public LimbusSystemStaging(LimbusStage stage, InputStream limbusSystemXML) throws SerializeException {
-    this.stage = stage;
-    this.mockSystem = new MockLimbusSystem(limbusSystemXML);
   }
 
   /**

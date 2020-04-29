@@ -139,21 +139,6 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- Limbus Monitoring Facade // We use the object factory delivered by
-			limbus-monitoring to monitor usage of public components -->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>limbus-monitoring</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<!-- Limbus Monitoring Facade // Publisher Implementation -->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>limbus-monitoring-influx</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-
 		<!-- The concrete Logging Framework -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>

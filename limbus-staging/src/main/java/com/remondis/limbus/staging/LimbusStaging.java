@@ -3,9 +3,6 @@ package com.remondis.limbus.staging;
 import static java.util.Objects.requireNonNull;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
 import java.security.CodeSource;
 import java.security.Permission;
@@ -22,14 +19,10 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
 import com.remondis.limbus.api.IInitializable;
 import com.remondis.limbus.engine.api.DefaultComponents;
-import com.remondis.limbus.launcher.SystemEngine;
 import com.remondis.limbus.staging.staging.Handler;
 import com.remondis.limbus.system.ApplicationBuilder;
-import com.remondis.limbus.system.LimbusSystem;
 import com.remondis.limbus.system.LimbusSystemException;
-import com.remondis.limbus.system.MockLimbusSystem;
 import com.remondis.limbus.system.SystemConfiguration;
-import com.remondis.limbus.utils.SerializeException;
 
 /**
  * This is the entry point to build a Limbus Staging environment. Use the {@link #create()} or {@link #create(String)}
@@ -313,43 +306,6 @@ public final class LimbusStaging {
           }
         });
     return staging;
-  }
-
-  /**
-   * Creates a Limbus System from the specified XML configuration. The {@link MockLimbusSystem} will contain all
-   * component configurations defined in the specified Limbus System XML configuration. The methods of this stage can be
-   * used to replace components by mocks.
-   *
-   * @param limbusSystemXMLURI
-   *        The URI to load the Limbus System configuration from.
-   * @return Returns the {@link LimbusSystem} represented by {@link MockLimbusSystem} that allows to add mocked system
-   *         components as well as real system components.
-   * @throws SerializeException
-   *         Thrown if the specified Limbus System configuration cannot be parsed.
-   */
-  public LimbusSystemStaging withComponentsFrom(URI limbusSystemXMLURI) throws SerializeException {
-    try {
-      return new LimbusSystemStaging(stage, limbusSystemXMLURI.toURL()
-          .openStream());
-    } catch (IOException e) {
-      throw new SerializeException("Cannot open URL connection.", e);
-    }
-  }
-
-  /**
-   * Creates a Limbus System from the specified XML configuration. The {@link MockLimbusSystem} will contain all
-   * component configurations defined in the specified Limbus System XML configuration. The methods of this stage can be
-   * used to replace components by mocks.
-   *
-   * @param limbusSystemXML
-   *        The Limbus System configuration to load.
-   * @return Returns the {@link LimbusSystem} represented by {@link MockLimbusSystem} that allows to add mocked system
-   *         components as well as real system components.
-   * @throws SerializeException
-   *         Thrown if the specified Limbus System configuration cannot be parsed.
-   */
-  public LimbusSystemStaging withComponentsFrom(InputStream limbusSystemXML) throws SerializeException {
-    return new LimbusSystemStaging(stage, limbusSystemXML);
   }
 
   /**

@@ -1,11 +1,8 @@
 package com.remondis.limbus.system;
 
-import java.io.InputStream;
 import java.util.List;
 
 import com.remondis.limbus.api.IInitializable;
-import com.remondis.limbus.utils.Lang;
-import com.remondis.limbus.utils.SerializeException;
 
 /**
  * This is a facade for {@link LimbusSystem} that should only be used in test environments to specify concrete instances
@@ -22,12 +19,6 @@ public class MockLimbusSystem implements IInitializable<Exception> {
 
   public MockLimbusSystem() {
     this.system = new LimbusSystem();
-    setupFields();
-  }
-
-  public MockLimbusSystem(InputStream limbusSystemXML) throws SerializeException {
-    Lang.denyNull("limbusSystemXML", limbusSystemXML);
-    this.system = LimbusSystem.deserializeConfiguration(limbusSystemXML);
     setupFields();
   }
 

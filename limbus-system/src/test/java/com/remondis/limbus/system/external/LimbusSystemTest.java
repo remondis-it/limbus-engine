@@ -7,9 +7,6 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.withSettings;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Test;
@@ -119,45 +116,13 @@ public class LimbusSystemTest {
   }
 
   @Test // Duplicate component configurations are allowed.
-  public void test_deserialize_config_with_duplicates() throws LimbusSystemException, SerializeException {
-    InputStream in = LimbusSystemTest.class.getResourceAsStream("/config-with-duplicates.xml");
-    LimbusSystem system = LimbusSystem.deserializeConfiguration(in);
-
-    system.initialize();
-    Aggregator component = system.getComponent(Aggregator.class);
-    String message = component.getMessage();
-    // The Filter will reverse the message
-    String expected = new StringBuilder(ProducerImpl.MESSAGE).reverse()
-        .toString();
-    assertEquals(expected, message);
-
-    assertNotNull(system.getComponent(Aggregator.class));
-    assertNotNull(system.getComponent(Consumer.class));
-    assertNotNull(system.getComponent(Filter.class));
-    assertNotNull(system.getComponent(Producer.class));
-
-    system.finish();
-  }
-
-  @Test // Happy Path
-  public void test_serialization() throws LimbusSystemException, SerializeException {
-    byte[] serialized = null;
-    {
-      LimbusSystem system = new LimbusSystem();
-      system.addComponentConfiguration(Aggregator.class, AggregatorImpl.class);
-      system.addComponentConfiguration(Consumer.class, ConsumerImpl.class);
-      system.addComponentConfiguration(Filter.class, FilterImpl.class);
-      system.addComponentConfiguration(Producer.class, ProducerImpl.class);
-      system.initialize();
-      system.finish();
-
-      ByteArrayOutputStream bout = new ByteArrayOutputStream();
-      system.serializeConfiguration(bout);
-      serialized = bout.toByteArray();
-    }
-
-    ByteArrayInputStream bin = new ByteArrayInputStream(serialized);
-    LimbusSystem system = LimbusSystem.deserializeConfiguration(bin);
+  public void test_config_with_duplicates() throws LimbusSystemException, SerializeException {
+    LimbusSystem system = new LimbusSystem();
+    system.addComponentConfiguration(Aggregator.class, AggregatorImpl.class);
+    system.addComponentConfiguration(Consumer.class, ConsumerImpl.class);
+    system.addComponentConfiguration(Aggregator.class, AnotherAggregatorImpl.class);
+    system.addComponentConfiguration(Filter.class, FilterImpl.class);
+    system.addComponentConfiguration(Producer.class, ProducerImpl.class);
 
     system.initialize();
     Aggregator component = system.getComponent(Aggregator.class);

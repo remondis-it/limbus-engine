@@ -58,8 +58,6 @@
 	</profiles>
 
 	<properties>
-		<!-- XML Serializer Framework -->
-		<xstream.version>1.4.11.1</xstream.version>
 		<!-- SLF4J Version -->
 		<limbus.slf4j.version>2.0.0-alpha1</limbus.slf4j.version>
 		<!-- Mockito Version used for testing -->
@@ -73,8 +71,8 @@
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
+		<maven.compiler.source>13</maven.compiler.source>
+		<maven.compiler.target>13</maven.compiler.target>
 
 		<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
 	</properties>
@@ -97,9 +95,7 @@
 		<module>limbus-staging</module>
 		<module>limbus-depchain-plugin</module>
 		<module>limbus-depchain-host</module>
-		<module>limbus-monitoring</module>
 		<module>limbus-launcher</module>
-		<module>limbus-monitoring-influx</module>
 	</modules>
 
 	<build>
@@ -125,7 +121,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.1.1</version>
+					<version>3.2.0</version>
 					<executions>
 						<execution>
 							<id>attach-javadocs</id>
@@ -218,12 +214,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- XML Serializer Framework -->
-			<dependency>
-				<groupId>com.thoughtworks.xstream</groupId>
-				<artifactId>xstream</artifactId>
-				<version>${xstream.version}</version>
-			</dependency>
 			<!-- Logging Facade -->
 			<dependency>
 				<groupId>org.slf4j</groupId>

@@ -20,16 +20,22 @@
 			<artifactId>limbus-engine-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!-- Limbus Properties -->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>limbus-properties</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 		<!-- Limbus System -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>limbus-system</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- Limbus VFS -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-vfs</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- Limbus Properties -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-properties</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<!-- Limbus Utils -->

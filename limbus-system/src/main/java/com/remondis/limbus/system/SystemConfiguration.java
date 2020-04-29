@@ -10,11 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.remondis.limbus.api.IInitializable;
-import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.utils.Lang;
-import com.remondis.limbus.utils.SerializeException;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 /**
  * This class encapsulates the system configuration that references components to be build and specifies their
@@ -23,7 +19,6 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
  * @author schuettec
  *
  */
-@XStreamAlias(value = "SystemConfiguration", impl = SystemConfiguration.class)
 public final class SystemConfiguration implements Serializable {
 
   /**
@@ -39,15 +34,7 @@ public final class SystemConfiguration implements Serializable {
   transient Map<Class<?>, Set<Class>> publicComponents = new Hashtable<>();
   transient Set<Class<?>> privateComponents = new HashSet<>();
 
-  @XStreamImplicit
   public List<ComponentConfiguration> components;
-
-  public static void main(String[] args) throws SerializeException {
-    SystemConfiguration conf = new SystemConfiguration();
-    conf.setObjectFactory(new ReflectiveObjectFactory());
-    conf.addComponentConfiguration(new ComponentConfiguration(Initializable.class, Initializable.class));
-    LimbusSystem.DEFAULT_XSTREAM.writeObject(conf, System.out);
-  }
 
   /**
    * Creates a new {@link SystemConfiguration} containig all component configurations from the specified configuration.
