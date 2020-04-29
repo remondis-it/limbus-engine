@@ -36,7 +36,7 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.5</version>
+			<version>1.3.2</version>
 		</dependency>
 
 		<!-- The concrete logging framework to log through for tests -->
