@@ -1,6 +1,5 @@
 package com.remondis.limbus.utils;
 
-import java.lang.ref.SoftReference;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;

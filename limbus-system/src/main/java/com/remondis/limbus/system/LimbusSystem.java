@@ -1,7 +1,5 @@
 package com.remondis.limbus.system;
 
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,16 +11,19 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
-import com.remondis.limbus.IInitializable;
-import com.remondis.limbus.Initializable;
-import com.remondis.limbus.events.EventMulticaster;
-import com.remondis.limbus.events.EventMulticasterFactory;
-import com.remondis.limbus.utils.Lang;
-import com.remondis.limbus.utils.ReflectionUtil;
-import com.remondis.limbus.utils.SerializeException;
-import com.remondis.limbus.utils.XStreamUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.remondis.limbus.api.IInitializable;
+import com.remondis.limbus.api.Initializable;
+import com.remondis.limbus.events.EventMulticaster;
+import com.remondis.limbus.events.EventMulticasterFactory;
+import com.remondis.limbus.system.api.LimbusComponent;
+import com.remondis.limbus.system.api.LimbusContainer;
+import com.remondis.limbus.system.api.LimbusSystemListener;
+import com.remondis.limbus.system.api.ObjectFactory;
+import com.remondis.limbus.utils.Lang;
+import com.remondis.limbus.utils.ReflectionUtil;
 
 /**
  * The Limbus System is a manager for lifecycle objects of the type {@link IInitializable}. The Limbus System manages
@@ -94,11 +95,6 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
 
   private EventMulticaster<LimbusSystemListener> listeners;
 
-  public static final XStreamUtil DEFAULT_XSTREAM = new XStreamUtil(SystemConfiguration.class,
-      ComponentConfiguration.class);
-
-  private XStreamUtil xstream = DEFAULT_XSTREAM;
-
   public LimbusSystem() {
     this.listeners = EventMulticasterFactory.create(LimbusSystemListener.class);
 
@@ -115,7 +111,7 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     Lang.denyNull("configuration", configuration);
     this.objectFactory = configuration.getObjectFactory();
     // schuettec - 21.02.2017 : Add all items from the system configuration through the public add methods, because the
-    // system configuration can be deserialized in an invalid state.
+    // system configuration may be deserialized in an invalid state.
     addAllFromSystemConfiguration(configuration);
   }
 
@@ -450,9 +446,6 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     for (Field f : fields) {
       // schuettec - 20.02.2017 : Inject LimbusSystem dependencies
       if (f.isAnnotationPresent(LimbusContainer.class)) {
-        // schuettec - 24.04.2017 : Currently it is not possible to create a public reference for this LimbusSystem
-        // instance using the object factory's method, because there is not public interface for LimbusSystem.
-        // schuettec - 24.04.2017 : Workaround here is to monitor the public methods of LimbusSystem "manually".
         injectValue(f, instance, this);
       }
 
@@ -651,30 +644,16 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
   }
 
   /**
-   * Serializes this {@link LimbusSystem} to XML representation using the specified {@link OutputStream}
-   *
-   * @param output
-   *        The target {@link OutputStream}
-   * @throws SerializeException
-   *         Thrown on any serialization error
+   * Use this method to build a {@link LimbusSystem} from a application class that configures a Limbus application using
+   * the
+   * {@link LimbusApplication} annotation.
+   * 
+   * @param applicationClass
+   * @return Returns a new {@link LimbusSystem} ready to be initialized.
    */
-  public void serializeConfiguration(OutputStream output) throws SerializeException {
-    xstream.writeObject(configuration, output);
-  }
-
-  /**
-   * Creates a {@link LimbusSystem} from a serialized XML representation using the specified {@link InputStream}
-   *
-   * @param input
-   *        The {@link InputStream} to read from
-   * @return Returns the deserialized {@link LimbusSystem}.
-   * @throws SerializeException
-   *         Thrown on any serialization error
-   */
-  public static LimbusSystem deserializeConfiguration(InputStream input) throws SerializeException {
-    SystemConfiguration readObject = DEFAULT_XSTREAM.readObject(SystemConfiguration.class, input);
-    return new LimbusSystem(readObject);
-
+  public static LimbusSystem fromApplication(Class<?> applicationClass) throws LimbusSystemException {
+    SystemConfiguration configuration = ApplicationBuilder.buildConfigurationFromApplicationClass(applicationClass);
+    return new LimbusSystem(configuration);
   }
 
   protected ObjectFactory getObjectFactory() {

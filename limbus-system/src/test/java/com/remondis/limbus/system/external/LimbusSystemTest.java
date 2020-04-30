@@ -1,23 +1,27 @@
 package com.remondis.limbus.system.external;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.withSettings;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Test;
-import com.remondis.limbus.IInitializable;
-import com.remondis.limbus.exceptions.NotInitializedException;
+import org.mockito.InOrder;
+import org.mockito.Mockito;
+
+import com.remondis.limbus.api.IInitializable;
+import com.remondis.limbus.api.NotInitializedException;
 import com.remondis.limbus.system.InfoRecord;
 import com.remondis.limbus.system.LimbusCyclicException;
 import com.remondis.limbus.system.LimbusSystem;
 import com.remondis.limbus.system.LimbusSystemException;
-import com.remondis.limbus.system.LimbusSystemListener;
 import com.remondis.limbus.system.MockLimbusSystem;
 import com.remondis.limbus.system.NoSuchComponentException;
+import com.remondis.limbus.system.api.LimbusSystemListener;
 import com.remondis.limbus.system.external.circular.CircularA;
 import com.remondis.limbus.system.external.circular.CircularAImpl;
 import com.remondis.limbus.system.external.circular.CircularB;
@@ -27,8 +31,6 @@ import com.remondis.limbus.system.external.circular.CircularCImpl;
 import com.remondis.limbus.system.external.circular.CircularD;
 import com.remondis.limbus.system.external.circular.CircularDImpl;
 import com.remondis.limbus.utils.SerializeException;
-import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 public class LimbusSystemTest {
 
@@ -114,45 +116,13 @@ public class LimbusSystemTest {
   }
 
   @Test // Duplicate component configurations are allowed.
-  public void test_deserialize_config_with_duplicates() throws LimbusSystemException, SerializeException {
-    InputStream in = LimbusSystemTest.class.getResourceAsStream("/config-with-duplicates.xml");
-    LimbusSystem system = LimbusSystem.deserializeConfiguration(in);
-
-    system.initialize();
-    Aggregator component = system.getComponent(Aggregator.class);
-    String message = component.getMessage();
-    // The Filter will reverse the message
-    String expected = new StringBuilder(ProducerImpl.MESSAGE).reverse()
-        .toString();
-    assertEquals(expected, message);
-
-    assertNotNull(system.getComponent(Aggregator.class));
-    assertNotNull(system.getComponent(Consumer.class));
-    assertNotNull(system.getComponent(Filter.class));
-    assertNotNull(system.getComponent(Producer.class));
-
-    system.finish();
-  }
-
-  @Test // Happy Path
-  public void test_serialization() throws LimbusSystemException, SerializeException {
-    byte[] serialized = null;
-    {
-      LimbusSystem system = new LimbusSystem();
-      system.addComponentConfiguration(Aggregator.class, AggregatorImpl.class);
-      system.addComponentConfiguration(Consumer.class, ConsumerImpl.class);
-      system.addComponentConfiguration(Filter.class, FilterImpl.class);
-      system.addComponentConfiguration(Producer.class, ProducerImpl.class);
-      system.initialize();
-      system.finish();
-
-      ByteArrayOutputStream bout = new ByteArrayOutputStream();
-      system.serializeConfiguration(bout);
-      serialized = bout.toByteArray();
-    }
-
-    ByteArrayInputStream bin = new ByteArrayInputStream(serialized);
-    LimbusSystem system = LimbusSystem.deserializeConfiguration(bin);
+  public void test_config_with_duplicates() throws LimbusSystemException, SerializeException {
+    LimbusSystem system = new LimbusSystem();
+    system.addComponentConfiguration(Aggregator.class, AggregatorImpl.class);
+    system.addComponentConfiguration(Consumer.class, ConsumerImpl.class);
+    system.addComponentConfiguration(Aggregator.class, AnotherAggregatorImpl.class);
+    system.addComponentConfiguration(Filter.class, FilterImpl.class);
+    system.addComponentConfiguration(Producer.class, ProducerImpl.class);
 
     system.initialize();
     Aggregator component = system.getComponent(Aggregator.class);

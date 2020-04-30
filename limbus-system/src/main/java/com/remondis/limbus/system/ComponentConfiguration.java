@@ -2,9 +2,7 @@ package com.remondis.limbus.system;
 
 import java.io.Serializable;
 
-import com.remondis.limbus.IInitializable;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.remondis.limbus.api.IInitializable;
 
 /**
  * This class defines a component configuration which consists of the type of component to be created and a (super-)type
@@ -16,7 +14,6 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  * @author schuettec
  */
-@XStreamAlias(value = "Component", impl = ComponentConfiguration.class)
 public class ComponentConfiguration implements Serializable {
 
   /**

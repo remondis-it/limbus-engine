@@ -5,7 +5,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.util.List;
 
-import com.remondis.limbus.IInitializable;
+import com.remondis.limbus.api.IInitializable;
 
 /**
  * The {@link LimbusFileService} is a file system abstraction service. It either simulates or performs read, write,

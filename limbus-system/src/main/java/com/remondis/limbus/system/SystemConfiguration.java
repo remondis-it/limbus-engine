@@ -1,16 +1,17 @@
 package com.remondis.limbus.system;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import com.remondis.limbus.IInitializable;
-import com.remondis.limbus.Initializable;
+import com.remondis.limbus.api.IInitializable;
+import com.remondis.limbus.system.api.ObjectFactory;
 import com.remondis.limbus.utils.Lang;
-import com.remondis.limbus.utils.SerializeException;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 /**
  * This class encapsulates the system configuration that references components to be build and specifies their
@@ -19,8 +20,7 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
  * @author schuettec
  *
  */
-@XStreamAlias(value = "SystemConfiguration", impl = SystemConfiguration.class)
-final class SystemConfiguration implements Serializable {
+public final class SystemConfiguration implements Serializable {
 
   /**
    *
@@ -32,15 +32,10 @@ final class SystemConfiguration implements Serializable {
    */
   protected ObjectFactory objectFactory;
 
-  @XStreamImplicit
-  public List<ComponentConfiguration> components;
+  transient Map<Class<?>, Set<Class>> publicComponents = new Hashtable<>();
+  transient Set<Class<?>> privateComponents = new HashSet<>();
 
-  public static void main(String[] args) throws SerializeException {
-    SystemConfiguration conf = new SystemConfiguration();
-    conf.setObjectFactory(new ReflectiveObjectFactory());
-    conf.addComponentConfiguration(new ComponentConfiguration(Initializable.class, Initializable.class));
-    LimbusSystem.DEFAULT_XSTREAM.writeObject(conf, System.out);
-  }
+  public List<ComponentConfiguration> components;
 
   /**
    * Creates a new {@link SystemConfiguration} containig all component configurations from the specified configuration.
@@ -129,7 +124,7 @@ final class SystemConfiguration implements Serializable {
   /**
    * @return the components Returns a new list containig the configured components.
    */
-  List<ComponentConfiguration> getComponents() {
+  public List<ComponentConfiguration> getComponents() {
     return new LinkedList<>(components);
   }
 
@@ -159,6 +154,26 @@ final class SystemConfiguration implements Serializable {
           .append("\n");
     }
     return b.toString();
+  }
+
+  /**
+   * @return Returns a {@link Set} of all known request types.
+   */
+  public Set<Class> getKnownRequestTypes() {
+    return components.stream()
+        .filter(ComponentConfiguration::isPublicComponent)
+        .map(ComponentConfiguration::getRequestType)
+        .collect(Collectors.toSet());
+  }
+
+  public boolean hasPrivateComponent(Class<? extends IInitializable<?>> componentType) {
+    Lang.denyNull("componentType", componentType);
+    return containsComponentConfiguration(new ComponentConfiguration(null, componentType));
+  }
+
+  public void removePrivateComponent(Class<? extends IInitializable<?>> componentType) {
+    Lang.denyNull("componentType", componentType);
+    removeComponentConfiguration(new ComponentConfiguration(null, componentType));
   }
 
 }

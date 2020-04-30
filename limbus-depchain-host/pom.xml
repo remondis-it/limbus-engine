@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.remondis.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
-		<version>2.0.1</version>
+		<version>3.0.0-beta-2</version>
 	</parent>
 	<artifactId>limbus-depchain-host</artifactId>
 	<packaging>pom</packaging>
@@ -55,19 +55,6 @@
 				<version>${project.version}</version>
 			</dependency>
 
-			<!-- Limbus Monitoring Facade // We use the object factory delivered by limbus-monitoring to monitor usage of public components -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>limbus-monitoring</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<!-- Limbus Monitoring Facade // Publisher Implementation -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>limbus-monitoring-influx</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
 			<!-- Limbus Logging Activator for JDK Logging (JUL) -->
 			<dependency>
 				<groupId>com.remondis.limbus</groupId>
@@ -87,16 +74,19 @@
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
 				<version>${limbus.slf4j.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-jdk14</artifactId>
 				<version>${limbus.slf4j.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-log4j12</artifactId>
 				<version>${limbus.slf4j.version}</version>
+				<scope>provided</scope>
 			</dependency>
 
 			<!-- Limbus Testing Environment -->

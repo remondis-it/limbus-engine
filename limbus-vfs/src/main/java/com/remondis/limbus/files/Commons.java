@@ -1,6 +1,6 @@
 package com.remondis.limbus.files;
 
-import static com.remondis.limbus.utils.Lang.*;
+import static com.remondis.limbus.utils.Lang.denyNull;
 
 import java.io.File;
 import java.util.regex.Pattern;

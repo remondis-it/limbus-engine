@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.remondis.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
-		<version>2.0.1</version>
+		<version>3.0.0-beta-2</version>
 	</parent>
 	<artifactId>limbus-utils</artifactId>
 	<name>Limbus Utils</name>
@@ -15,18 +15,6 @@
 		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
 	</properties>
 	<dependencies>
-		<!-- XML Serializer Framework -->
-		<dependency>
-			<groupId>com.thoughtworks.xstream</groupId>
-			<artifactId>xstream</artifactId>
-		</dependency>
-
-		<!-- Logging Facade -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-
 		<!-- The concrete logging framework to log through for tests -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

@@ -17,7 +17,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import com.remondis.limbus.Initializable;
+
+import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.utils.Lang;
 
 /**

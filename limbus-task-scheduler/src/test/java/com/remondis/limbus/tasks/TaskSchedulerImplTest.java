@@ -7,8 +7,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import com.remondis.limbus.files.InMemoryFilesystemImpl;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import com.remondis.limbus.files.InMemoryFilesystemImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TaskSchedulerImplTest implements Task {

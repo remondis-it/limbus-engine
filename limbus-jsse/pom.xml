@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.remondis.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
-		<version>2.0.1</version>
+		<version>3.0.0-beta-2</version>
 	</parent>
 	<artifactId>limbus-jsse</artifactId>
 	<name>Limbus JSSE</name>
@@ -17,7 +17,7 @@
 		<!-- Limbus Engine Implementation -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>limbus-engine-impl</artifactId>
+			<artifactId>limbus-system</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
@@ -26,12 +26,6 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>limbus-properties</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-
-		<!-- Logging Facade -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
 		</dependency>
 
 		<!-- The concrete logging framework to log through for tests -->

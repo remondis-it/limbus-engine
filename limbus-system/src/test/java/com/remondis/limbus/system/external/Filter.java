@@ -1,6 +1,6 @@
 package com.remondis.limbus.system.external;
 
-import com.remondis.limbus.IInitializable;
+import com.remondis.limbus.api.IInitializable;
 
 /**
  * Service definition filter.

@@ -1,6 +1,5 @@
 package com.remondis.limbus.launcher;
 
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Iterator;
@@ -16,14 +15,14 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import com.remondis.limbus.logging.LoggingActivator;
-import com.remondis.limbus.logging.LoggingActivatorException;
-import com.remondis.limbus.monitoring.MonitoringActivator;
-import com.remondis.limbus.system.LimbusSystem;
-import com.remondis.limbus.utils.ReflectionUtil;
-import com.remondis.limbus.utils.SerializeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.remondis.limbus.activators.logging.LoggingActivator;
+import com.remondis.limbus.activators.logging.LoggingActivatorException;
+import com.remondis.limbus.activators.monitoring.MonitoringActivator;
+import com.remondis.limbus.system.LimbusSystem;
+import com.remondis.limbus.utils.ReflectionUtil;
 
 /**
  * This is the main entry point for launching the runtime engine. For use as linux daemon there is a shutdown hook that
@@ -101,12 +100,12 @@ public class EngineLauncher {
    * </p>
    * </b>
    */
-  protected static boolean skipSystemExit = false;
+  public static boolean skipSystemExit = false;
 
   /**
    * For test purposes, holds the wasDirty flag of the last shutdown sequence.
    */
-  protected static Boolean lastShutdownWasDirty = new Boolean(false);
+  public static Boolean lastShutdownWasDirty = new Boolean(false);
 
   public static void main(String[] args) {
     Options options = new Options();
@@ -247,23 +246,6 @@ public class EngineLauncher {
 
   /**
    * Bootstraps a Limbus System engine that utilizes {@link LimbusSystem} and a valid system description to create a
-   * runtime environment of components. The system descriptor is specified via {@link InputStream}.
-   *
-   * @param systemDescriptor
-   *        The input stream representing the XML system descriptor.
-   *
-   * @throws SerializeException
-   *         Thrown if the {@link LimbusSystem} cannot be created from the specified system descriptor.
-   * @throws Exception
-   *         Thrown on any error while bootstrapping.
-   */
-  public static void bootstrapLimbusSystem(InputStream systemDescriptor) throws SerializeException, Exception {
-    SystemEngine engine = new SystemEngine(systemDescriptor);
-    bootstrap(engine);
-  }
-
-  /**
-   * Bootstraps a Limbus System engine that utilizes {@link LimbusSystem} and a valid system description to create a
    * runtime environment of components. The system descriptor can be provided in the following ways:
    * <ul>
    * <li>Place a file <tt>limbus-system.xml</tt> in the Limbus configuration directory.</li>
@@ -274,10 +256,11 @@ public class EngineLauncher {
    * @throws Exception
    *         Thrown on any bootstrapping error.
    */
-  public static void bootstrapLimbusSystem() throws Exception {
+  public static void bootstrapLimbusSystem(Class<?> limbusApplicationClass) throws Exception {
     Engine engine;
     try {
-      engine = getEngineByClass(SystemEngine.class);
+      LimbusSystem limbusSystem = LimbusSystem.fromApplication(limbusApplicationClass);
+      engine = new SystemEngine(limbusSystem);
     } catch (Exception e) {
       throw new Exception(
           String.format("Cannot get engine implementation using the specified class %s", SystemEngine.class.getName()),

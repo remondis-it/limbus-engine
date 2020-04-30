@@ -7,9 +7,10 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import com.remondis.limbus.utils.IllegalTypeException;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import com.remondis.limbus.utils.IllegalTypeException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MulticastHandlerTest {

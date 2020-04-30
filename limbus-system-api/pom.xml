@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.remondis.limbus</groupId>
+		<artifactId>limbus-parent</artifactId>
+		<version>3.0.0-beta-2</version>
+	</parent>
+	<artifactId>limbus-system-api</artifactId>
+	<name>Limbus System API</name>
+	<description>Provides the neccessary interfaces to use Limbus System.</description>
+	<properties>
+		<!-- Formatter configuration -->
+		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
+	</properties>
+	<dependencies>
+		<!-- Limbus Engine API -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-engine-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+</project>

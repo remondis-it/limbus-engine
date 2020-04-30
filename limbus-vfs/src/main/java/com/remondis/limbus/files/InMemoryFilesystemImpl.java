@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import com.remondis.limbus.Initializable;
+import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.files.vfs.Handler;
 import com.remondis.limbus.utils.Lang;
 
