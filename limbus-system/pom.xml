@@ -60,7 +60,12 @@ This module delivers an optional system component that visualizes the object gra
 			<artifactId>limbus-utils</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
+		
+		<!-- Logging Facade -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
 
 		<!-- The concrete logging framework to log through for tests -->
 		<dependency>

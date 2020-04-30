@@ -20,7 +20,7 @@ is the entry point for this library. The features can be used in a fluent builde
 		<!-- Formatter configuration -->
 		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
 
-		<!-- Attention: This library is build with Java 8 level, because there
+		<!-- Attention: This library is build with Java 8 level, because there 
 			was no way to migrate to Java Module System while havin Shrinkwrap on board. -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -97,7 +97,11 @@ is the entry point for this library. The features can be used in a fluent builde
 			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
-
+		<!-- Logging Facade -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.jboss.shrinkwrap</groupId>
 			<artifactId>shrinkwrap-api</artifactId>
