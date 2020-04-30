@@ -1,16 +1,9 @@
 package com.remondis.limbus.launcher;
 
-import static com.remondis.limbus.utils.Files.getConfigurationDirectoryUnchecked;
-import static com.remondis.limbus.utils.Files.getOrFailFile;
+import static java.util.Objects.isNull;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-
-import com.remondis.limbus.IInitializable;
+import com.remondis.limbus.api.IInitializable;
 import com.remondis.limbus.system.LimbusSystem;
-import com.remondis.limbus.utils.Lang;
-import com.remondis.limbus.utils.SerializeException;
 
 /**
  * The {@link SystemEngine} is an implementation of {@link AbstractEngine} and integrates the Limbus System into a
@@ -26,7 +19,7 @@ import com.remondis.limbus.utils.SerializeException;
  *
  */
 public class SystemEngine extends AbstractEngine {
-  private static final String DEFAULT_SYSTEM_FILENAME = "limbus-system.xml";
+
   /**
    * Holds the Limbus System to manage components of this engine.
    */
@@ -41,23 +34,6 @@ public class SystemEngine extends AbstractEngine {
   }
 
   /**
-   * Constructs a System Engine that reads the system descriptor from the specified input stream.
-   *
-   * @param descriptorInput
-   *        The input stream containing the XML system descriptor.
-   * @throws SerializeException
-   *         Thrown if the Limbus System cannot be deserialized.
-   */
-  public SystemEngine(InputStream descriptorInput) throws SerializeException {
-    Lang.denyNull("descriptorInput", descriptorInput);
-    try {
-      this.system = fromInputStream(descriptorInput);
-    } finally {
-      Lang.closeQuietly(descriptorInput);
-    }
-  }
-
-  /**
    * Constructs a System Engine that uses the specified uninitialized {@link LimbusSystem}.
    *
    * @param system
@@ -68,23 +44,10 @@ public class SystemEngine extends AbstractEngine {
 
   @Override
   protected void performInitialize() throws Exception {
-    if (system == null) {
-      this.system = configureLimbusSystem();
+    if (isNull(system)) {
+      throw new IllegalStateException("No system instance available.");
     }
     this.system.initialize();
-  }
-
-  private LimbusSystem configureLimbusSystem() throws Exception {
-    File confDir = getConfigurationDirectoryUnchecked();
-    File systemConfig = getOrFailFile("limbus system description", new File(confDir, DEFAULT_SYSTEM_FILENAME));
-    try (FileInputStream fin = new FileInputStream(systemConfig)) {
-      return fromInputStream(fin);
-    }
-  }
-
-  private LimbusSystem fromInputStream(InputStream fin) throws SerializeException {
-    LimbusSystem limbusSystem = LimbusSystem.deserializeConfiguration(fin);
-    return limbusSystem;
   }
 
   @Override

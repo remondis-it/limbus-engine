@@ -1,9 +1,9 @@
 package com.remondis.limbus.system.external;
 
-import com.remondis.limbus.Initializable;
-import com.remondis.limbus.system.LimbusComponent;
-import com.remondis.limbus.system.LimbusContainer;
+import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.system.LimbusSystem;
+import com.remondis.limbus.system.api.LimbusComponent;
+import com.remondis.limbus.system.api.LimbusContainer;
 
 /**
  * Service definition aggregator

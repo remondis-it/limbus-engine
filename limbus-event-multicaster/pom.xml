@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.remondis.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
-		<version>2.0.2</version>
+		<version>3.0.0-beta-1</version>
 	</parent>
 	<artifactId>limbus-event-multicaster</artifactId>
 	<name>Limbus Event Multicaster</name>
@@ -19,13 +19,11 @@
 			<artifactId>limbus-utils</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
 		<!-- Logging Facade -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
-
 		<!-- The concrete logging framework to log through for tests -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

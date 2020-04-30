@@ -45,7 +45,7 @@ public class GentleRegeneration implements Function<Boolean, Long> {
    *
    * @param initialIntervalSeconds
    *        The initial interval of the periodic task.
-   * @return Returns a {@link GentleRegeneration} scheduling function for polling tasks targetting a database.
+   * @return Returns a {@link GentleRegeneration} scheduling function for polling tasks targeting a database.
    */
   public static GentleRegeneration pollingDefault(long initialIntervalSeconds) {
     return new GentleRegeneration(TimeUnit.SECONDS.toMillis(initialIntervalSeconds), DEFAULT_ACCEPTED_FAILS,

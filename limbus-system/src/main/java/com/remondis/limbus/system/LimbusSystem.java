@@ -1,7 +1,5 @@
 package com.remondis.limbus.system;
 
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Collections;
@@ -16,14 +14,16 @@ import java.util.function.Supplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.remondis.limbus.IInitializable;
-import com.remondis.limbus.Initializable;
+import com.remondis.limbus.api.IInitializable;
+import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.events.EventMulticaster;
 import com.remondis.limbus.events.EventMulticasterFactory;
+import com.remondis.limbus.system.api.LimbusComponent;
+import com.remondis.limbus.system.api.LimbusContainer;
+import com.remondis.limbus.system.api.LimbusSystemListener;
+import com.remondis.limbus.system.api.ObjectFactory;
 import com.remondis.limbus.utils.Lang;
 import com.remondis.limbus.utils.ReflectionUtil;
-import com.remondis.limbus.utils.SerializeException;
-import com.remondis.limbus.utils.XStreamUtil;
 
 /**
  * The Limbus System is a manager for lifecycle objects of the type {@link IInitializable}. The Limbus System manages
@@ -94,11 +94,6 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
   private List<Component> initializeOrder;
 
   private EventMulticaster<LimbusSystemListener> listeners;
-
-  public static final XStreamUtil DEFAULT_XSTREAM = new XStreamUtil(SystemConfiguration.class,
-      ComponentConfiguration.class);
-
-  private XStreamUtil xstream = DEFAULT_XSTREAM;
 
   public LimbusSystem() {
     this.listeners = EventMulticasterFactory.create(LimbusSystemListener.class);
@@ -646,33 +641,6 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     log.warn(
         "Error while finishing a component. This operation was expected to be silent - this is an implementation fault.",
         e);
-  }
-
-  /**
-   * Serializes this {@link LimbusSystem} to XML representation using the specified {@link OutputStream}
-   *
-   * @param output
-   *        The target {@link OutputStream}
-   * @throws SerializeException
-   *         Thrown on any serialization error
-   */
-  public void serializeConfiguration(OutputStream output) throws SerializeException {
-    xstream.writeObject(configuration, output);
-  }
-
-  /**
-   * Creates a {@link LimbusSystem} from a serialized XML representation using the specified {@link InputStream}
-   *
-   * @param input
-   *        The {@link InputStream} to read from
-   * @return Returns the deserialized {@link LimbusSystem}.
-   * @throws SerializeException
-   *         Thrown on any serialization error
-   */
-  public static LimbusSystem deserializeConfiguration(InputStream input) throws SerializeException {
-    SystemConfiguration readObject = DEFAULT_XSTREAM.readObject(SystemConfiguration.class, input);
-    return new LimbusSystem(readObject);
-
   }
 
   /**

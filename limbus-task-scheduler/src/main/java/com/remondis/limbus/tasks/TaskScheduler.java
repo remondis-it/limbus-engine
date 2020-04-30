@@ -3,7 +3,7 @@ package com.remondis.limbus.tasks;
 import java.util.List;
 import java.util.function.Function;
 
-import com.remondis.limbus.IInitializable;
+import com.remondis.limbus.api.IInitializable;
 
 /**
  * This is the global task scheduler that provides fixed rate scheduling for periodic tasks.

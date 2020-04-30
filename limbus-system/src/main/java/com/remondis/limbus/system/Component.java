@@ -1,6 +1,6 @@
 package com.remondis.limbus.system;
 
-import com.remondis.limbus.IInitializable;
+import com.remondis.limbus.api.IInitializable;
 
 /**
  * This class holds information of an instatiated component.

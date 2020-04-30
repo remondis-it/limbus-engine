@@ -15,10 +15,10 @@ import javax.net.ssl.X509TrustManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.remondis.limbus.Initializable;
-import com.remondis.limbus.LimbusProperties;
+import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.files.LimbusFileService;
-import com.remondis.limbus.system.LimbusComponent;
+import com.remondis.limbus.properties.LimbusProperties;
+import com.remondis.limbus.system.api.LimbusComponent;
 
 /**
  * This component configures the JSSE via {@link LimbusProperties}. Use the default Limbus configuration mechanism to

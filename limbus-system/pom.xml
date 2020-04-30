@@ -5,72 +5,10 @@
 	<parent>
 		<groupId>com.remondis.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
-		<version>2.0.2</version>
+		<version>3.0.0-beta-1</version>
 	</parent>
 	<artifactId>limbus-system</artifactId>
 	<name>Limbus System</name>
-	<properties>
-		<!-- Formatter configuration -->
-		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
-	</properties>
-	<dependencies>
-		<!-- Limbus Engine API -->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>limbus-engine-api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<!-- Limbus Event Multicaster -->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>limbus-event-multicaster</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<!-- Limbus Utils -->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>limbus-utils</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<!-- Logging Facade -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-
-		<!-- Graph Stream for Visualization feature -->
-		<dependency>
-			<groupId>org.graphstream</groupId>
-			<artifactId>gs-core</artifactId>
-			<version>1.3</version>
-			<scope>compile</scope>
-			<!-- Optional dependencies are not included in projects that depend on
-				Limbus System. If they want to use the feature, they have to deliver the
-				dependency themselves. -->
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.graphstream</groupId>
-			<artifactId>gs-ui</artifactId>
-			<version>1.3</version>
-			<scope>compile</scope>
-			<!-- Optional dependencies are not included in projects that depend on
-				Limbus System. If they want to use the feature, they have to deliver the
-				dependency themselves. -->
-			<optional>true</optional>
-		</dependency>
-
-		<!-- The concrete logging framework to log through for tests -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-jdk14</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-
 	<description>The Limbus System is a small light-weight CDI framework managing the Limbus Core Components.
 
 The object graph is represented by an XML configuration file or can be build using the Limbus System API.
@@ -89,4 +27,51 @@ This module delivers an optional system component that visualizes the object gra
 			&lt;artifactId&gt;gs-ui&lt;/artifactId&gt;
 			&lt;version&gt;1.3&lt;/version&gt;
 		&lt;/dependency&gt;</description>
+
+	<properties>
+		<!-- Formatter configuration -->
+		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
+	</properties>
+	<dependencies>
+		<!-- Limbus Engine API -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-engine-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Limbus System API -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-system-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Limbus Event Multicaster -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-event-multicaster</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Limbus Utils -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-utils</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- Logging Facade -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<!-- The concrete logging framework to log through for tests -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-jdk14</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>

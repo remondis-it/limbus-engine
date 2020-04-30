@@ -1,6 +1,6 @@
 package com.remondis.limbus.system.external.circular;
 
-import com.remondis.limbus.Initializable;
+import com.remondis.limbus.api.Initializable;
 
 public class CircularDImpl extends Initializable<Exception> implements CircularD {
 

@@ -11,17 +11,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.remondis.limbus.Classpath;
-import com.remondis.limbus.DeploymentListener;
-import com.remondis.limbus.LimbusDefaultComponents;
-import com.remondis.limbus.LimbusEngine;
-import com.remondis.limbus.LimbusPlugin;
-import com.remondis.limbus.UndeployVetoException;
-import com.remondis.limbus.Veto;
+import com.remondis.limbus.api.Classpath;
+import com.remondis.limbus.api.LimbusPlugin;
+import com.remondis.limbus.engine.LimbusDefaultComponents;
+import com.remondis.limbus.engine.api.DeploymentListener;
+import com.remondis.limbus.engine.api.LimbusEngine;
+import com.remondis.limbus.engine.api.UndeployVetoException;
+import com.remondis.limbus.engine.api.Veto;
 import com.remondis.limbus.files.InMemoryFilesystemImpl;
 import com.remondis.limbus.files.LimbusFileService;
-import com.remondis.limbus.launcher.LimbusStage;
-import com.remondis.limbus.launcher.LimbusStaging;
+import com.remondis.limbus.staging.LimbusStage;
+import com.remondis.limbus.staging.LimbusStaging;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LimbusIntegrationTest implements DeploymentListener {
