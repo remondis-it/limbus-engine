@@ -20,7 +20,7 @@ open module com.remondis.limbus.engine.implementation {
   requires aether.util;
   requires org.slf4j;
   requires com.remondis.limbus.vfs;
-  requires lanterna;
+  requires com.googlecode.lanterna;
   requires java.desktop;
   requires org.apache.commons.io;
   requires com.remondis.limbus.tasks;
