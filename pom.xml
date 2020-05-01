@@ -4,11 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.remondis.limbus</groupId>
 	<artifactId>limbus-parent</artifactId>
-	<version>3.0.0-beta-2</version>
-	<prerequisites>
-		<maven>3.0.5</maven>
-	</prerequisites>
-
+	<version>3.0.2</version>
 	<name>Limbus Engine</name>
 	<packaging>pom</packaging>
 	<description>A multi classloader hot-deploy container</description>
@@ -140,6 +136,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
+					<version>3.2.0</version>
 					<configuration>
 						<archive>
 							<manifest>
