@@ -28,7 +28,7 @@
 
 	<properties>
 		<!-- Service name (without spaces!) -->
-		<engine.service.name>Max5LimbusEngine</engine.service.name>
+		<engine.service.name>LimbusEngine</engine.service.name>
 		<!-- Engine Final JAR name (without spaces!) -->
 		<engine.deploy.finalName>limbus-engine</engine.deploy.finalName>
 		<!-- Engine Launcher Main Class -->
