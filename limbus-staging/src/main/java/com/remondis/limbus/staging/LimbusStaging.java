@@ -25,7 +25,7 @@ import com.remondis.limbus.system.SystemConfiguration;
  */
 public final class LimbusStaging {
 
-  class ConfigurationHolder<T extends IInitializable<?>, I extends T> {
+  static class ConfigurationHolder<T extends IInitializable<?>, I extends T> {
     private Class<T> requestType;
     private Class<I> componentType;
 
@@ -57,7 +57,7 @@ public final class LimbusStaging {
    * @return Returns the {@link LimbusSystem} represented by {@link MockLimbusSystem} that allows to add mocked system
    *         components as well as real system components.
    */
-  public LimbusSystemStaging withDefaultLimbusComponents(DefaultComponents defaultComponentsEnumerator) {
+  public static LimbusSystemStaging fromDefaultLimbusComponents(DefaultComponents defaultComponentsEnumerator) {
     LimbusSystemStaging limbusSystemStaging = new LimbusSystemStaging();
     defaultComponentsEnumerator.applyDefaultComponents(limbusSystemStaging);
     return limbusSystemStaging;
@@ -67,7 +67,7 @@ public final class LimbusStaging {
    * @return Returns the {@link LimbusSystem} represented by {@link MockLimbusSystem} that allows to add mocked system
    *         components as well as real system components.
    */
-  public LimbusSystemStaging withComponents() {
+  public static LimbusSystemStaging fromComponents() {
     return new LimbusSystemStaging();
   }
 
@@ -79,7 +79,8 @@ public final class LimbusStaging {
    * @return Returns a new {@link LimbusStaging} for further component configuration.
    * @throws LimbusSystemException Thrown if the application class cannot be analyzed.
    */
-  public LimbusSystemStaging withComponentsFromApplication(Class<?> applicationClass) throws LimbusSystemException {
+  public static LimbusSystemStaging fromComponentsFromApplication(Class<?> applicationClass)
+      throws LimbusSystemException {
     requireNonNull(applicationClass, "Application class must not be null!");
     SystemConfiguration systemConfiguration = ApplicationBuilder
         .buildConfigurationFromApplicationClass(applicationClass);

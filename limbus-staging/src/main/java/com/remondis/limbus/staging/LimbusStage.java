@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.Semaphore;
 
 import org.jboss.shrinkwrap.api.formatter.Formatters;
@@ -21,6 +22,11 @@ import com.remondis.limbus.system.LimbusSystem;
  * The {@link LimbusStage} is a configuration holder for a Limbus environment that is ready to get bootstrapped. The
  * public methods can be used to control the lifecycle of the Limbus environment and to access components of the
  * {@link LimbusSystem} managing the specified components.
+ * 
+ * <p>
+ * The {@link LimbusStage} also defines the common dependencies and is able to create {@link LimbusStagingDeployment}s.
+ * The {@link LimbusStagingDeployment}s represent the parts that are deployed usign the plugin classpath.
+ * </p>
  *
  * @author schuettec
  *
@@ -38,6 +44,29 @@ public final class LimbusStage {
   LimbusStage(LimbusSystem limbusSystem) {
     this.system = limbusSystem;
     this.dependencies = new LinkedList<>();
+  }
+
+  /**
+   * Creates a new {@link LimbusStagingDeployment} that can be deployed as a plugin classpath.
+   * 
+   * @param deployName The deploy name is used to reference the plugin classpath later.
+   * @return Returns a new {@link LimbusStagingDeployment} referencing the dependencies configured for this
+   *         {@link LimbusStage}.
+   */
+  public LimbusStagingDeployment createDeployment(String deployName) {
+    return new LimbusStagingDeployment(deployName, dependencies);
+  }
+
+  /**
+   * Creates a new {@link LimbusStagingDeployment} that can be deployed as a plugin classpath.
+   * When using this method, an anonymous random deploy name is created.
+   * 
+   * @return Returns a new {@link LimbusStagingDeployment} referencing the dependencies configured for this
+   *         {@link LimbusStage}.
+   */
+  public LimbusStagingDeployment createDeployment() {
+    return new LimbusStagingDeployment(UUID.randomUUID()
+        .toString(), dependencies);
   }
 
   /**

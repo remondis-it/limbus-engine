@@ -1,5 +1,7 @@
 package com.remondis.limbus.staging;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -30,8 +32,11 @@ public class LimbusStagingDeployment {
   private String deployName;
   private List<JavaArchive> dependencies;
 
-  LimbusStagingDeployment(List<JavaArchive> dependencies) {
+  LimbusStagingDeployment(String deployName, List<JavaArchive> dependencies) {
     super();
+    requireNonNull(deployName, "deployName must not be null!");
+    requireNonNull(dependencies, "dependencies must not be null!");
+    this.deployName = deployName;
     this.dependencies = dependencies;
     this.permissions = new HashSet<>();
     this.deployment = ShrinkWrap.create(JavaArchive.class);

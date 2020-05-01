@@ -22,6 +22,7 @@ import com.remondis.limbus.files.InMemoryFilesystemImpl;
 import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.staging.LimbusStage;
 import com.remondis.limbus.staging.LimbusStaging;
+import com.remondis.limbus.staging.LimbusStagingDeployment;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LimbusIntegrationTest implements DeploymentListener {
@@ -50,9 +51,8 @@ public class LimbusIntegrationTest implements DeploymentListener {
     InMemoryFilesystemImpl filesystem = new InMemoryFilesystemImpl();
 
     // @formatter:off
-     this.stage = LimbusStaging.create(DEPLOY_NAME)
-                 .andClasses(TestPlugin.class)
-                 .withDefaultLimbusComponents(new LimbusDefaultComponents())
+     this.stage = LimbusStaging
+                 .fromDefaultLimbusComponents(new LimbusDefaultComponents())
                  /*
                   *  schuettec - 18.04.2017 : Add the TestEngine, because the proprietary plugin interface
                   *  org.testclient.TestPlugin is used
@@ -71,6 +71,10 @@ public class LimbusIntegrationTest implements DeploymentListener {
   public void test() throws Exception {
     // schuettec - 16.05.2017 : Deny undeploy!
     undeployVeto = true;
+
+    LimbusStagingDeployment deployment = stage.createDeployment(DEPLOY_NAME)
+        .andClasses(TestPlugin.class);
+    stage.deploy(deployment);
 
     Classpath classpath = engine.getClasspath(DEPLOY_NAME);
     LimbusPlugin plugin = engine.getPlugin(classpath, TestPlugin.class.getName(), LimbusPlugin.class);
