@@ -19,7 +19,7 @@ import java.lang.annotation.Target;
  * <h2>Importing</h2>
  * <p>
  * Sometimes components are located in a package that is not part of the
- * application's root package. This often happends when using components from a
+ * application's root package. This often happens when using components from a
  * library. In this case {@link LimbusComponent}s can be imported using
  * {@link PrivateComponent}, {@link PublicComponent} or
  * </p>
@@ -32,10 +32,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface LimbusApplication {
 
-  /**
-   * @return The type of object factory to be used, when creating objects for
-   *         {@link LimbusSystem}.
-   */
-  Class<? extends ObjectFactory> objectFactory();
+	/**
+	 * @return The type of object factory to be used, when creating objects for
+	 *         {@link LimbusSystem}.
+	 */
+	Class<? extends ObjectFactory> objectFactory();
 
 }
