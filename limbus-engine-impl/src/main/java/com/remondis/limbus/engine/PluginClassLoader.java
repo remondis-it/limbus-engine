@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -14,7 +13,6 @@ import java.security.CodeSource;
 import java.security.Permission;
 import java.security.PermissionCollection;
 import java.security.PrivilegedAction;
-import java.security.PrivilegedExceptionAction;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -347,7 +345,7 @@ public class PluginClassLoader extends URLClassLoader {
           }
 
           // Clear URL cache in JarFileFactory
-          Workarounds.clearJarFileCache(PluginClassLoader.this, urls);
+          // Workarounds.clearJarFileCache(PluginClassLoader.this, urls);
 
           // Trigger GC
           System.gc();
@@ -506,15 +504,7 @@ public class PluginClassLoader extends URLClassLoader {
       // passed to the parent classloader's loadClass-method. Another solution is to analyze what could go wrong if
       // parent.loadClass() is used (since it sets always false for the resolve-flag). The resolving could then happen
       // on demand.
-      return AccessController.doPrivileged(new PrivilegedExceptionAction<Class<?>>() {
-        @Override
-        public Class<?> run() throws Exception {
-          Method loadClassMethod = ClassLoader.class.getDeclaredMethod("loadClass", String.class, boolean.class);
-          loadClassMethod.setAccessible(true);
-          return (Class<?>) loadClassMethod.invoke(parent, name, b);
-        }
-      });
-
+      return parent.loadClass(name);
     } catch (Throwable e) {
       throw new ClassNotFoundException(String.format("Class %s cannot be found.", name), e);
     }
