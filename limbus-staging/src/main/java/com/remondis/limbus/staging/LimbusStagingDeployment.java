@@ -62,6 +62,8 @@ public class LimbusStagingDeployment {
       addJavaArchiveAsURL(urls, a, null);
     }
     addJavaArchiveAsURL(urls, deployment, null);
+    this.classpath = Classpath.create(deployName)
+        .add(urls);
   }
 
   private byte[] archiveToBytes(JavaArchive a) throws IOException {
@@ -82,7 +84,7 @@ public class LimbusStagingDeployment {
     } else {
       jarURLStr = createJarURL(archiveName);
     }
-    URL jarURL = new URL(jarURLStr);// , resourceHandler);
+    URL jarURL = new URL(jarURLStr);
     urls.add(jarURL);
     addResourceToStagingHandler(resource, jarURL);
   }
