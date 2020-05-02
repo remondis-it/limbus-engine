@@ -1,15 +1,17 @@
 package com.remondis.limbus_integrations;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.remondis.limbus.api.Classpath;
 import com.remondis.limbus.api.LimbusPlugin;
@@ -24,7 +26,8 @@ import com.remondis.limbus.staging.LimbusStage;
 import com.remondis.limbus.staging.LimbusStaging;
 import com.remondis.limbus.staging.LimbusStagingDeployment;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@RunWith(JUnitPlatform.class)
 public class LimbusIntegrationTest implements DeploymentListener {
 
   private static final String DEPLOY_NAME = "deployName";
@@ -35,17 +38,17 @@ public class LimbusIntegrationTest implements DeploymentListener {
 
   private boolean undeployVeto = false;
 
-  @BeforeClass
+  @BeforeAll
   public static void beforeClass() throws Exception {
     LimbusStaging.prepareEnvironment();
   }
 
-  @AfterClass
+  @AfterAll
   public static void afterClass() {
     LimbusStaging.resetEnvironment();
   }
 
-  @Before
+  @BeforeEach
   public void before() throws Exception {
 
     InMemoryFilesystemImpl filesystem = new InMemoryFilesystemImpl();
@@ -99,7 +102,7 @@ public class LimbusIntegrationTest implements DeploymentListener {
     }
   }
 
-  @After
+  @AfterEach
   public void after() {
     if (stage != null) {
       engine.removeDeploymentListener(this);

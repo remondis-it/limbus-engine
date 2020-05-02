@@ -202,5 +202,13 @@
 			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- Logging activator for integration test -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-logging-jdk</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>

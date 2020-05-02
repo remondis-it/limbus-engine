@@ -61,7 +61,9 @@
 		<!-- AssertJ Version used for testing -->
 		<limbus.testing.assertj.version>3.14.0</limbus.testing.assertj.version>
 		<!-- JUnit -->
-		<limbus.testing.junit.version>4.12</limbus.testing.junit.version>
+		<junit.jupiter.version>5.5.2</junit.jupiter.version>
+		<junit.platform.version>1.5.2</junit.platform.version>
+
 		<!-- Shared Directory -->
 		<sharedDirectory>${project.basedir}</sharedDirectory>
 
@@ -240,35 +242,53 @@
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.assertj</groupId>
-				<artifactId>assertj-core</artifactId>
-				<version>${limbus.testing.assertj.version}</version>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-junit-jupiter</artifactId>
+				<version>2.23.0</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>${limbus.testing.junit.version}</version>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-engine</artifactId>
+				<version>${junit.jupiter.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.junit.platform</groupId>
+				<artifactId>junit-platform-runner</artifactId>
+				<version>${junit.platform.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.assertj</groupId>
+				<artifactId>assertj-core</artifactId>
+				<version>${limbus.testing.assertj.version}</version>
 				<scope>test</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 	<dependencies>
+		<!-- Test Environment -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-runner</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

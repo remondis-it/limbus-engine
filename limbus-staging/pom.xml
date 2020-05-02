@@ -32,7 +32,6 @@ is the entry point for this library. The features can be used in a fluent builde
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.4</version>
 				<configuration>
 					<archive>
 						<manifest>
@@ -102,6 +101,8 @@ is the entry point for this library. The features can be used in a fluent builde
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
+
+		<!-- Shrinkwrap modules -->
 		<dependency>
 			<groupId>org.jboss.shrinkwrap</groupId>
 			<artifactId>shrinkwrap-api</artifactId>
@@ -163,6 +164,17 @@ is the entry point for this library. The features can be used in a fluent builde
 			<version>${shrinkwrap.resolver.version}</version>
 		</dependency>
 
+		<!-- Junit 5 with legacy Junit 4 support -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<version>5.4.0</version>
+		</dependency>
 	</dependencies>
 
 

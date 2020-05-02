@@ -1,18 +1,18 @@
 package com.remondis.limbus;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.remondis.limbus.engine.LimbusUtil;
 import com.remondis.limbus.engine.PluginClassLoader;
@@ -52,7 +52,7 @@ public class ClassLoaderHierarchyTest {
 
   private LimbusFileService filesystem;
 
-  @BeforeClass
+  @BeforeAll
   public static void beforeClass() {
     B_URL = ClassLoaderHierarchyTest.class.getResource(B_JAR);
     A_URL = ClassLoaderHierarchyTest.class.getResource(A_JAR);
@@ -61,7 +61,7 @@ public class ClassLoaderHierarchyTest {
 
   }
 
-  @Before
+  @BeforeEach
   public void before() {
     this.filesystem = new InMemoryFilesystemImpl();
     // schuettec - 02.11.2016 : Set the default allowed package prefixes to get the same isolation of Limbus Engine

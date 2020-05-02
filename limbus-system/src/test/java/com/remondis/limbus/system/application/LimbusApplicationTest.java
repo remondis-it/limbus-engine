@@ -1,15 +1,17 @@
 package com.remondis.limbus.system.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.remondis.limbus.system.InfoRecord;
 import com.remondis.limbus.system.LimbusSystem;
@@ -23,7 +25,8 @@ import com.remondis.limbus.system.bundle.BundlePrivateComponent;
 import com.remondis.limbus.system.bundle.BundlePublicComponent;
 import com.remondis.limbus.system.bundle.BundlePublicComponentImpl;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@RunWith(JUnitPlatform.class)
 public class LimbusApplicationTest {
 
   @Test

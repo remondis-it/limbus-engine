@@ -1,16 +1,16 @@
 package com.remondis.limbus.launchertest;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.remondis.limbus.engine.NoOpEngine;
 import com.remondis.limbus.engine.api.EmptySharedClasspathProvider;
@@ -34,7 +34,7 @@ public class EngineLauncherTest extends EngineLauncher {
 
   private LimbusSystem system;
 
-  @Before
+  @BeforeEach
   public void setup() {
     skipSystemExitOLD = EngineLauncher.skipSystemExit;
     EngineLauncher.skipSystemExit = true;
@@ -47,7 +47,7 @@ public class EngineLauncherTest extends EngineLauncher {
     this.system.addComponentConfiguration(LimbusEngine.class, NoOpEngine.class);
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     EngineLauncher.skipSystemExit = skipSystemExitOLD;
   }

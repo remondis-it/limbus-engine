@@ -1,10 +1,10 @@
 package com.remondis.limbus.utils;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Simple JUnit case after removing SoftReferences from the Cache
@@ -30,11 +30,11 @@ public class CacheTest {
       cache.add("l", 0l);
       cache.add("l", 0l);
       cache.add("o", 0l);
-      assertArrayEquals("Cache contains elements", new Object[] {
+      assertArrayEquals(new Object[] {
           4
       }, new Object[] {
           cache.size()
-      });
+      }, "Cache contains elements");
 
       assertTrue(cache.containsKey("o"));
       cache.getAndRemove("o");

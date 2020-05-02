@@ -1,18 +1,22 @@
 package com.remondis.limbus.events;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.remondis.limbus.utils.IllegalTypeException;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@RunWith(JUnitPlatform.class)
 public class MulticastHandlerTest {
 
   @Mock
@@ -21,14 +25,18 @@ public class MulticastHandlerTest {
   @Mock
   protected SubscriberType anotherSubscriberMock;
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void eventMulticasterFactory_01_test() {
-    EventMulticasterFactory.create(null);
+    assertThrows(IllegalArgumentException.class, () -> {
+      EventMulticasterFactory.create(null);
+    });
   }
 
-  @Test(expected = IllegalTypeException.class)
+  @Test
   public void eventMulticasterFactory_02_test() {
-    EventMulticasterFactory.create(String.class);
+    assertThrows(IllegalTypeException.class, () -> {
+      EventMulticasterFactory.create(String.class);
+    });
   }
 
   @Test // Happy path.

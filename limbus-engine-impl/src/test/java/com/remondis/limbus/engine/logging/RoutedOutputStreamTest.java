@@ -9,17 +9,15 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.remondis.limbus.engine.logging.RoutedOutputStream;
-import com.remondis.limbus.engine.logging.TargetSelector;
-import com.remondis.limbus.engine.logging.TargetWriteException;
-import com.remondis.limbus.engine.logging.TargetWriter;
-
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@RunWith(JUnitPlatform.class)
 public class RoutedOutputStreamTest {
 
   @Mock
