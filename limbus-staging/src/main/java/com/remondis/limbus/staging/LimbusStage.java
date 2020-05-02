@@ -2,7 +2,6 @@ package com.remondis.limbus.staging;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -13,7 +12,6 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
 import com.remondis.limbus.api.IInitializable;
-import com.remondis.limbus.api.LimbusException;
 import com.remondis.limbus.engine.api.LimbusEngine;
 import com.remondis.limbus.launcher.EngineLauncher;
 import com.remondis.limbus.system.LimbusSystem;
@@ -121,8 +119,9 @@ public final class LimbusStage {
     return system.hasComponent(requestType);
   }
 
-  public void deploy(LimbusStagingDeployment deployment) throws LimbusException, IOException {
+  public void deploy(LimbusStagingDeployment deployment) throws Exception {
     requireNonNull(deployment, "Deploytment must not be null!");
+    deployment.registerContentToStreamHandler();
     LimbusEngine limbusEngine = system.getComponent(LimbusEngine.class);
     limbusEngine.deployPlugin(deployment.getClasspath(), deployment.getPermissions());
   }

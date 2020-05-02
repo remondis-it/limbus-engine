@@ -26,6 +26,15 @@ import com.remondis.limbus.staging.LimbusStage;
 import com.remondis.limbus.staging.LimbusStaging;
 import com.remondis.limbus.staging.LimbusStagingDeployment;
 
+/**
+ * Java 9 and later compatibility:
+ * Limbus Engine performs some cleaning/classloader-leak prevention using reflective access to java.base/java.lang.
+ * Therefore to execute the test you have to add
+ * <tt>--add-opens java.base/java.lang=com.remondis.limbus.engine.implementation</tt>.
+ * 
+ * @author cschu
+ *
+ */
 @ExtendWith(MockitoExtension.class)
 @RunWith(JUnitPlatform.class)
 public class LimbusIntegrationTest implements DeploymentListener {

@@ -55,7 +55,7 @@ public class LimbusStagingDeployment {
     return this;
   }
 
-  void getDeploymentArchive() throws Exception {
+  void registerContentToStreamHandler() throws Exception {
     List<URL> urls = new LinkedList<>();
     List<JavaArchive> archives = new LinkedList<>(dependencies);
     for (JavaArchive a : archives) {
