@@ -32,6 +32,32 @@ This module delivers an optional system component that visualizes the object gra
 		<!-- Formatter configuration -->
 		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
 	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>
+					--add-opens
+						com.remondis.limbus.system/com.remondis.limbus.system=com.remondis.limbus.utils
+					--add-opens
+						com.remondis.limbus.system/com.remondis.limbus.system.external=com.remondis.limbus.utils
+					--add-opens
+						com.remondis.limbus.system/com.remondis.limbus.system.external.circular=com.remondis.limbus.utils
+					--add-opens
+						com.remondis.limbus.system/com.remondis.limbus.system.bundle=com.remondis.limbus.utils
+					--add-opens
+						com.remondis.limbus.system/com.remondis.limbus.system.applicationExtern=com.remondis.limbus.utils
+					--add-opens
+						com.remondis.limbus.system/com.remondis.limbus.system.application=com.remondis.limbus.utils
+					--add-opens
+						com.remondis.limbus.system/com.remondis.limbus.system.application.subpackage=com.remondis.limbus.utils
+						</argLine>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	<dependencies>
 		<!-- Limbus Engine API -->
 		<dependency>
@@ -60,7 +86,7 @@ This module delivers an optional system component that visualizes the object gra
 			<artifactId>limbus-utils</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
 		<!-- Logging Facade -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
