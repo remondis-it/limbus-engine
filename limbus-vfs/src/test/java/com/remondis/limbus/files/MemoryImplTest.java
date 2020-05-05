@@ -30,7 +30,7 @@ public class MemoryImplTest {
 
   @BeforeEach
   public void before() throws Exception {
-    Lang.initializeJDKLogging();
+    Lang.initializeJDKLogging(MemoryImplTest.class);
     fs = new InMemoryFilesystemImpl();
     fs.initialize();
   }

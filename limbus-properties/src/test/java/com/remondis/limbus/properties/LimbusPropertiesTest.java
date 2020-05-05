@@ -24,7 +24,7 @@ public class LimbusPropertiesTest {
 
   @BeforeEach
   public void before() throws Exception {
-    Lang.initializeJDKLogging();
+    Lang.initializeJDKLogging(LimbusPropertiesTest.class);
 
     system = new MockLimbusSystem();
 

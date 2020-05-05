@@ -39,7 +39,7 @@ public class ClassLoaderHierarchyTest {
   /**
    * This resource may not be seen by shared loader because it does not match any of the allowed package prefixes.
    */
-  private static final String RESOURCE_NOT_SEEN_BY_SHARED_LOADER = "org/max5/limbus_notAllowed/NotSeenBySharedLoader";
+  private static final String RESOURCE_NOT_SEEN_BY_SHARED_LOADER = "foo/bar/limbus_notAllowed/NotSeenBySharedLoader";
 
   private static final String A_CLASS = "org.dummy.test.a.A";
 
@@ -88,7 +88,7 @@ public class ClassLoaderHierarchyTest {
   public void ensure_classes_fix_of_allowedPackagePrefix_ISSUE_117() throws Exception {
     try {
       sharedLoader.loadClass(NotSeenBySharedLoader.class.getName());
-      fail("Class not found exception was expcted for " + NotSeenBySharedLoader.class.getName());
+      fail("Class not found exception was expected for " + NotSeenBySharedLoader.class.getName());
     } catch (ClassNotFoundException e) {
       // Totally expected
     }
