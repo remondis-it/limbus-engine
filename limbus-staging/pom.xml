@@ -51,7 +51,7 @@ is the entry point for this library. The features can be used in a fluent builde
 					<dependency>
 						<groupId>org.junit.vintage</groupId>
 						<artifactId>junit-vintage-engine</artifactId>
-						<version>5.4.0</version>
+						<version>5.7.0-M1</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -179,8 +179,6 @@ is the entry point for this library. The features can be used in a fluent builde
 		<dependency>
 			<groupId>org.junit.vintage</groupId>
 			<artifactId>junit-vintage-engine</artifactId>
-			<version>5.4.0</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

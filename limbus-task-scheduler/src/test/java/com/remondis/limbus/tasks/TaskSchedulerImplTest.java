@@ -7,14 +7,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.remondis.limbus.files.InMemoryFilesystemImpl;
 
 @ExtendWith(MockitoExtension.class)
-@RunWith(JUnitPlatform.class)
 public class TaskSchedulerImplTest implements Task {
 
   Semaphore waitForExecution = new Semaphore(1);

@@ -9,8 +9,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.remondis.limbus.api.Classpath;
@@ -36,7 +34,6 @@ import com.remondis.limbus.staging.LimbusStagingDeployment;
  *
  */
 @ExtendWith(MockitoExtension.class)
-@RunWith(JUnitPlatform.class)
 public class LimbusIntegrationTest implements DeploymentListener {
 
   private static final String DEPLOY_NAME = "deployName";
