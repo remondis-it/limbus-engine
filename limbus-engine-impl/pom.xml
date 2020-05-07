@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.remondis.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
-		<version>3.0.2</version>
+		<version>3.1.0</version>
 	</parent>
 	<artifactId>limbus-engine-impl</artifactId>
 	<name>Limbus Engine Implementation</name>
@@ -45,6 +45,16 @@
 		<mavenVersion>3.3.3</mavenVersion>
 	</properties>
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>--add-opens
+						java.base/java.lang=com.remondis.limbus.engine.implementation</argLine>
+				</configuration>
+			</plugin>
+		</plugins>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -199,6 +209,14 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>limbus-staging</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Logging activator for integration test -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-logging-jdk</artifactId>
 			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>

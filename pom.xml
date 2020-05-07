@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.remondis.limbus</groupId>
 	<artifactId>limbus-parent</artifactId>
-	<version>3.0.2</version>
+	<version>3.1.0</version>
 	<name>Limbus Engine</name>
 	<packaging>pom</packaging>
 	<description>A multi classloader hot-deploy container</description>
@@ -56,12 +56,7 @@
 	<properties>
 		<!-- SLF4J Version -->
 		<limbus.slf4j.version>2.0.0-alpha1</limbus.slf4j.version>
-		<!-- Mockito Version used for testing -->
-		<limbus.testing.mockito.version>3.1.0</limbus.testing.mockito.version>
-		<!-- AssertJ Version used for testing -->
-		<limbus.testing.assertj.version>3.14.0</limbus.testing.assertj.version>
-		<!-- JUnit -->
-		<limbus.testing.junit.version>4.12</limbus.testing.junit.version>
+
 		<!-- Shared Directory -->
 		<sharedDirectory>${project.basedir}</sharedDirectory>
 
@@ -208,6 +203,16 @@
 					<configFile>${sharedDirectory}/shared/formatter.xml</configFile>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M4</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>3.0.0-M4</version>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -234,40 +239,57 @@
 			</dependency>
 			<!-- Test Environment -->
 			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter</artifactId>
+				<version>5.7.0-M1</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.junit.vintage</groupId>
+				<artifactId>junit-vintage-engine</artifactId>
+				<version>5.7.0-M1</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
 				<groupId>org.mockito</groupId>
 				<artifactId>mockito-core</artifactId>
-				<version>${limbus.testing.mockito.version}</version>
+				<version>3.3.3</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-junit-jupiter</artifactId>
+				<version>3.3.3</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.assertj</groupId>
 				<artifactId>assertj-core</artifactId>
-				<version>${limbus.testing.assertj.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>${limbus.testing.junit.version}</version>
-				<scope>test</scope>
+				<version>3.16.0</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 	<dependencies>
+		<!-- Test Environment -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-core</artifactId>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

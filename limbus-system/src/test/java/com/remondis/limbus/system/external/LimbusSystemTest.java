@@ -1,15 +1,16 @@
 package com.remondis.limbus.system.external;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.withSettings;
 
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
@@ -140,33 +141,36 @@ public class LimbusSystemTest {
     system.finish();
   }
 
-  @Test(expected = LimbusCyclicException.class)
+  @Test
   public void test_circular_dependency_detection() throws LimbusSystemException {
-    LimbusSystem system = new LimbusSystem();
-    system.addComponentConfiguration(CircularD.class, CircularDImpl.class);
-    system.addComponentConfiguration(CircularC.class, CircularCImpl.class);
-    system.addComponentConfiguration(CircularB.class, CircularBImpl.class);
-    system.addComponentConfiguration(CircularA.class, CircularAImpl.class);
-    system.initialize();
+    assertThrows(LimbusCyclicException.class, () -> {
+      LimbusSystem system = new LimbusSystem();
+      system.addComponentConfiguration(CircularD.class, CircularDImpl.class);
+      system.addComponentConfiguration(CircularC.class, CircularCImpl.class);
+      system.addComponentConfiguration(CircularB.class, CircularBImpl.class);
+      system.addComponentConfiguration(CircularA.class, CircularAImpl.class);
+      system.initialize();
+    });
   }
 
-  @Test(expected = NoSuchComponentException.class)
+  @Test
   public void test_optional_failing_component() throws LimbusSystemException {
-    LimbusSystem system = new LimbusSystem();
-    system.addComponentConfiguration(Aggregator.class, AggregatorImpl.class);
-    system.addComponentConfiguration(Consumer.class, ConsumerImpl.class);
-    system.addComponentConfiguration(Filter.class, FilterImpl.class);
-    system.addComponentConfiguration(Producer.class, ProducerImpl.class);
-    system.addComponentConfiguration(OptionalComponent.class, false);
-    system.initialize();
+    assertThrows(NoSuchComponentException.class, () -> {
+      LimbusSystem system = new LimbusSystem();
+      system.addComponentConfiguration(Aggregator.class, AggregatorImpl.class);
+      system.addComponentConfiguration(Consumer.class, ConsumerImpl.class);
+      system.addComponentConfiguration(Filter.class, FilterImpl.class);
+      system.addComponentConfiguration(Producer.class, ProducerImpl.class);
+      system.addComponentConfiguration(OptionalComponent.class, false);
+      system.initialize();
 
-    assertNotNull(system.getComponent(Aggregator.class));
-    assertNotNull(system.getComponent(Consumer.class));
-    assertNotNull(system.getComponent(Filter.class));
-    assertNotNull(system.getComponent(Producer.class));
+      assertNotNull(system.getComponent(Aggregator.class));
+      assertNotNull(system.getComponent(Consumer.class));
+      assertNotNull(system.getComponent(Filter.class));
+      assertNotNull(system.getComponent(Producer.class));
 
-    system.getComponent(OptionalComponent.class);
-
+      system.getComponent(OptionalComponent.class);
+    });
   }
 
   @Test

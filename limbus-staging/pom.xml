@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.remondis.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
-		<version>3.0.2</version>
+		<version>3.1.0</version>
 	</parent>
 	<artifactId>limbus-staging</artifactId>
 	<name>Limbus Staging</name>
@@ -32,7 +32,6 @@ is the entry point for this library. The features can be used in a fluent builde
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.4</version>
 				<configuration>
 					<archive>
 						<manifest>
@@ -44,6 +43,17 @@ is the entry point for this library. The features can be used in a fluent builde
 						</manifestEntries>
 					</archive>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<groupId>org.junit.vintage</groupId>
+						<artifactId>junit-vintage-engine</artifactId>
+						<version>5.7.0-M1</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -102,6 +112,8 @@ is the entry point for this library. The features can be used in a fluent builde
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
+
+		<!-- Shrinkwrap modules -->
 		<dependency>
 			<groupId>org.jboss.shrinkwrap</groupId>
 			<artifactId>shrinkwrap-api</artifactId>
@@ -163,6 +175,11 @@ is the entry point for this library. The features can be used in a fluent builde
 			<version>${shrinkwrap.resolver.version}</version>
 		</dependency>
 
+		<!-- Junit 5 with legacy Junit 4 support -->
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+		</dependency>
 	</dependencies>
 
 

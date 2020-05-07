@@ -44,8 +44,8 @@ public class Lang {
    * Initializes the JDK logger and loads the configuration file </b>logging.properties</b> from classpath's root
    * folder.
    */
-  public static void initializeJDKLogging() {
-    InputStream logStream = Lang.class.getResourceAsStream("/logging.properties");
+  public static void initializeJDKLogging(Class<?> caller) {
+    InputStream logStream = caller.getResourceAsStream("/logging.properties");
     if (logStream == null) {
       System.err.println("Cannot load logging configuration.");
     }

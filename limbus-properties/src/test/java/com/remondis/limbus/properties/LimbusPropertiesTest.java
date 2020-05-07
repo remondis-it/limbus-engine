@@ -1,14 +1,15 @@
 package com.remondis.limbus.properties;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Properties;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.remondis.limbus.files.InMemoryFilesystemImpl;
 import com.remondis.limbus.files.LimbusFileService;
@@ -21,9 +22,9 @@ public class LimbusPropertiesTest {
 
   InMemoryFilesystemImpl filesystem;
 
-  @Before
+  @BeforeEach
   public void before() throws Exception {
-    Lang.initializeJDKLogging();
+    Lang.initializeJDKLogging(LimbusPropertiesTest.class);
 
     system = new MockLimbusSystem();
 
@@ -33,7 +34,7 @@ public class LimbusPropertiesTest {
     system.initialize();
   }
 
-  @After
+  @AfterEach
   public void after() {
     system.finish();
   }
@@ -133,9 +134,11 @@ public class LimbusPropertiesTest {
     assertEquals("addedValue", conf.getProperty(addedKey));
   }
 
-  @Test(expected = Exception.class)
+  @Test
   public void test_fail_on_no_default() throws Exception {
-    new LimbusProperties(filesystem, String.class, true, false);
+    assertThrows(Exception.class, () -> {
+      new LimbusProperties(filesystem, String.class, true, false);
+    });
   }
 
   @Test
@@ -145,9 +148,11 @@ public class LimbusPropertiesTest {
     assertTrue(properties.isEmpty());
   }
 
-  @Test(expected = Exception.class)
+  @Test
   public void test_fail_on_no_file() throws Exception {
-    new LimbusProperties(filesystem, LimbusPropertiesTest.class, false, true);
+    assertThrows(Exception.class, () -> {
+      new LimbusProperties(filesystem, LimbusPropertiesTest.class, false, true);
+    });
   }
 
 }

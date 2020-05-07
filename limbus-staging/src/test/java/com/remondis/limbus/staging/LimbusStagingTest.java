@@ -10,8 +10,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.remondis.limbus.engine.api.LimbusEngine;
-import com.remondis.limbus.staging.LimbusStage;
-import com.remondis.limbus.staging.LimbusStaging;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LimbusStagingTest {
@@ -31,8 +29,7 @@ public class LimbusStagingTest {
 
   @Test
   public void shouldStartLimbusStage() throws Exception {
-    LimbusStage stage = LimbusStaging.create()
-        .withComponents()
+    LimbusStage stage = LimbusStaging.fromComponents()
         .addPublicComponentMock(LimbusEngine.class, limbusEngineMock)
         .addComponentConfiguration(MockComponent.class, MockComponentImpl.class)
         .buildStage();
@@ -48,8 +45,7 @@ public class LimbusStagingTest {
 
   @Test
   public void shouldStartLimbusStageFromApplication() throws Exception {
-    LimbusStage stage = LimbusStaging.create()
-        .withComponentsFromApplication(MockApplication.class)
+    LimbusStage stage = LimbusStaging.fromComponentsFromApplication(MockApplication.class)
         .addPublicComponentMock(LimbusEngine.class, limbusEngineMock)
         .buildStage();
 

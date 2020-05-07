@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.remondis.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
-		<version>3.0.2</version>
+		<version>3.1.0</version>
 	</parent>
 	<artifactId>limbus-event-multicaster</artifactId>
 	<name>Limbus Event Multicaster</name>
@@ -13,6 +13,17 @@
 	<properties>
 		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
 	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>--add-opens com.remondis.limbus.events/com.remondis.limbus.events=ALL-UNNAMED</argLine>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>

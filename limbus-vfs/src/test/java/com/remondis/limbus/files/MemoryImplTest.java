@@ -1,10 +1,10 @@
 package com.remondis.limbus.files;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -14,9 +14,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.UUID;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.remondis.limbus.utils.Lang;
 
@@ -28,14 +28,14 @@ public class MemoryImplTest {
 
   private LimbusFileService fs;
 
-  @Before
+  @BeforeEach
   public void before() throws Exception {
-    Lang.initializeJDKLogging();
+    Lang.initializeJDKLogging(MemoryImplTest.class);
     fs = new InMemoryFilesystemImpl();
     fs.initialize();
   }
 
-  @After
+  @AfterEach
   public void after() {
     fs.finish();
   }

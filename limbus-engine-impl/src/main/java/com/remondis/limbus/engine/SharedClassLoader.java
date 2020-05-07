@@ -2,7 +2,6 @@ package com.remondis.limbus.engine;
 
 import java.io.IOException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.net.URLStreamHandlerFactory;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
