@@ -45,6 +45,16 @@
 		<mavenVersion>3.3.3</mavenVersion>
 	</properties>
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>--add-opens
+						java.base/java.lang=com.remondis.limbus.engine.implementation</argLine>
+				</configuration>
+			</plugin>
+		</plugins>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -202,7 +212,7 @@
 			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- Logging activator for integration test -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
