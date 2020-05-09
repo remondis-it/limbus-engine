@@ -4,6 +4,6 @@ open module com.remondis.limbus.engine.interfaces {
   exports com.remondis.limbus.engine.api;
   exports com.remondis.limbus.engine.api.security;
 
-  requires com.remondis.limbus.api;
-  requires com.remondis.limbus.system.api;
+  requires transitive com.remondis.limbus.api;
+  requires transitive com.remondis.limbus.system.api;
 }
