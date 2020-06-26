@@ -88,6 +88,7 @@ public class LimbusStagingDeployment {
     urls.add(jarURL);
     addResourceToStagingHandler(resource, jarURL);
   }
+
   private void addResourceToStagingHandler(byte[] resource, URL jarURL) {
     if (Handler.CURRENT_INSTANCE == null) {
       throw new IllegalStateException(
@@ -96,8 +97,7 @@ public class LimbusStagingDeployment {
       Handler.CURRENT_INSTANCE.addResource(jarURL, resource);
     }
   }
-  
-  
+
   /**
    * @return Returns the deployName of the resulting plugin deployment.
    */
@@ -161,8 +161,6 @@ public class LimbusStagingDeployment {
     defaultPermissions.add(new RuntimePermission("accessClassInPackage.sun.util.logging.resources"));
     return defaultPermissions;
   }
-
-
 
   private String createJarURL(String archiveName) {
     return String.format("staging:/%s.jar", archiveName);
