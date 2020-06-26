@@ -1,5 +1,7 @@
 package com.remondis.limbus.engine;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
@@ -239,6 +241,19 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
       Deployment deployment = deploymentMap.get(classpath);
       return deployment.getPlugin(classname, expectedType, lifecycleHook);
     } else {
+      throw new NoSuchDeploymentException("The specified classpath is not deployed on this container.");
+    }
+  }
+
+  /**
+   * Throws a {@link NoSuchDeploymentException} if the specified classpath does not exist.
+   * 
+   * @param classpath The specified classpath.
+   * @throws NoSuchDeploymentException if the specified classpath does not exist.
+   */
+  protected void denyClasspathNotDeployed(Classpath classpath) {
+    requireNonNull(classpath, "classpath must not be null!");
+    if (!deploymentMap.containsKey(classpath)) {
       throw new NoSuchDeploymentException("The specified classpath is not deployed on this container.");
     }
   }
