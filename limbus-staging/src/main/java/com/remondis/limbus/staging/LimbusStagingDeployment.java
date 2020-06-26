@@ -88,7 +88,16 @@ public class LimbusStagingDeployment {
     urls.add(jarURL);
     addResourceToStagingHandler(resource, jarURL);
   }
-
+  private void addResourceToStagingHandler(byte[] resource, URL jarURL) {
+    if (Handler.CURRENT_INSTANCE == null) {
+      throw new IllegalStateException(
+          "The staging resource URL handler is not available. Call LimbusStaging.prepareEnvironment() before using LimbusStage.");
+    } else {
+      Handler.CURRENT_INSTANCE.addResource(jarURL, resource);
+    }
+  }
+  
+  
   /**
    * @return Returns the deployName of the resulting plugin deployment.
    */
@@ -153,14 +162,7 @@ public class LimbusStagingDeployment {
     return defaultPermissions;
   }
 
-  private void addResourceToStagingHandler(byte[] resource, URL jarURL) {
-    if (Handler.CURRENT_INSTANCE == null) {
-      throw new IllegalStateException(
-          "The staging resource URL handler is not available. Call LimbusStaging.prepareEnvironment() before using LimbusStage.");
-    } else {
-      Handler.CURRENT_INSTANCE.addResource(jarURL, resource);
-    }
-  }
+
 
   private String createJarURL(String archiveName) {
     return String.format("staging:/%s.jar", archiveName);
