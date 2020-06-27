@@ -349,24 +349,8 @@ public class DeployServiceImpl extends Initializable<LimbusException> implements
     }
   }
 
-  /**
-   * Deploys a Maven artifact to this container.
-   *
-   * @param groupId
-   *        The group id
-   * @param artifactId
-   *        The artifact id
-   * @param extension
-   *        (optional) The extension, defaults to "jar".
-   * @param version
-   *        The version
-   * @param permissions
-   *        The permissions to be granted for classes of this classpath.
-   * @throws LimbusException
-   *         Thrown on any error while downloading, processing or deploying the Maven artifact.
-   */
   @Override
-  public void deployMavenArtifact(String groupId, String artifactId, String extension, String version,
+  public String deployMavenArtifact(String groupId, String artifactId, String extension, String version,
       Set<Permission> permissions) throws LimbusException {
     checkState();
 
@@ -392,6 +376,8 @@ public class DeployServiceImpl extends Initializable<LimbusException> implements
 
       // Trigger deploy process
       deployFromFilesystem(deployName, permissions);
+      
+      return deployName;
 
     } catch (Exception e) {
       // Clean deployed files from work
