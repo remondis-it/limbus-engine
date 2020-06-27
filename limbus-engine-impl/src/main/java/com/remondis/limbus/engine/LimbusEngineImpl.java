@@ -1,5 +1,6 @@
 package com.remondis.limbus.engine;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
 
 import java.io.ByteArrayOutputStream;
@@ -53,30 +54,9 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
 
   private static final String UNKNOWN = "unknown";
 
-  static {
-    Properties p = new Properties();
-    InputStream inputStream = null;
-    try {
-      inputStream = LimbusEngineImpl.class.getResourceAsStream("/version.properties");
-      p.load(inputStream);
-      GROUP_ID = p.getProperty("engine.groupId", "unkown");
-      ARTIFACT_ID = p.getProperty("engine.artifactId", "unkown");
-      VERSION = p.getProperty("engine.version", "unkown");
-    } catch (Exception e) {
-      GROUP_ID = UNKNOWN;
-      ARTIFACT_ID = UNKNOWN;
-      VERSION = UNKNOWN;
-      throw new IllegalStateException(
-          "No version information available. Please place a version.properties file in the classpath's root "
-              + "of this Limbus Engine implementation.");
-    } finally {
-      Lang.closeQuietly(inputStream);
-    }
-  }
-
-  public static String GROUP_ID;
-  public static String ARTIFACT_ID;
-  public static String VERSION;
+  public String GROUP_ID = null;
+  public String ARTIFACT_ID = null;
+  public String VERSION = null;
 
   @LimbusComponent
   private SharedClasspathProvider sharedClassPathProvider;
@@ -115,17 +95,43 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
 
   @Override
   public String getEngineVersion() {
+    readMetaDataOnDemand();
     return VERSION;
   }
 
   @Override
   public String getEngineGroupId() {
+    readMetaDataOnDemand();
     return GROUP_ID;
   }
 
   @Override
   public String getEngineArtifactId() {
+    readMetaDataOnDemand();
     return ARTIFACT_ID;
+  }
+
+  private void readMetaDataOnDemand() {
+    if (isNull(GROUP_ID)) {
+      Properties p = new Properties();
+      InputStream inputStream = null;
+      try {
+        inputStream = getClass().getResourceAsStream("/version.properties");
+        p.load(inputStream);
+        GROUP_ID = p.getProperty("engine.groupId", "unkown");
+        ARTIFACT_ID = p.getProperty("engine.artifactId", "unkown");
+        VERSION = p.getProperty("engine.version", "unkown");
+      } catch (Exception e) {
+        GROUP_ID = UNKNOWN;
+        ARTIFACT_ID = UNKNOWN;
+        VERSION = UNKNOWN;
+        throw new IllegalStateException(
+            "No version information available. Please place a version.properties file in the classpath's root "
+                + "of this Limbus Engine implementation.");
+      } finally {
+        Lang.closeQuietly(inputStream);
+      }
+    }
   }
 
   @Override
