@@ -490,4 +490,67 @@ public class ReflectionUtil {
       }
     }
   }
+
+  static String fieldToSetter(String name) {
+    return "set" + name.substring(0, 1)
+        .toUpperCase() + name.substring(1);
+  }
+
+  /**
+   * Performs a setter injection.
+   * 
+   * @param f The field to inject into.
+   * @param instance The instance to inject into.
+   * @param value The value to inject.
+   * @return Returns <code>true</code> if the injection was possible, <code>false</code>
+   *         otherwise.
+   * @throws RuntimeException Thrown on any injection error.
+   */
+  public static boolean setterInjectValue(Field f, Object instance, Object value) throws RuntimeException {
+    try {
+      String setMethodName = fieldToSetter(f.getName());
+      try {
+        Method setMethod = f.getDeclaringClass()
+            .getMethod(setMethodName, f.getType());
+        invokeMethodProxySafe(setMethod, instance, value);
+        return true;
+      } catch (NoSuchMethodException e) {
+        return false;
+      }
+    } catch (Exception e) {
+      throw new RuntimeException(String.format("Cannot inject field %s in component %s with value %s.", f.getName(),
+          instance.getClass()
+              .getName(),
+          value.getClass()
+              .getName()),
+          e);
+    }
+  }
+
+  /**
+   * Performs a field injection.
+   * 
+   * @param f The field to inject into.
+   * @param instance The instance to inject into.
+   * @param value The value to inject.
+   * @throws LimbusComponentException Thrown on any injection error.
+   */
+  public static void fieldInjectValue(Field f, Object instance, Object value) {
+    try {
+      f.setAccessible(true);
+      f.set(instance, value);
+    } catch (IllegalArgumentException e) {
+      throw new RuntimeException(String.format("Cannot inject field %s in component %s with value %s.", f.getName(),
+          instance.getClass()
+              .getName(),
+          value.getClass()
+              .getName()),
+          e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(
+          String.format("Cannot access field %s in component %s.", f.getName(), instance.getClass()
+              .getName()),
+          e);
+    }
+  }
 }

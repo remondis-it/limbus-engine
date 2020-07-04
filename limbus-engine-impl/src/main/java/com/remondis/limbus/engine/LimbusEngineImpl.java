@@ -6,6 +6,9 @@ import static java.util.Objects.requireNonNull;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
 import java.net.URLClassLoader;
 import java.security.Permission;
 import java.util.Arrays;
@@ -253,6 +256,16 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
       return deployment.getPlugin(classname, expectedType, lifecycleHook);
     } else {
       throw new NoSuchDeploymentException("The specified classpath is not deployed on this container.");
+    }
+  }
+
+  @Override
+  public <T extends LimbusPlugin> void performPropertyInjection(Field field, T pluginInstance, Object value) {
+    if (Proxy.isProxyClass(pluginInstance.getClass())) {
+      InvocationHandler invocationHandler = Proxy.getInvocationHandler(pluginInstance);
+      @SuppressWarnings("unchecked")
+      LifecycleProxyHandler<LimbusPlugin> limbusProxyHandler = (LifecycleProxyHandler<LimbusPlugin>) invocationHandler;
+      limbusProxyHandler.performPropertyInjection(field, value);
     }
   }
 

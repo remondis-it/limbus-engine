@@ -1,6 +1,7 @@
 package com.remondis.limbus.engine.api;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Field;
 import java.security.Permission;
 import java.util.Set;
 
@@ -192,6 +193,18 @@ public interface LimbusEngine extends IInitializable<Exception> {
    */
   public <T extends LimbusPlugin> T getPlugin(Classpath classpath, String classname, Class<T> expectedType,
       boolean initialize) throws LimbusException, NoSuchDeploymentException;
+
+  /**
+   * Since the {@link LimbusEngine} only exposes proxy objects for plugin instances, Java Bean property introspection is
+   * not possible without unwrapping the plugin type. This method makes sure that the plugin type is introspected
+   * safely.
+   * 
+   * @param <T> The plugin type.
+   * @param field The field to inject.
+   * @param pluginProxy The plugin instance (normally a proxy object).
+   * @param value The value to inject.
+   */
+  public <T extends LimbusPlugin> void performPropertyInjection(Field field, T pluginInstance, Object value);
 
   /**
    * Deploys a classpath on this Limbus container and restricts the classpath using the specified set of permissions.

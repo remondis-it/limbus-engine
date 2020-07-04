@@ -1,6 +1,9 @@
 package com.remondis.limbus.engine;
 
+import static com.remondis.limbus.utils.ReflectionUtil.fieldInjectValue;
+
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -178,6 +181,26 @@ public class LifecycleProxyHandler<P extends LimbusPlugin> implements Invocation
       throw new PluginUndeployedException("The requested plugin was undeployed.");
     }
     return p;
+  }
+
+  /**
+   * Performs a Java Bean property injection on the specified field using the original plugin instance. This is usually
+   * not possible
+   * to perform on the proxy objects, so this method was introduced.
+   * 
+   * @param f The field to use.
+   * @param value The value to use.
+   */
+  public void performPropertyInjection(Field f, Object value) {
+    // Make sure this is done within a context action since plugin code is executed.
+    context.doContextAction(() -> {
+      P instance = getPluginObjectOrFail();
+      // boolean setterInjectionSuccessful = setterInjectValue(f, instance, value);
+      // if (!setterInjectionSuccessful) {
+      fieldInjectValue(f, instance, value);
+      // }
+      return null;
+    });
   }
 
 }
