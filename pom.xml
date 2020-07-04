@@ -88,6 +88,7 @@
 		<module>limbus-depchain-host</module>
 		<module>limbus-launcher</module>
 		<module>limbus-system-api</module>
+		<module>limbus-maintenance-console</module>
 	</modules>
 
 	<build>
