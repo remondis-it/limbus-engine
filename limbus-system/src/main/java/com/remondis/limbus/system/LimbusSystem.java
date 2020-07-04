@@ -1,6 +1,9 @@
 package com.remondis.limbus.system;
 
+import static com.remondis.limbus.utils.ReflectionUtil.invokeMethodProxySafe;
+
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -18,6 +21,7 @@ import com.remondis.limbus.api.IInitializable;
 import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.events.EventMulticaster;
 import com.remondis.limbus.events.EventMulticasterFactory;
+import com.remondis.limbus.system.api.LimbusApplication;
 import com.remondis.limbus.system.api.LimbusComponent;
 import com.remondis.limbus.system.api.LimbusContainer;
 import com.remondis.limbus.system.api.LimbusSystemListener;
@@ -479,6 +483,41 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
   }
 
   private void injectValue(Field f, Object instance, Object value) throws LimbusComponentException {
+    boolean setterInjectionSuccessful = setterInjectValue(f, instance, value);
+    if (!setterInjectionSuccessful) {
+      fieldInjectValue(f, instance, value);
+    }
+  }
+
+  static String fieldToSetter(String name) {
+    return "set" + name.substring(0, 1)
+        .toUpperCase() + name.substring(1);
+  }
+
+  private boolean setterInjectValue(Field f, Object instance, Object value) throws LimbusComponentException {
+    try {
+      String setMethodName = fieldToSetter(f.getName());
+      try {
+        Method setMethod = f.getDeclaringClass()
+            .getMethod(setMethodName, f.getType());
+        invokeMethodProxySafe(setMethod, instance, value);
+        return true;
+      } catch (NoSuchMethodException e) {
+        log.debug("Attempt to inject field {} into instance {} but no set method was found '{}'.", f.toString(),
+            instance, setMethodName);
+        return false;
+      }
+    } catch (Exception e) {
+      throw new LimbusComponentException(String.format("Cannot inject field %s in component %s with value %s.",
+          f.getName(), instance.getClass()
+              .getName(),
+          value.getClass()
+              .getName()),
+          e);
+    }
+  }
+
+  private void fieldInjectValue(Field f, Object instance, Object value) throws LimbusComponentException {
     try {
       f.setAccessible(true);
       f.set(instance, value);
