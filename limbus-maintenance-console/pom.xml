@@ -33,7 +33,7 @@
 							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 						</manifest>
 						<manifestEntries>
-							<Automatic-Module-Name>com.remondis.limbus.maintenance.console</Automatic-Module-Name>
+							<Automatic-Module-Name>limbus.maintenance.console</Automatic-Module-Name>
 						</manifestEntries>
 					</archive>
 				</configuration>
