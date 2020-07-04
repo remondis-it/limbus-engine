@@ -27,7 +27,7 @@ import com.remondis.limbus.utils.Lang;
  * application. The service is intended for accessing the current Limbus environment.
  * <b>Therefore all file access is assumed to happen relative to the current directory.</b>
  *
- * @author schuettec
+ * 
  *
  */
 public class FileSystemServiceImpl extends Initializable<Exception> implements LimbusFileService {

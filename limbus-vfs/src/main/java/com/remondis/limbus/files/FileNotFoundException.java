@@ -3,7 +3,7 @@ package com.remondis.limbus.files;
 /**
  * Thrown if a file could not be found.
  *
- * @author schuettec
+ * 
  *
  */
 public class FileNotFoundException extends RuntimeException {

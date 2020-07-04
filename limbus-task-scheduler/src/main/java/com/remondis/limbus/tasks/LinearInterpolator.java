@@ -5,7 +5,7 @@ import java.util.function.Function;
 /**
  * A linear interpolator between two points.
  *
- * @author schuettec
+ * 
  *
  */
 public class LinearInterpolator implements Function<Double, Double> {

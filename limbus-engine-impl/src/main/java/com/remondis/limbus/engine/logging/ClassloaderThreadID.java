@@ -3,7 +3,7 @@ package com.remondis.limbus.engine.logging;
 /**
  * This tupel stores the classloader id and an optional thread id.
  *
- * @author schuettec
+ * 
  *
  */
 public class ClassloaderThreadID {

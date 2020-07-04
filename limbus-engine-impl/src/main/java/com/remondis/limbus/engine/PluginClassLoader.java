@@ -36,7 +36,7 @@ import com.remondis.limbus.utils.Lang;
  * class loader it is forwared to the parent classloader. This class loader does not delegate directly to any JVM system
  * class loader. Therefore it is not possible to create a plugin class loader without a parent class loader.
  *
- * @author schuettec
+ * 
  *
  */
 public class PluginClassLoader extends URLClassLoader {

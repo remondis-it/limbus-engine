@@ -11,7 +11,7 @@ import com.remondis.limbus.launcher.EngineLauncher;
  * the next new line character, the component shuts down the engine. This component is not intended for use in
  * production environments as it is not common for runtime containers to shutdown.
  *
- * @author schuettec
+ * 
  *
  */
 public class ShutdownComponent extends LimbusServicePlugin {

@@ -26,7 +26,7 @@ import com.remondis.limbus_notAllowed.NotSeenBySharedLoader;
 /**
  * This class tests the isolating class loader hierarchy.
  *
- * @author schuettec
+ * 
  *
  */
 public class ClassLoaderHierarchyTest {

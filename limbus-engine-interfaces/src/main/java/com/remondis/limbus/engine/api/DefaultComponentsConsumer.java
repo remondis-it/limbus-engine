@@ -6,7 +6,7 @@ import com.remondis.limbus.api.IInitializable;
  * This interface describes a consumer for default components. The consumer will be passed to {@link DefaultComponents}
  * so engine implementations can provide a minimal system configuration description for use with Limbus Staging.
  *
- * @author schuettec
+ * 
  *
  */
 public interface DefaultComponentsConsumer {

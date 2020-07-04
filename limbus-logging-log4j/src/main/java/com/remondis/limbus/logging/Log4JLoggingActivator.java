@@ -20,7 +20,7 @@ import com.remondis.limbus.utils.Lang;
  * format
  * defined by the Log4J framework.
  *
- * @author schuettec
+ * 
  *
  */
 public class Log4JLoggingActivator extends Initializable<LoggingActivatorException> implements LoggingActivator {

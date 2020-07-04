@@ -25,7 +25,7 @@ import java.util.jar.JarFile;
 /**
  * This is a util class that provides useful reflective methods. <b>Intended for internal use only!</b>.
  *
- * @author schuettec
+ * 
  *
  */
 public class ReflectionUtil {

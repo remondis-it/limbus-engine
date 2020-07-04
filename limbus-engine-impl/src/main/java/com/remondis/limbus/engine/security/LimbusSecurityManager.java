@@ -21,7 +21,7 @@ import com.remondis.limbus.utils.Lang;
  * on the context of classloading and codesources and cannot be calculated in this class completely.</b>
  * </p>
  *
- * @author schuettec
+ * 
  *
  */
 public class LimbusSecurityManager extends SecurityManager {

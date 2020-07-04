@@ -3,7 +3,7 @@ package com.remondis.limbus.engine.api;
 /**
  * This interface provides a way to perform an action in the plugin's context.
  *
- * @author schuettec
+ * 
  *
  */
 public interface LimbusContext {

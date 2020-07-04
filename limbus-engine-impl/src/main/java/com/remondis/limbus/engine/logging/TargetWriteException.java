@@ -5,7 +5,7 @@ import java.io.IOException;
 /**
  * Thrown on any error while writing to a target.
  *
- * @author schuettec
+ * 
  *
  */
 public class TargetWriteException extends IOException {

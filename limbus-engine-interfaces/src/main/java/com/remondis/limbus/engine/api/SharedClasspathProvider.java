@@ -8,7 +8,7 @@ import com.remondis.limbus.api.LimbusClasspathException;
  * This interface defines a provider that is able to construct a {@link Classpath} used by the {@link LimbusEngine} as
  * shared classpath. The use of this interface is intended for testing purposes.
  *
- * @author schuettec
+ * 
  *
  */
 public interface SharedClasspathProvider extends IInitializable<Exception> {

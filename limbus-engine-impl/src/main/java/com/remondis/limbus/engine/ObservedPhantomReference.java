@@ -7,7 +7,7 @@ import java.lang.ref.ReferenceQueue;
  * This reference is an extension of {@link WeakReference}. It stores some leight-weight information about the
  * referenced object to make identifying easier when the object is enqueued.
  *
- * @author schuettec
+ * 
  *
  * @param <T>
  */

@@ -39,7 +39,7 @@ import com.remondis.limbus.utils.Lang;
  * called directly.
  * </p>
  *
- * @author schuettec
+ * 
  *
  */
 public class Workarounds {

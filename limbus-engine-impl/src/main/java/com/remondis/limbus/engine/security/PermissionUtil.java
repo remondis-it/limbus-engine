@@ -5,7 +5,7 @@ import java.util.Properties;
 /**
  * Util methods that are useful to parse permissions and its arguments.
  *
- * @author schuettec
+ * 
  *
  */
 class PermissionUtil {

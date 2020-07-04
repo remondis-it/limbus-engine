@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.jupiter.api.Test;
 
 /**
- * @author schuettec
+ * 
  *
  */
 public class InitializableTest {

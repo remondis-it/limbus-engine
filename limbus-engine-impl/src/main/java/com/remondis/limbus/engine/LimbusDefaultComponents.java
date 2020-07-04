@@ -13,7 +13,7 @@ import com.remondis.limbus.engine.security.LimbusSecurityImpl;
  * This is the default components enumerator that can be used to get a minimal system configuration for use with
  * <tt>LimbusStaging.withDefaultLimbusComponents(DefaultComponents)</tt>.
  *
- * @author schuettec
+ * 
  *
  */
 public class LimbusDefaultComponents implements DefaultComponents {

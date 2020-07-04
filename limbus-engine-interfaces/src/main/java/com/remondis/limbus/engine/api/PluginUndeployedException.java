@@ -4,7 +4,7 @@ package com.remondis.limbus.engine.api;
  * Thrown by the framework when an object of type {@link LimbusPlugin} is accessed but the classpath delivering the
  * plugin was undeployed.
  *
- * @author schuettec
+ * 
  *
  */
 public class PluginUndeployedException extends RuntimeException {

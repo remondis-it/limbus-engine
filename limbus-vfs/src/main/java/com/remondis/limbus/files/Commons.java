@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 /**
  * Commonly used methods of {@link InMemoryFilesystemImpl} and {@link FileSystemServiceImpl}.
  * 
- * @author schuettec
+ * 
  *
  */
 public class Commons {

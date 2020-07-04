@@ -13,7 +13,7 @@ import com.remondis.limbus.launcher.EngineLauncher;
  * std/out channel for every access initiated by the Limbus Maintenance console. This access needs to be written to
  * std/out without any modification. Any other access is delegated to the specified delegate stream.
  *
- * @author schuettec
+ * 
  */
 public class MaintenanceFilterStream extends OutputStream {
 

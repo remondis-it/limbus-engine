@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
  * is managed by.</b>
  * </p>
  *
- * @author schuettec
+ * 
  *
  */
 @Documented

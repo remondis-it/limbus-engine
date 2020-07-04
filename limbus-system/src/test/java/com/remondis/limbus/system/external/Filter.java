@@ -5,7 +5,7 @@ import com.remondis.limbus.api.IInitializable;
 /**
  * Service definition filter.
  *
- * @author schuettec
+ * 
  *
  */
 public interface Filter extends IInitializable<RuntimeException> {

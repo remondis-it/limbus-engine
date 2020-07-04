@@ -56,7 +56,7 @@ import com.remondis.limbus.api.LimbusException;
  * This class handles the access to the Maven repositories for plugin deployment. It contains methods that can access
  * the local Maven installation and the settings (settings.xml) of the current user to retrieve dependencies.
  *
- * @author schuettec
+ * 
  *
  */
 public class AetherUtil {

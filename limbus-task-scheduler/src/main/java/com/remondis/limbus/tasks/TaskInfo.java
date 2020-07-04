@@ -3,7 +3,7 @@ package com.remondis.limbus.tasks;
 /**
  * Represents the information snapshot of a scheduled task, managed by {@link TaskScheduler}.
  *
- * @author schuettec
+ * 
  *
  */
 public class TaskInfo {

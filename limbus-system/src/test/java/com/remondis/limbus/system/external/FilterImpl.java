@@ -3,7 +3,7 @@ package com.remondis.limbus.system.external;
 import com.remondis.limbus.api.Initializable;
 
 /**
- * @author schuettec
+ * 
  *
  */
 public class FilterImpl extends Initializable<RuntimeException> implements Filter {

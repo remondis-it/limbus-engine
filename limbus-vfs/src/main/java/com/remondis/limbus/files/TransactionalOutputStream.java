@@ -8,7 +8,7 @@ import java.io.OutputStream;
  * This {@link OutputStream} implementation adds new content to a {@link InMemoryFilesystemImpl}-filesystem on
  * {@link #close()}.
  *
- * @author schuettec
+ * 
  *
  */
 public class TransactionalOutputStream extends OutputStream {

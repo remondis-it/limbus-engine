@@ -2,7 +2,7 @@ package com.remondis.limbus.showcase.launcher;
 
 import com.remondis.limbus.engine.ActionsBundle;
 import com.remondis.limbus.engine.DefaultPluginOutputBundle;
-import com.remondis.limbus.engine.DeployServiceBundle;
+import com.remondis.limbus.engine.PluginDeployServiceBundle;
 import com.remondis.limbus.engine.LimbusSecurityBundle;
 import com.remondis.limbus.engine.MaintenanceBundle;
 import com.remondis.limbus.engine.NoOpEngine;
@@ -19,7 +19,7 @@ import com.remondis.limbus.tasks.TaskSchedulerBundle;
 @PublicComponent(requestType = LimbusEngine.class, type = NoOpEngine.class)
 @ImportBundle({
     FileSystemBundle.class, LimbusSecurityBundle.class, EmptySharedClasspathBundle.class, MaintenanceBundle.class,
-    ActionsBundle.class, DeployServiceBundle.class, DefaultPluginOutputBundle.class, TaskSchedulerBundle.class
+    ActionsBundle.class, PluginDeployServiceBundle.class, DefaultPluginOutputBundle.class, TaskSchedulerBundle.class
 })
 public class ShowcaseApplication {
 

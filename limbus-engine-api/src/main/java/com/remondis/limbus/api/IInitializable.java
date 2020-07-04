@@ -5,7 +5,7 @@ package com.remondis.limbus.api;
  *
  * @param <E>
  *        The type of the business exception the implementation may throw during initialization.
- * @author schuettec
+ * 
  *
  */
 public interface IInitializable<E extends Exception> {

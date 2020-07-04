@@ -14,7 +14,7 @@ import com.remondis.limbus.api.LimbusPlugin;
  * This is the service interface for the Limbus Container. This service allows access to the container for deploying and
  * undeploying of plugins.
  *
- * @author schuettec
+ * 
  *
  */
 public interface LimbusEngine extends IInitializable<Exception> {

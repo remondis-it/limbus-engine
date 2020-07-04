@@ -5,7 +5,7 @@ import com.remondis.limbus.api.IInitializable;
 /**
  * Service definition consumer
  *
- * @author schuettec
+ * 
  *
  */
 public interface Consumer extends IInitializable<RuntimeException> {

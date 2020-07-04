@@ -8,7 +8,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import com.remondis.limbus.api.Classpath;
-import com.remondis.limbus.engine.api.DeployService;
+import com.remondis.limbus.engine.api.PluginDeployService;
 import com.remondis.limbus.engine.api.LimbusEngine;
 import com.remondis.limbus.engine.api.LimbusLifecycleHook;
 import com.remondis.limbus.engine.api.PluginUndeployedException;
@@ -29,7 +29,7 @@ import com.remondis.limbus.launcher.SystemEngine;
  * {@link PluginUndeployedException} when accessing the plugin after
  * undeployment.
  *
- * @author schuettec
+ * 
  *
  */
 public class EngineShowcaseLauncher {
@@ -50,7 +50,7 @@ public class EngineShowcaseLauncher {
       // Get the Limbus Engine instance
       LimbusEngine engine = system.getComponent(LimbusEngine.class);
       // Get the deploy service for full control over deployed classpaths
-      DeployService deployService = system.getComponent(DeployService.class);
+      PluginDeployService deployService = system.getComponent(PluginDeployService.class);
 
       // Create a set of runtime permissions that will be granted to the plugin
       // classpath

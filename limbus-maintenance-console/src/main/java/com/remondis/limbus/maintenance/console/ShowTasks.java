@@ -19,7 +19,7 @@ import com.remondis.limbus.tasks.TaskScheduler;
  * This maintenance page shows scheduled periodic service tasks managed by
  * {@link TaskScheduler}.
  *
- * @author schuettec
+ * 
  *
  */
 public class ShowTasks extends AbstractLimbusItem {

@@ -9,7 +9,7 @@ import java.util.Map;
  *        The datatype of the id.
  * @param <T>
  *        The type of the targets.
- * @author schuettec
+ * 
  *
  */
 public interface TargetSelector<ID, T> {

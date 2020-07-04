@@ -4,7 +4,7 @@
 package com.remondis.limbus.api;
 
 /**
- * @author schuettec
+ * 
  *
  */
 public class NotInitializedException extends RuntimeException {

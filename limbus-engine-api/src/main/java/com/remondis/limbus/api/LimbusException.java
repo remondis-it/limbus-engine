@@ -3,7 +3,7 @@ package com.remondis.limbus.api;
 /**
  * This is the most general exception type for the Limbus API.
  *
- * @author schuettec
+ * 
  *
  */
 public class LimbusException extends Exception {

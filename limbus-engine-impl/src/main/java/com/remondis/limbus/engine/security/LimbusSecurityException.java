@@ -3,7 +3,7 @@ package com.remondis.limbus.engine.security;
 /**
  * Thrown if the Limbus security sandbox cannot be initialized properly.
  *
- * @author schuettec
+ * 
  *
  */
 public class LimbusSecurityException extends RuntimeException {

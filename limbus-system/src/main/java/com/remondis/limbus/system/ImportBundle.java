@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * This annotation is used to import a {@link LimbusBundle}. Use this annotation in conjunction with
  * {@link LimbusApplication} to import the specified bundle.
  * 
- * @author schuettec
+ * 
  *
  */
 @Documented

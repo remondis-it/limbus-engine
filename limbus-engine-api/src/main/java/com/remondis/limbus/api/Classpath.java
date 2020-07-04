@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * This class is useful to set up an URL set representing a classpath.
  *
- * @author schuettec
+ * 
  *
  */
 public class Classpath {

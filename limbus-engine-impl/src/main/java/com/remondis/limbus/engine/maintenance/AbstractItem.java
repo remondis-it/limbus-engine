@@ -5,7 +5,7 @@ import com.remondis.limbus.api.IInitializable;
 /**
  * This class defines an abstract item that implements basic methods to be used in {@link LimbusMaintenanceConsole}.
  *
- * @author schuettec
+ * 
  *
  */
 public abstract class AbstractItem extends Action implements IInitializable<Exception> {

@@ -30,7 +30,7 @@ import com.remondis.limbus.staging.LimbusStagingDeployment;
  * Therefore to execute the test you have to add
  * <tt>--add-opens java.base/java.lang=com.remondis.limbus.engine.implementation</tt>.
  * 
- * @author cschu
+ * 
  *
  */
 @ExtendWith(MockitoExtension.class)

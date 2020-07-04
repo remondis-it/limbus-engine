@@ -22,7 +22,7 @@ import com.remondis.limbus.system.api.LimbusContainer;
  * loaded this class, because it is assumed that this class is part of the host
  * system.
  *
- * @author schuettec
+ * 
  *
  */
 public class ShowComponents extends AbstractLimbusItem {

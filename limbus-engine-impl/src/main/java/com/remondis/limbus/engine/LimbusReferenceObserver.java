@@ -14,7 +14,7 @@ import com.remondis.limbus.api.Initializable;
  * This class maintains a {@link ReferenceQueue} to determine the time when an object is garbage collected. This class
  * is mainly used to observe references to {@link PluginClassLoader}.
  *
- * @author schuettec
+ * 
  *
  */
 class LimbusReferenceObserver<T> extends Initializable<RuntimeException> {

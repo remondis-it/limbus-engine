@@ -24,7 +24,7 @@ import com.googlecode.lanterna.gui2.dialogs.MessageDialogBuilder;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogButton;
 import com.remondis.limbus.api.Classpath;
 import com.remondis.limbus.api.LimbusException;
-import com.remondis.limbus.engine.api.DeployService;
+import com.remondis.limbus.engine.api.PluginDeployService;
 import com.remondis.limbus.engine.api.LimbusEngine;
 import com.remondis.limbus.engine.api.NoSuchDeploymentException;
 import com.remondis.limbus.engine.api.UndeployVetoException;
@@ -35,7 +35,7 @@ import com.remondis.limbus.utils.Lang;
 public class ShowDeployService extends AbstractLimbusItem {
 
   @LimbusComponent
-  protected DeployService deployService;
+  protected PluginDeployService deployService;
 
   @LimbusComponent
   protected LimbusEngine engine;
@@ -138,7 +138,7 @@ public class ShowDeployService extends AbstractLimbusItem {
       pluginData.addComponent(txtVersion, GridLayout.createLayoutData(Alignment.FILL, Alignment.CENTER));
 
       pluginData.addComponent(new Label("Extension:"), GridLayout.createLayoutData(Alignment.END, Alignment.CENTER));
-      final TextBox txtExtension = createMavenCoordTextBox(DeployService.DEFAULT_MAVEN_EXTENSION);
+      final TextBox txtExtension = createMavenCoordTextBox(PluginDeployService.DEFAULT_MAVEN_EXTENSION);
       pluginData.addComponent(txtExtension, GridLayout.createLayoutData(Alignment.FILL, Alignment.CENTER));
 
       pluginData.addComponent(new EmptySpace());

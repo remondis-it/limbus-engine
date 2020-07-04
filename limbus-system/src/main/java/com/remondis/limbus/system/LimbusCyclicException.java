@@ -3,7 +3,7 @@ package com.remondis.limbus.system;
 /**
  * Thrown by the {@link LimbusSystem} if a circular dependency request was detected on the object graph.
  * 
- * @author schuettec
+ * 
  *
  */
 public class LimbusCyclicException extends RuntimeException {

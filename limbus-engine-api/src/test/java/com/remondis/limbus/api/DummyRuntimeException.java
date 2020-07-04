@@ -3,7 +3,7 @@ package com.remondis.limbus.api;
 /**
  * This exception tries to produce output as minimally as possible when thrown. Use for test purposes.
  *
- * @author schuettec
+ * 
  *
  */
 class DummyRuntimeException extends RuntimeException {

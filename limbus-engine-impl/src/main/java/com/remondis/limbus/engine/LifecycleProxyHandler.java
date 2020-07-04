@@ -24,7 +24,7 @@ import com.remondis.limbus.utils.Lang;
  * <P>
  *        The type of the plugin interface.
  *
- * @author schuettec
+ * 
  *
  */
 public class LifecycleProxyHandler<P extends LimbusPlugin> implements InvocationHandler {

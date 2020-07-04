@@ -20,7 +20,7 @@ import com.remondis.limbus.launcher.EngineLauncher;
  * @param <T>
  *        The type of the underlying write target.
  *
- * @author schuettec
+ * 
  *
  */
 public abstract class AbstractLogTarget<T> extends Initializable<Exception> implements LogTarget {

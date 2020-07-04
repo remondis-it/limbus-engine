@@ -16,7 +16,7 @@ import com.remondis.limbus.utils.Lang;
 /**
  * This class encapsulates the thread cleaning and analysis features of the Limbus Engine.
  *
- * @author schuettec
+ * 
  *
  */
 public class ThreadCleaning {

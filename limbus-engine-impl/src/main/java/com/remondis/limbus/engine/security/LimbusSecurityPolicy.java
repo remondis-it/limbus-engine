@@ -14,7 +14,7 @@ import com.remondis.limbus.engine.PluginClassLoader;
  * This is the Limbus security policy implementation that manages the sets of permissions granted for different
  * execution environments.
  *
- * @author schuettec
+ * 
  *
  */
 class LimbusSecurityPolicy extends Policy {

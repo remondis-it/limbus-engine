@@ -17,7 +17,7 @@ import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogBuilder;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogButton;
 import com.remondis.limbus.engine.aether.AetherUtil;
-import com.remondis.limbus.engine.api.DeployService;
+import com.remondis.limbus.engine.api.PluginDeployService;
 import com.remondis.limbus.launcher.EngineLauncher;
 import com.remondis.limbus.system.api.LimbusComponent;
 import com.remondis.limbus.utils.Files;
@@ -25,7 +25,7 @@ import com.remondis.limbus.utils.Files;
 public class ShowEnvironment extends AbstractLimbusItem {
 
   @LimbusComponent
-  protected DeployService deployService;
+  protected PluginDeployService deployService;
 
   public ShowEnvironment() {
     super("Environment");

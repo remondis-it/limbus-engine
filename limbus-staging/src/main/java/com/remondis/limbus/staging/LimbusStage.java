@@ -26,7 +26,7 @@ import com.remondis.limbus.system.LimbusSystem;
  * The {@link LimbusStagingDeployment}s represent the parts that are deployed usign the plugin classpath.
  * </p>
  *
- * @author schuettec
+ * 
  *
  */
 public final class LimbusStage {

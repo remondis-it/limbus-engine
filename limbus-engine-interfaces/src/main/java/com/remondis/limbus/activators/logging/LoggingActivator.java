@@ -16,7 +16,7 @@ import com.remondis.limbus.api.IInitializable;
  * The {@link LoggingActivator} is intended to activate and configure the target logging framework without using
  * globally visible system properties.
  *
- * @author schuettec
+ * 
  *
  */
 public interface LoggingActivator extends IInitializable<LoggingActivatorException> {

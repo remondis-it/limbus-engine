@@ -56,7 +56,7 @@ import com.remondis.limbus.utils.ReflectionUtil;
  * it was decided to use std/out and the logger for logging on {@link EngineLauncher} level.</b>
  * </p>
  *
- * @author schuettec
+ * 
  *
  */
 public class EngineLauncher {

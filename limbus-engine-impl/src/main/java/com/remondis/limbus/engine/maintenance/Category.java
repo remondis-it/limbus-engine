@@ -8,7 +8,7 @@ import java.util.List;
  * This class defines an action that opens a child category. A categorie can contain further categories or actions that
  * result in opening a panel.
  *
- * @author schuettec
+ * 
  *
  */
 public class Category extends Item {

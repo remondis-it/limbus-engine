@@ -18,7 +18,7 @@ import com.remondis.limbus.utils.Lang;
  * Engine. The configuration can be overridden by the file <tt>conf/logging.properties</tt> which should have the format
  * defined by the Java Utils Logging framework.
  *
- * @author schuettec
+ * 
  *
  */
 public class JDKLoggingActivator extends Initializable<LoggingActivatorException> implements LoggingActivator {

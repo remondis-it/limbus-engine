@@ -16,7 +16,7 @@ import com.remondis.limbus.utils.ReflectionUtil;
  * @param <T>
  *        The type of the {@link LimbusContainer} extension, this {@link ActionService} can operate on.
  *
- * @author schuettec
+ * 
  *
  */
 public class LimbusActionService extends Initializable<Exception> implements ActionService {

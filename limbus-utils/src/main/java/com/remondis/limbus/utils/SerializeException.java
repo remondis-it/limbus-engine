@@ -3,7 +3,7 @@ package com.remondis.limbus.utils;
 /**
  * Thrown if a system configuration cannot be read, written or is otherwise invalid or corrupted.
  *
- * @author schuettec
+ * 
  *
  */
 public class SerializeException extends Exception {

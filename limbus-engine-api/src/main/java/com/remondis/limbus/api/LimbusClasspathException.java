@@ -3,7 +3,7 @@ package com.remondis.limbus.api;
 /**
  * Thrown if something is wrong with the Limbus class path configuration.
  *
- * @author schuettec
+ * 
  *
  */
 public class LimbusClasspathException extends RuntimeException {

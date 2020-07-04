@@ -8,7 +8,7 @@ import com.remondis.limbus.api.LimbusPlugin;
  * This is the {@link LimbusPlugin} type extension defining some new plugin
  * methods.
  *
- * @author schuettec
+ * 
  *
  */
 public interface ExtendedLimbusPlugin extends LimbusPlugin {

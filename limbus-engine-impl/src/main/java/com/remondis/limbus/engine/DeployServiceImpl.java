@@ -34,7 +34,7 @@ import com.remondis.limbus.api.Classpath;
 import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.api.LimbusException;
 import com.remondis.limbus.engine.aether.AetherUtil;
-import com.remondis.limbus.engine.api.DeployService;
+import com.remondis.limbus.engine.api.PluginDeployService;
 import com.remondis.limbus.engine.api.LimbusEngine;
 import com.remondis.limbus.engine.api.security.LimbusSecurity;
 import com.remondis.limbus.files.LimbusFileService;
@@ -79,14 +79,14 @@ import com.remondis.limbus.utils.Zip;
  * a ZIP file containing all JAR files in its root.</b>
  * </p>
  *
- * @author schuettec
+ * 
  *
  */
-public class DeployServiceImpl extends Initializable<LimbusException> implements DeployService {
+public abstract class DeployServiceImpl extends Initializable<LimbusException> implements PluginDeployService {
 
   private static final String HOT_DEPLOY_THREAD_NAME = "HotDeploy Listener";
 
-  private static final Logger log = LoggerFactory.getLogger(DeployService.class);
+  private static final Logger log = LoggerFactory.getLogger(PluginDeployService.class);
 
   @LimbusComponent
   protected LimbusEngine container;

@@ -4,7 +4,7 @@ package com.remondis.limbus.system.api;
  * This is a listener interface for subscribers that need a notification when the {@link LimbusSystem} instance was
  * fully initialized.
  *
- * @author schuettec
+ * 
  *
  */
 public interface LimbusSystemListener {

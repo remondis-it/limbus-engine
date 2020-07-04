@@ -25,7 +25,7 @@ import com.remondis.limbus.utils.Lang;
  * {@link #SHUTDOWN_TIMEOUT}) the engine is shut down forcibly.
  * </p>
  *
- * @author schuettec
+ * 
  *
  */
 public abstract class AbstractEngine extends Initializable<Exception> implements Engine {

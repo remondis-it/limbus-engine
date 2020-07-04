@@ -20,7 +20,7 @@ import com.remondis.limbus.system.api.LimbusComponent;
  * This class contains methods to enable the plugin sandbox security framework that manages different sets of
  * permissions for code executed by the Limbus Engine and the plugins loaded by different classloaders.
  *
- * @author schuettec
+ * 
  *
  */
 public class LimbusSecurityImpl extends Initializable<Exception> implements LimbusSecurity {

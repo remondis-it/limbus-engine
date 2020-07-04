@@ -8,7 +8,7 @@ import java.util.Set;
  *
  * @param <I>
  *        The subscriber interface type.
- * @author schuettec
+ * 
  *
  */
 public interface EventMulticaster<I> {

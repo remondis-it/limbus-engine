@@ -11,7 +11,7 @@ import com.remondis.limbus.utils.Lang;
  * This class wrappes objects of type {@link PrintStream}. This class is used to proxy std/out and std/err streams.
  * Therefore the close operation is not supported.
  *
- * @author schuettec
+ * 
  *
  */
 final class WrappedOutputStream extends OutputStream {

@@ -5,7 +5,7 @@ package com.remondis.limbus.engine;
  * will validate the constraints and method arguments accordingly. This error is thrown by internal methods were the
  * constraints can only violate if there is a bug that makes certain conditions invalid.
  *
- * @author schuettec
+ * 
  *
  */
 public class LimbusConventionError extends Error {

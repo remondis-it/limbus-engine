@@ -17,7 +17,7 @@ import com.remondis.limbus.system.api.LimbusComponent;
  * This is a {@link SharedClasspathProvider} constructing a shared classpath from the lib directory. All containing
  * files from the lib directory will be added to the shared classpath.
  *
- * @author schuettec
+ * 
  *
  */
 public class SharedFileSystemClasspath extends Initializable<Exception> implements SharedClasspathProvider {

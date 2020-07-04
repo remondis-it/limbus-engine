@@ -5,7 +5,7 @@ import com.remondis.limbus.utils.StringUtil;
 /**
  * This enumeration defines all statuus a component can have.
  *
- * @author schuettec
+ * 
  *
  */
 public enum ComponentStatus {

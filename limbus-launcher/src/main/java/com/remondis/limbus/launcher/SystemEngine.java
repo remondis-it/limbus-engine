@@ -15,7 +15,7 @@ import com.remondis.limbus.system.LimbusSystem;
  * can also be passed as {@link InputStream} using the constructor {@link #SystemEngine(InputStream)} or the
  * uninitialized instance of {@link LimbusSystem} can be passed using {@link #SystemEngine(LimbusSystem)}.
  *
- * @author schuettec
+ * 
  *
  */
 public class SystemEngine extends AbstractEngine {

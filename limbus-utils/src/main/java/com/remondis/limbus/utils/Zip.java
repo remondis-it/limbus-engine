@@ -19,7 +19,7 @@ import java.util.zip.ZipOutputStream;
 /**
  * This class contains useful methods for processing zip files.
  *
- * @author schuettec
+ * 
  *
  */
 public class Zip {

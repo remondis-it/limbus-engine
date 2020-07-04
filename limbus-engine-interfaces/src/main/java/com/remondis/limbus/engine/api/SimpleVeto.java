@@ -3,7 +3,7 @@ package com.remondis.limbus.engine.api;
 /**
  * A simple thread-safe veto implementation.
  *
- * @author schuettec
+ * 
  *
  */
 public class SimpleVeto implements Veto {

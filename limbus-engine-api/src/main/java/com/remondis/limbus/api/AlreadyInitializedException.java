@@ -7,7 +7,7 @@ package com.remondis.limbus.api;
  * This exception is thrown if the lifecycle methods of {@link Initializable} are not called in a legal order. Example:
  * This exception is thrown if an {@link Initializable} is initialized more than one time.
  *
- * @author schuettec
+ * 
  *
  */
 public class AlreadyInitializedException extends RuntimeException {

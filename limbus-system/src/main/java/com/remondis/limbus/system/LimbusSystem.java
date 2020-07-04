@@ -74,7 +74,7 @@ import com.remondis.limbus.utils.ReflectionUtil;
  * </ul>
  *
  *
- * @author schuettec
+ * 
  *
  */
 public final class LimbusSystem extends Initializable<LimbusSystemException> {

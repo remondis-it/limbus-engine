@@ -20,7 +20,7 @@ import com.remondis.limbus.system.SystemConfiguration;
  * Please follow the method and class documentations to get further information on how to use each individual feature.
  * </p>
  *
- * @author schuettec
+ * 
  *
  */
 public final class LimbusStaging {

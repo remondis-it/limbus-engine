@@ -5,7 +5,7 @@ import com.remondis.limbus.api.IInitializable;
 /**
  * This is the definition of the {@link ActionService}.
  *
- * @author schuettec
+ * 
  *
  */
 public interface ActionService extends IInitializable<Exception> {

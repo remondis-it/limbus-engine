@@ -5,7 +5,7 @@ import com.remondis.limbus.api.LimbusException;
 /**
  * Thrown if the undeploy operation was vetoed and therefore cannot be performed.
  *
- * @author schuettec
+ * 
  *
  */
 public class UndeployVetoException extends LimbusException {

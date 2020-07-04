@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
  * {@link PrivateComponent}, {@link PublicComponent} or
  * </p>
  * 
- * @author schuettec
+ * 
  *
  */
 @Documented

@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * Utility class to calculate SHA-1 hash of a byte array. SHA-1 hashes are always (20 bytes) long.
  *
- * @author schuettec
+ * 
  *
  */
 public class Hash {

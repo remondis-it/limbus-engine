@@ -29,7 +29,7 @@ import com.remondis.limbus.utils.ReflectionUtil;
 /**
  * The Deployment provides access to all needed information for a deployed plugin to execute an action.
  *
- * @author buschmann
+ * 
  *
  */
 class Deployment extends Initializable<LimbusClasspathException> {

@@ -7,7 +7,7 @@ import java.util.Set;
  * This class is used to take a snapshot of the currently running threads. The thread cleaning feature of
  * {@link EngineLauncher} will then ignore these threads while shutting down.
  *
- * @author schuettec
+ * 
  *
  */
 public class ThreadSnapshot {

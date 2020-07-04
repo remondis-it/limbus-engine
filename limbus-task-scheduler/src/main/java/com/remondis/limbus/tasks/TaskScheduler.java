@@ -8,7 +8,7 @@ import com.remondis.limbus.api.IInitializable;
 /**
  * This is the global task scheduler that provides fixed rate scheduling for periodic tasks.
  *
- * @author schuettec
+ * 
  *
  */
 public interface TaskScheduler extends IInitializable<Exception> {

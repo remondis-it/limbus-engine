@@ -3,7 +3,7 @@ package com.remondis.limbus.system;
 /**
  * Thrown by {@link LimbusSystem} if a component was requested that does not exist in the system.
  *
- * @author schuettec
+ * 
  *
  */
 public class NoSuchComponentException extends RuntimeException {

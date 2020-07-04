@@ -4,7 +4,7 @@ package com.remondis.limbus.system;
  * This interface describes a component consumer that performs operations on a component managed by the
  * {@link LimbusSystem}.
  *
- * @author schuettec
+ * 
  *
  */
 @FunctionalInterface

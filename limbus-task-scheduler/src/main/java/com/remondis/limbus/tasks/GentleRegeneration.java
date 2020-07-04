@@ -7,7 +7,7 @@ import java.util.function.Function;
  * This is a scheduling rate function that lowers the scheduling frequency on exceptions. The regeneration on the
  * upcoming successful results
  *
- * @author schuettec
+ * 
  *
  */
 public class GentleRegeneration implements Function<Boolean, Long> {

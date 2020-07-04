@@ -24,7 +24,7 @@ import com.remondis.limbus.events.EventMulticasterFactory;
  * {@link #SHUTDOWN_TIMEOUT}) the engine is shut down forcibly.
  * </p>
  *
- * @author schuettec
+ * 
  *
  */
 public abstract class SimpleEngine extends AbstractEngine {

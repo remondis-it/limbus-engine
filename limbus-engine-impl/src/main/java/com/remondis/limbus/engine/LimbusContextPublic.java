@@ -11,7 +11,7 @@ import com.remondis.limbus.engine.api.PluginUndeployedException;
  * for clients outside the scope of the Limbus Engine extension. The public {@link LimbusContext} will hold a weak
  * reference to the original Limbus context, so that no memory- or classloader-leaks may occur.
  *
- * @author schuettec
+ * 
  *
  */
 public final class LimbusContextPublic implements LimbusContext {

@@ -15,7 +15,7 @@ import com.remondis.limbus.files.StreamConnection;
  * This stream handler makes in-memory resources available via {@link URL}.
  *
  *
- * @author schuettec
+ * 
  *
  */
 public class Handler extends URLStreamHandler {

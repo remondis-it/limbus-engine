@@ -13,7 +13,7 @@ package com.remondis.limbus.utils;
  *        The type of the key used for the mapping
  * @param <V>
  *        The type of cached values.
- * @author schuettec
+ * 
  *
  */
 public interface DisposeStrategy<K, V> {

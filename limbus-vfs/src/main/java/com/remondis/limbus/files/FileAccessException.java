@@ -5,7 +5,7 @@ import java.io.File;
 /**
  * Thrown if a file could not be created.
  *
- * @author schuettec
+ * 
  *
  */
 public class FileAccessException extends Exception {

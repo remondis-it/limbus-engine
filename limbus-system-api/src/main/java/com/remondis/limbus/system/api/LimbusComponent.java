@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * an interface were found, a specific binding is required using {@link PublicComponent} on the application class.
  * </p>
  * 
- * @author schuettec
+ * 
  *
  */
 @Documented

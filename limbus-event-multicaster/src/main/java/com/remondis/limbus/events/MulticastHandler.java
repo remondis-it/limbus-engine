@@ -28,7 +28,7 @@ import com.remondis.limbus.utils.ReflectionUtil;
  * event method. The processing of further subscribers is then aborted and not all subscribers may be notified.</li>
  * </p>
  *
- * @author schuettec
+ * 
  *
  * @param <I>
  */

@@ -14,7 +14,7 @@ import java.security.Permission;
 /**
  * This class is used by the ReBind stream handler.
  *
- * @author schuettec
+ * 
  *
  */
 public class StreamConnection extends URLConnection {

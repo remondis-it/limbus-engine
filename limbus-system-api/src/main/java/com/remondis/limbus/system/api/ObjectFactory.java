@@ -8,7 +8,7 @@ import com.remondis.limbus.api.IInitializable;
  * This interface defines an object factory that is used by the
  * {@link LimbusSystem} to create objects.
  *
- * @author schuettec
+ * 
  *
  */
 public interface ObjectFactory {

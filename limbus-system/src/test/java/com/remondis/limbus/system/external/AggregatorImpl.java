@@ -8,11 +8,11 @@ import com.remondis.limbus.system.api.LimbusContainer;
 /**
  * Service definition aggregator
  *
- * @author schuettec
+ * 
  *
  */
 /**
- * @author schuettec
+ * 
  *
  */
 public class AggregatorImpl extends Initializable<RuntimeException> implements Aggregator {

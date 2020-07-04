@@ -3,7 +3,7 @@ package com.remondis.limbus.staging;
 /**
  * Thrown if an error occurs while simulation a deployment environment for Limbus Staging.
  *
- * @author schuettec
+ * 
  *
  */
 public class LimbusStagingException extends RuntimeException {

@@ -5,7 +5,7 @@ package com.remondis.limbus.engine.actions;
  *
  * @param <R>
  *        The type of the value returned by this command.
- * @author schuettec
+ * 
  *
  */
 public final class ActionResult<R> {

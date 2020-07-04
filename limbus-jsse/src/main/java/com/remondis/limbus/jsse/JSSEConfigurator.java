@@ -44,7 +44,7 @@ import com.remondis.limbus.system.api.LimbusComponent;
  *
  * @see <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html#Customization">
  *      JSSE Configuration keys.</a>
- * @author schuettec
+ * 
  *
  */
 public class JSSEConfigurator extends Initializable<Exception> {

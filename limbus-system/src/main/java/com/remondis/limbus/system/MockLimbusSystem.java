@@ -9,7 +9,7 @@ import com.remondis.limbus.system.api.ObjectFactory;
  * This is a facade for {@link LimbusSystem} that should only be used in test environments to specify concrete instances
  * for the components managed by the system.
  *
- * @author schuettec
+ * 
  *
  */
 public class MockLimbusSystem implements IInitializable<Exception> {

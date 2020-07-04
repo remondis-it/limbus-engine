@@ -4,7 +4,7 @@ package com.remondis.limbus.launcher;
  * A thread filter is used by the {@link ThreadSnapshot} to filter known threads that should not be part of a
  * {@link ThreadSnapshot}.
  *
- * @author schuettec
+ * 
  *
  */
 public interface ThreadFilter {

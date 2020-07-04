@@ -7,7 +7,7 @@ import com.remondis.limbus.utils.ReflectionUtil;
 /**
  * This {@link ObjectFactory} creates object using reflections.
  *
- * @author schuettec
+ * 
  *
  */
 public class ReflectiveObjectFactory implements ObjectFactory {

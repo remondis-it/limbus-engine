@@ -5,7 +5,7 @@ import com.remondis.limbus.api.IInitializable;
 /**
  * Service definition producer
  *
- * @author schuettec
+ * 
  *
  */
 public interface Producer extends IInitializable<RuntimeException> {

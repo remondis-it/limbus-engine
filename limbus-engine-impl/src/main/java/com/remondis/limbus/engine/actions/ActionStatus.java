@@ -3,7 +3,7 @@ package com.remondis.limbus.engine.actions;
 /**
  * Enumeration for action states.
  *
- * @author buschmann
+ * 
  *
  */
 public enum ActionStatus {

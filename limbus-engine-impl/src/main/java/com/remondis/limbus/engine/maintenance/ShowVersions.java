@@ -25,7 +25,7 @@ import com.googlecode.lanterna.gui2.table.TableModel;
  * analyzed using the classloader that loaded this class, because it is assumed that this class is part of the host
  * system.
  *
- * @author schuettec
+ * 
  *
  */
 public class ShowVersions extends AbstractLimbusItem {

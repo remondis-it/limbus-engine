@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Simple JUnit case after removing SoftReferences from the Cache
  * 
- * @author dudzik
+ * 
  *
  */
 public class CacheTest {

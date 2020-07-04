@@ -5,7 +5,7 @@ import com.remondis.limbus.api.Classpath;
 /**
  * Listener interface to receive deployment events.
  *
- * @author schuettec
+ * 
  *
  */
 public interface DeploymentListener {

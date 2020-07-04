@@ -9,7 +9,7 @@ import com.remondis.limbus.utils.Lang;
 /**
  * This is a util class providing util methods to access the filesystem.
  *
- * @author schuettec
+ * 
  *
  */
 public class LimbusFiles {

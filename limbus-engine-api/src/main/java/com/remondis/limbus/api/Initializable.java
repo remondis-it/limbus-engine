@@ -22,7 +22,7 @@ import java.util.concurrent.Semaphore;
  *
  * @param <E>
  *        The type of the business exception the implementation may throw during initialization.
- * @author schuettec
+ * 
  *
  */
 public abstract class Initializable<E extends Exception> implements IInitializable<E> {

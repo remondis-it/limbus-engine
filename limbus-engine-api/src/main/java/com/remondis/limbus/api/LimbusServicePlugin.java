@@ -21,7 +21,7 @@ package com.remondis.limbus.api;
  * {@link Thread#interrupt()} to safely terminate. </b>
  * </p>
  *
- * @author schuettec
+ * 
  *
  */
 public abstract class LimbusServicePlugin extends Initializable<Exception> implements LimbusPlugin, Runnable {

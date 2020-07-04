@@ -18,7 +18,7 @@ import java.util.logging.LogManager;
 /**
  * A utility class to provide some language features.
  *
- * @author schuettec
+ * 
  *
  */
 public class Lang {

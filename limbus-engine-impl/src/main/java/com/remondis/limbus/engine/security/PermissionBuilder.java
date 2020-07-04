@@ -13,7 +13,7 @@ import com.remondis.limbus.utils.ReflectionUtil;
 /**
  * This util class helps to create a set of {@link Permission} objects to grant privileges to Limbus Plugins.
  *
- * @author schuettec
+ * 
  *
  */
 public final class PermissionBuilder {

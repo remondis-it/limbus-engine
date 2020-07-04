@@ -3,7 +3,7 @@ package com.remondis.limbus.utils;
 /**
  * This class provides string utilities used to format strings.
  * 
- * @author schuettec
+ * 
  *
  */
 public class StringUtil {

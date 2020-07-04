@@ -5,7 +5,7 @@ import com.remondis.limbus.api.IInitializable;
 /**
  * This class holds information of an instatiated component.
  *
- * @author schuettec
+ * 
  *
  */
 public final class Component {

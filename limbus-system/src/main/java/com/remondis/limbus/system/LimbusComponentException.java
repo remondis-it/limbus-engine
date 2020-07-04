@@ -4,7 +4,7 @@ package com.remondis.limbus.system;
  * Thrown if a Limbus component managed by a {@link LimbusSystem} cannot be created, the injection of dependencies
  * failed or the initializing fails.
  *
- * @author schuettec
+ * 
  *
  */
 public class LimbusComponentException extends Exception {

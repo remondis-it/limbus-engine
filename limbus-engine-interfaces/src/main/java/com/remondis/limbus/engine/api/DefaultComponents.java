@@ -6,7 +6,7 @@ package com.remondis.limbus.engine.api;
  * implementation of this class to specify the minimal set of components that can be used with Limbus Staging to get a
  * running system that is the minimal configuration.
  *
- * @author schuettec
+ * 
  *
  */
 public interface DefaultComponents {

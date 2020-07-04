@@ -5,7 +5,7 @@ package com.remondis.limbus.launcher;
  * {@link #startEngine()} is called by the framework. When the engine is requested to stop via external signals
  * {@link #stopEngine()} is called.
  *
- * @author schuettec
+ * 
  *
  */
 public interface Engine {

@@ -21,7 +21,7 @@ import com.remondis.limbus.utils.Lang;
  * URLs. This class loader follows the default delegation scheme, but provides an entry point used by the child first
  * {@link PluginClassLoader}.
  *
- * @author schuettec
+ * 
  *
  */
 public class SharedClassLoader extends PluginClassLoader {

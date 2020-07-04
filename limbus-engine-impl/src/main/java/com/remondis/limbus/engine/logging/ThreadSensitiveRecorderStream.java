@@ -15,7 +15,7 @@ import com.remondis.limbus.utils.Lang;
  * specified thread running specified plugin code and writes a copy to the registered {@link ByteArrayOutputStream}.
  * This class
  *
- * @author schuettec
+ * 
  *
  */
 public class ThreadSensitiveRecorderStream extends OutputStream {

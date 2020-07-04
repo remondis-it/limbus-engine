@@ -6,7 +6,7 @@ package com.remondis.limbus.engine.logging;
  *
  * @param <T>
  *        The type of the underlying write target.
- * @author schuettec
+ * 
  *
  */
 public interface TargetWriter<T> {

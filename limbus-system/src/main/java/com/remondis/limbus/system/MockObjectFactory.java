@@ -10,7 +10,7 @@ import com.remondis.limbus.system.api.ObjectFactory;
  * This {@link ObjectFactory} can be configured to be used by the {@link LimbusSystem} to inject mock instances of
  * components.
  *
- * @author schuettec
+ * 
  *
  */
 public class MockObjectFactory implements ObjectFactory {

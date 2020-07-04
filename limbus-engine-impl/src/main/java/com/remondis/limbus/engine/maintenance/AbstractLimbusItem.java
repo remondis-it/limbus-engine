@@ -7,7 +7,7 @@ import com.remondis.limbus.system.api.LimbusComponent;
  * <b>add the item to the maintenance console root category</b>. All basic Limbus Maintenance features are added into
  * the root category..
  *
- * @author schuettec
+ * 
  *
  */
 public abstract class AbstractLimbusItem extends AbstractItem {

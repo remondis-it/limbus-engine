@@ -12,7 +12,7 @@ import com.remondis.limbus.api.IInitializable;
  * classes annotated with {@link LimbusApplication} to import other
  * public components in packages that are not picked up by the component scan.
  * 
- * @author schuettec
+ * 
  *
  */
 @Documented
@@ -38,7 +38,7 @@ public @interface PublicComponent {
   /**
    * Container annotation to enumerate {@link PublicComponent} declarations.
    * 
-   * @author schuettec
+   * 
    *
    */
   @Documented

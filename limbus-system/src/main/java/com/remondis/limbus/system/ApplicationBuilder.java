@@ -24,7 +24,7 @@ import com.remondis.limbus.utils.ReflectionUtil;
 /**
  * Internal class to build a {@link LimbusSystem} from a {@link LimbusApplication} configuration.
  *
- * @author schuettec
+ * 
  *
  */
 public class ApplicationBuilder {

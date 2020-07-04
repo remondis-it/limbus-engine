@@ -48,7 +48,7 @@ import com.remondis.limbus.utils.Lang;
  * The Limbus Engine manages the lifecycle of plugins and provides a class loader hierarchy to isolate plugins
  * with the use of a shared class loader. Plugins can be added and removed during runtime.
  *
- * @author schuettec
+ * 
  *
  */
 public abstract class LimbusEngineImpl extends Initializable<Exception> implements LimbusEngine {

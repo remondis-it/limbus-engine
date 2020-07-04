@@ -12,7 +12,7 @@ import com.remondis.limbus.api.IInitializable;
  * The identifying attribute for this class is the request type.
  * </p>
  *
- * @author schuettec
+ * 
  */
 public class ComponentConfiguration implements Serializable {
 

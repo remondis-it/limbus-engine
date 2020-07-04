@@ -6,7 +6,7 @@ import com.remondis.limbus.api.IInitializable;
 /**
  * This is the public interface for the Limbus maintenance console.
  *
- * @author schuettec
+ * 
  *
  */
 public interface LimbusMaintenanceConsole extends IInitializable<Exception> {

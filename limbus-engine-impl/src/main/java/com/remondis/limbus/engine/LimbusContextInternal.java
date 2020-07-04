@@ -17,7 +17,7 @@ import com.remondis.limbus.utils.Lang;
  * available. The interfaces are only used to provide an internal an external interface for accessing a Limbus
  * context.
  *
- * @author schuettec
+ * 
  *
  */
 public final class LimbusContextInternal implements LimbusContext {

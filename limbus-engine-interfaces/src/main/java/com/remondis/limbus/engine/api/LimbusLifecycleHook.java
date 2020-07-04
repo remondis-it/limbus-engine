@@ -7,7 +7,7 @@ import com.remondis.limbus.api.LimbusPlugin;
  *
  * @param <T>
  *        The type of the plugin
- * @author schuettec
+ * 
  *
  */
 public interface LimbusLifecycleHook<T extends LimbusPlugin> {

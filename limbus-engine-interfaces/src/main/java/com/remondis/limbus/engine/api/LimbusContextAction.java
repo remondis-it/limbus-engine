@@ -7,7 +7,7 @@ package com.remondis.limbus.engine.api;
  *        The return value type
  * @param <E>
  *        The type of exception that may be thrown.
- * @author schuettec
+ * 
  *
  */
 public interface LimbusContextAction<R, E extends Throwable> {

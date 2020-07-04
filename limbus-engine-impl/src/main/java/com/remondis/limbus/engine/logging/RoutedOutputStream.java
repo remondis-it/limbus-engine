@@ -25,7 +25,7 @@ import com.remondis.limbus.utils.Lang;
  * @param <T>
  *        The type of the targets
  *
- * @author schuettec
+ * 
  *
  */
 public class RoutedOutputStream<ID, T> extends OutputStream {

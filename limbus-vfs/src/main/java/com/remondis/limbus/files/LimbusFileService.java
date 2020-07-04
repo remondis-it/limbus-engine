@@ -12,7 +12,7 @@ import com.remondis.limbus.api.IInitializable;
  * delete and browse operations on the filesystem. <b>The file service does not support direct access of absolute paths.
  * All paths will be relative to the current Limbus environment directory.</b>
  *
- * @author schuettec
+ * 
  *
  */
 public interface LimbusFileService extends IInitializable<Exception> {

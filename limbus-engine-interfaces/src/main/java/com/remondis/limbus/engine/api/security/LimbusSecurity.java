@@ -8,7 +8,7 @@ import com.remondis.limbus.api.IInitializable;
 /**
  * This is the Limbus Security component managing the default sandbox permissions for plugins.
  *
- * @author schuettec
+ * 
  *
  */
 public interface LimbusSecurity extends IInitializable<Exception> {

@@ -6,7 +6,7 @@ import com.remondis.limbus.utils.ReflectionUtil;
 /**
  * Factory to create {@link EventMulticaster} instances.
  *
- * @author schuettec
+ * 
  *
  */
 public class EventMulticasterFactory {

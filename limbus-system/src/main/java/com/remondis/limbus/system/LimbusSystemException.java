@@ -3,7 +3,7 @@ package com.remondis.limbus.system;
 /**
  * This exception is thrown by {@link LimbusSystem} if the initialization of the Limbus system components failed.
  *
- * @author schuettec
+ * 
  *
  */
 public class LimbusSystemException extends Exception {

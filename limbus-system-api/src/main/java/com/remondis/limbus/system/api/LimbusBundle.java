@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
  * reference {@link LimbusComponent}s that should be part of the bundle.
  * </p>
  * 
- * @author schuettec
+ * 
  *
  */
 @Documented

@@ -9,7 +9,7 @@ import java.util.Map;
  * @param <T>
  *        The type of the target.
  *
- * @author schuettec
+ * 
  *
  */
 public class ContextClassloaderSelector<T> implements TargetSelector<Integer, T> {

@@ -3,7 +3,7 @@ package com.remondis.limbus.engine.actions;
 /**
  * This interface defines the needed information from an action to be executable per reflection.
  *
- * @author buschmann
+ * 
  *
  */
 public interface ActionExecution {

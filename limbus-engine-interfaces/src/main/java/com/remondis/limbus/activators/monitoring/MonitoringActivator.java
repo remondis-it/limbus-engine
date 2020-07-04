@@ -4,7 +4,7 @@ package com.remondis.limbus.activators.monitoring;
  * This interface defines the Limbus Monitoring Facade activator. It is used to initialize the monitoring with a valid
  * configuration.
  *
- * @author schuettec
+ * 
  *
  */
 public interface MonitoringActivator {

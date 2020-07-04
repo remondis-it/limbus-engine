@@ -12,18 +12,13 @@ import com.remondis.limbus.api.LimbusException;
 /**
  * This is the public deploy service interface providing deploy features for filesystem or Maven deploy.
  * <p>
- * <b>Note:</b> The {@link DeployService} only provides extended deploy features but does not take undeployment
+ * <b>Note:</b> The {@link PluginDeployService} only provides extended deploy features but does not take undeployment
  * operations into account. Use the deploy name of the classpath with {@link LimbusEngine#getClasspath(String)} in
  * conjunction with {@link LimbusEngine#undeployPlugin(Classpath)} to undeploy a classpath. The deploy service provides
  * methods to get the deploy name of classpaths that can be used with the {@link LimbusEngine}.
  * </p>
- *
- *
- *
- * @author schuettec
- *
  */
-public interface DeployService extends IInitializable<LimbusException>, DeploymentListener {
+public interface PluginDeployService extends IInitializable<LimbusException>, DeploymentListener {
 
   /**
    * This is the default Maven extension used for deployments in most cases.

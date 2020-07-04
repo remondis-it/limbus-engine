@@ -10,7 +10,7 @@ import java.util.Date;
  * utility but also contains file system conventions that were specified for the Limbus environment.
  *
  *
- * @author schuettec
+ * 
  *
  */
 public class Files {

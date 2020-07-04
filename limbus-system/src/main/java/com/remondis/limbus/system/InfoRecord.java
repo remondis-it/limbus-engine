@@ -6,7 +6,7 @@ import com.remondis.limbus.utils.StringUtil;
  * This class holds log information to provide information about the initialization order and result in
  * {@link LimbusSystem}.
  *
- * @author schuettec
+ * 
  *
  */
 public class InfoRecord {

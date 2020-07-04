@@ -43,7 +43,7 @@ import com.remondis.limbus.utils.Lang;
  *
  * </p>
  *
- * @author schuettec
+ * 
  *
  */
 public class LimbusProperties {

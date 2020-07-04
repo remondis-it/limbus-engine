@@ -30,7 +30,7 @@ import java.util.Set;
  * character.</b>
  * </p>
  *
- * @author schuettec
+ * 
  *
  */
 public class PermissionFileReader implements Closeable {

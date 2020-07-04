@@ -36,7 +36,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *        The type of the key used for the mapping
  * @param <V>
  *        The type of cached values.
- * @author schuettec
+ * 
  */
 public class Cache<K, V> {
 

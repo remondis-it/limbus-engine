@@ -6,7 +6,7 @@ import com.googlecode.lanterna.gui2.Container;
  * An item represents a leaf in the navigation tree. Selecting an {@link Action}
  * results in opening a new panel.
  *
- * @author schuettec
+ * 
  *
  */
 public abstract class Action extends Item {

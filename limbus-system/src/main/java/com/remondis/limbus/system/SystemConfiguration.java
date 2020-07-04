@@ -14,7 +14,7 @@ import com.remondis.limbus.utils.Lang;
  * This class encapsulates the system configuration that references components to be build and specifies their
  * (de)initialization order.
  *
- * @author schuettec
+ * 
  *
  */
 public final class SystemConfiguration implements Serializable {

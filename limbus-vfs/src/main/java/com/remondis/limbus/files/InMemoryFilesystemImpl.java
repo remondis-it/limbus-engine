@@ -26,7 +26,7 @@ import com.remondis.limbus.utils.Lang;
  * This is an in-memory implementation of a file system. <b>Do not use the in memory representation for huge amount of
  * files.</b>
  *
- * @author schuettec
+ * 
  *
  */
 public class InMemoryFilesystemImpl extends Initializable<Exception> implements LimbusFileService {
