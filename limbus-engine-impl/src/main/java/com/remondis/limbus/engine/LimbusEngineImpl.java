@@ -237,23 +237,24 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
 
   @Override
   public <T extends LimbusPlugin> T getPlugin(Classpath classpath, String classname, Class<T> expectedType,
-      boolean initialize) throws LimbusException, NoSuchDeploymentException {
+      LimbusLifecycleHook<T> lifecycleHook, boolean initialize) throws LimbusException, NoSuchDeploymentException {
     checkState();
     if (deploymentMap.containsKey(classpath)) {
       Deployment deployment = deploymentMap.get(classpath);
-      return deployment.getPlugin(classname, expectedType, null, initialize);
+      return deployment.getPlugin(classname, expectedType, lifecycleHook, initialize);
     } else {
       throw new NoSuchDeploymentException("The specified classpath is not deployed on this container.");
     }
   }
 
   @Override
-  public <T extends LimbusPlugin> T getPlugin(Classpath classpath, String classname, Class<T> expectedType,
-      LimbusLifecycleHook<T> lifecycleHook) throws LimbusException, NoSuchDeploymentException {
+  public <T extends LimbusPlugin, S extends T> S getPluginAsInterface(Classpath classpath, String classname,
+      Class<T> pluginInterface, Class<S> supportedInteface, LimbusLifecycleHook<T> lifecycleHook, boolean initialize)
+      throws LimbusException {
     checkState();
     if (deploymentMap.containsKey(classpath)) {
       Deployment deployment = deploymentMap.get(classpath);
-      return deployment.getPlugin(classname, expectedType, lifecycleHook);
+      return deployment.createPluginProxy(classname, pluginInterface, supportedInteface, lifecycleHook, initialize);
     } else {
       throw new NoSuchDeploymentException("The specified classpath is not deployed on this container.");
     }

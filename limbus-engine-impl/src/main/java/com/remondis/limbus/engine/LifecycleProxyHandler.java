@@ -175,7 +175,7 @@ public class LifecycleProxyHandler<P extends LimbusPlugin> implements Invocation
     }
   }
 
-  private P getPluginObjectOrFail() {
+  P getPluginObjectOrFail() {
     P p = pluginRef.get();
     if (p == null) {
       throw new PluginUndeployedException("The requested plugin was undeployed.");

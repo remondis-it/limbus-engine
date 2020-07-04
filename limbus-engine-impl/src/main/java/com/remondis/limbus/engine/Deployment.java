@@ -62,45 +62,6 @@ class Deployment extends Initializable<LimbusClasspathException> {
 
   /**
    * Returns a Limbus plugin instance from this deployment. If the plugin class is known by this deployment and was not
-   * created and initialized before, this method creates the plugin instance and initializes the plugin. <b>Note: This
-   * method does not create a lifecycle hook. The caller must ensure that the requested plugin type does not require a
-   * lifecycle hook.</b>
-   *
-   * @param classname
-   *        The classname of the plugin
-   * @param expectedType
-   *        The interface the plugin implements.
-   * @return Returns the plugin instance as the expected type if creation and initialization was successfull.
-   * @throws LimbusException
-   *         Thrown if the creation or initialization failed.
-   */
-  protected <T extends LimbusPlugin> T getPlugin(String classname, Class<T> expectedType) throws LimbusException {
-    return getPlugin(classname, expectedType, null);
-  }
-
-  /**
-   * Returns a Limbus plugin instance from this deployment. If the plugin class is known by this deployment and was not
-   * created and initialized before, this method creates the plugin instance and initializes the plugin. <b>Note: This
-   * method does not create a lifecycle hook. The caller must ensure that the requested plugin type does not require a
-   * lifecycle hook.</b>
-   *
-   * @param classname
-   *        The classname of the plugin
-   * @param expectedType
-   *        The interface the plugin implements.
-   * @param lifecycleHook
-   *        (Optional) The lifecycle hook that intercepts the plugin's lifecycle methods.
-   * @return Returns the plugin instance as the expected type if creation and initialization was successfull.
-   * @throws LimbusException
-   *         Thrown if the creation or initialization failed.
-   */
-  protected <T extends LimbusPlugin> T getPlugin(String classname, Class<T> expectedType,
-      LimbusLifecycleHook<T> lifecycleHook) throws LimbusException {
-    return getPlugin(classname, expectedType, null, true);
-  }
-
-  /**
-   * Returns a Limbus plugin instance from this deployment. If the plugin class is known by this deployment and was not
    * created and initialized before, this method creates the plugin instance, creates the lifecycle hook if specified
    * and initializes the plugin.
    *
@@ -127,6 +88,36 @@ class Deployment extends Initializable<LimbusClasspathException> {
         limbusPlugin = initializePlugin(classname, pluginInterface, lifecycleHook, limbusPlugin, initialize);
         return limbusPlugin;
       }
+    } catch (LimbusClasspathException e) {
+      // schuettec - 27.01.2017 : Wrap the classpath exception into a LimbusException. It is indeed worth to throw a
+      // classpath exception here, but this would change the minor version and breaks backwards compatibility.
+      String message;
+      if (classpath.hasDeployName()) {
+        message = String.format("Error while accessing plugin %s for plugin interface %s in deployment %s.", classname,
+            pluginInterface.getName(), classpath.getDeployName());
+      } else {
+        message = String.format("Error while accessing plugin %s for plugin interface %s.", classname,
+            pluginInterface.getName());
+      }
+      throw new LimbusException(message, e);
+    }
+  }
+
+  /**
+   * Creates a new proxy wrapping a plugin instance by supporting the specified interface. The interface must be
+   * implemented by the plugin and note: <strong>The proxy class is defined using the classloader of the specified
+   * interface.</strong>
+   */
+  protected <S, T extends LimbusPlugin> S createPluginProxy(String classname, Class<T> pluginInterface,
+      Class<S> supportedInteface, LimbusLifecycleHook<T> lifecycleHook, boolean initialize) throws LimbusException {
+    try {
+      T plugin = getPlugin(classname, pluginInterface, lifecycleHook, initialize);
+      LifecycleProxyHandler invocationHandler = (LifecycleProxyHandler) Proxy.getInvocationHandler(plugin);
+      LimbusPlugin pluginObject = invocationHandler.getPluginObjectOrFail();
+      // schuettec - 27.01.2017 : Let the proxy will be defined in the classloader of the supported interface.
+      return (S) Proxy.newProxyInstance(supportedInteface.getClassLoader(), new Class<?>[] {
+          pluginInterface, supportedInteface
+      }, invocationHandler);
     } catch (LimbusClasspathException e) {
       // schuettec - 27.01.2017 : Wrap the classpath exception into a LimbusException. It is indeed worth to throw a
       // classpath exception here, but this would change the minor version and breaks backwards compatibility.
