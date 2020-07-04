@@ -1,11 +1,8 @@
 package com.remondis.limbus.system;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,10 +29,7 @@ public final class SystemConfiguration implements Serializable {
    */
   protected ObjectFactory objectFactory;
 
-  transient Map<Class<?>, Set<Class>> publicComponents = new Hashtable<>();
-  transient Set<Class<?>> privateComponents = new HashSet<>();
-
-  public List<ComponentConfiguration> components;
+  protected List<ComponentConfiguration> components;
 
   /**
    * Creates a new {@link SystemConfiguration} containig all component configurations from the specified configuration.

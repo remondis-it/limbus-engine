@@ -131,8 +131,10 @@ public interface LimbusEngine extends IInitializable<Exception> {
    * @throws NoSuchDeploymentException
    *         Thrown if the classpath is not deployed on this container.
    */
-  public <T extends LimbusPlugin> T getPlugin(Classpath classpath, String classname, Class<T> expectedType)
-      throws LimbusException, NoSuchDeploymentException;
+  public default <T extends LimbusPlugin> T getPlugin(Classpath classpath, String classname, Class<T> expectedType)
+      throws LimbusException, NoSuchDeploymentException {
+    return getPlugin(classpath, classname, expectedType, null);
+  }
 
   /**
    * Provides access to deployed plugins of this {@link LimbusEngine}. <b>Attention: Use this method with care!
@@ -162,6 +164,34 @@ public interface LimbusEngine extends IInitializable<Exception> {
    */
   public <T extends LimbusPlugin> T getPlugin(Classpath classpath, String classname, Class<T> expectedType,
       LimbusLifecycleHook<T> lifecycleHook) throws LimbusException, NoSuchDeploymentException;
+
+  /**
+   * Provides access to deployed plugins of this {@link LimbusEngine}. <b>Attention: Use this method with care!
+   * Plugins are loaded by their specific classloaders, therefore any call to a plugin must be performed with the
+   * specific thread context classloader set.</b>
+   * <p>
+   * <b>Do not cache the instances to the returned plugins! Plugins may be undeployed from the container anytime
+   * during runtime so it is important to keep those references in the engines lifecycle and honor the undeploy
+   * events.</b>
+   * </p>
+   *
+   * @param classpath
+   *        The classpath the plugin is expected to be available in.
+   * @param classname
+   *        The classname of the plugin.
+   * @param expectedType
+   *        The expected plugin type. The plugin type must be derived from {@link LimbusPlugin}.
+   * @param initialize If <code>true</code> the plugin is initialized, if <code>false</code> the caller is responsible
+   *        to initialize the plugin using a {@link LimbusContextAction}.
+   * @return Returns the plugin if available.
+   * @throws LimbusException
+   *         Thrown if the plugin could not be initialized, the plugin was not found, the classpath is not
+   *         deployed or the expected type does not match.
+   * @throws NoSuchDeploymentException
+   *         Thrown if the classpath is not deployed on this container.
+   */
+  public <T extends LimbusPlugin> T getPlugin(Classpath classpath, String classname, Class<T> expectedType,
+      boolean initialize) throws LimbusException, NoSuchDeploymentException;
 
   /**
    * Deploys a classpath on this Limbus container and restricts the classpath using the specified set of permissions.

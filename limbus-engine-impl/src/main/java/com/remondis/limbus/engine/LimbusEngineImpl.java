@@ -233,10 +233,15 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
   }
 
   @Override
-  public <T extends LimbusPlugin> T getPlugin(Classpath classpath, String classname, Class<T> expectedType)
-      throws LimbusException, NoSuchDeploymentException {
+  public <T extends LimbusPlugin> T getPlugin(Classpath classpath, String classname, Class<T> expectedType,
+      boolean initialize) throws LimbusException, NoSuchDeploymentException {
     checkState();
-    return getPlugin(classpath, classname, expectedType, null);
+    if (deploymentMap.containsKey(classpath)) {
+      Deployment deployment = deploymentMap.get(classpath);
+      return deployment.getPlugin(classname, expectedType, null, initialize);
+    } else {
+      throw new NoSuchDeploymentException("The specified classpath is not deployed on this container.");
+    }
   }
 
   @Override
