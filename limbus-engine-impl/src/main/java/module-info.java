@@ -1,6 +1,8 @@
 open module com.remondis.limbus.engine.implementation {
   exports com.remondis.limbus.engine;
   exports com.remondis.limbus.engine.logging;
+  exports com.remondis.limbus.engine.aether;
+  exports com.remondis.limbus.engine.actions;
 
   requires com.remondis.limbus.launcher;
   requires com.remondis.limbus.api;
