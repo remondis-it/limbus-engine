@@ -285,10 +285,22 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
       List<ComponentConfiguration> components = configuration.getComponents();
       createAllComponents(components);
       forAllComponents(allComponents, (component) -> {
-        injectDependencies(component);
+        /*
+         * A component can already be initialized, because another dependency
+         * path triggered initialization before.
+         */
+        if (!initializeOrder.contains(component)) {
+          injectDependencies(component);
+        }
       });
       forAllComponents(allComponents, (component) -> {
-        initializeComponentOnDemand(component);
+        /*
+         * A component can already be initialized, because another dependency
+         * path triggered initialization before.
+         */
+        if (!initializeOrder.contains(component)) {
+          initializeComponentOnDemand(component);
+        }
       });
       denyRequests.set(false);
       firePostInitializeEvent();
