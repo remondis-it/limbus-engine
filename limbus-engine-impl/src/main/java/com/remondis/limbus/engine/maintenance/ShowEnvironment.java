@@ -26,7 +26,7 @@ public class ShowEnvironment extends AbstractLimbusItem {
 
   @LimbusComponent
   protected DeployService deployService;
-  
+
   @LimbusComponent
   protected MavenArtifactService artifacts;
 

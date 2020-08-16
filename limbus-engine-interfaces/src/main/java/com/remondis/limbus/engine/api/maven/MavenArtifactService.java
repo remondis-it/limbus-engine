@@ -5,13 +5,12 @@ import java.util.List;
 
 import com.remondis.limbus.api.IInitializable;
 
-
 /**
  * Service providing features to resolve and download Maven artifacts by their coordinates. Service implementations may
  * rely on the local Maven configuration so retrieve the requires settings.
  * 
  */
-public interface MavenArtifactService extends IInitializable<Exception>{
+public interface MavenArtifactService extends IInitializable<Exception> {
 
   /**
    * Provides access to the user settings file.

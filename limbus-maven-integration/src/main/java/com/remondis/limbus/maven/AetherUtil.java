@@ -49,7 +49,6 @@ import org.eclipse.aether.util.repository.AuthenticationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * This class handles the access to the Maven repositories for plugin deployment. It contains methods that can access
  * the local Maven installation and the settings (settings.xml) of the current user to retrieve dependencies.

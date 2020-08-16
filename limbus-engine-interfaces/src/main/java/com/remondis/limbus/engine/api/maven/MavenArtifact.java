@@ -52,5 +52,4 @@ public interface MavenArtifact {
    */
   File getFile();
 
-
 }

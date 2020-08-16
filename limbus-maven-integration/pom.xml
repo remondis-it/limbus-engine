@@ -11,6 +11,8 @@
 	<name>Limbus Maven Integration</name>
 	<description>This library provides a service implementation to resolve, download and provide Maven artifacts from remote/local repositories. This library uses Aether and Maven dependencies that are based on Java 8. Because the projects were terminated and Maven developers announced that no compatibility for Java 9 is planned, this service must be deployed on the legacy Java &lt; 9 class path.</description>
 	<properties>
+		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
+
 		<!-- Dependency Versions -->
 		<!-- Aether API Version -->
 		<aetherVersion>1.0.2.v20150114</aetherVersion>
