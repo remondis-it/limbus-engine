@@ -25,17 +25,16 @@ import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.eclipse.aether.artifact.Artifact;
-import org.eclipse.aether.resolution.ArtifactResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.remondis.limbus.api.Classpath;
 import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.api.LimbusException;
-import com.remondis.limbus.engine.aether.AetherUtil;
 import com.remondis.limbus.engine.api.DeployService;
 import com.remondis.limbus.engine.api.LimbusEngine;
+import com.remondis.limbus.engine.api.maven.MavenArtifact;
+import com.remondis.limbus.engine.api.maven.MavenArtifactService;
 import com.remondis.limbus.engine.api.security.LimbusSecurity;
 import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.properties.LimbusProperties;
@@ -96,6 +95,9 @@ public class DeployServiceImpl extends Initializable<LimbusException> implements
 
   @LimbusComponent
   protected LimbusFileService filesystem;
+
+  @LimbusComponent
+  protected MavenArtifactService artifacts;
 
   private Thread directoryWatcher;
   private WatchService watcher;
@@ -360,12 +362,10 @@ public class DeployServiceImpl extends Initializable<LimbusException> implements
     try {
       File pluginDirectory = getCreateOrFailPluginDirectory(deployName);
 
-      List<ArtifactResult> artifacts = AetherUtil.resolveArtifactAndTransitiveDependencies(groupId, artifactId,
+      List<MavenArtifact> mavenArtifacts = artifacts.resolveArtifactAndTransitiveDependencies(groupId, artifactId,
           extension, version);
 
-      for (ArtifactResult artifactResult : artifacts) {
-        Artifact artifact = artifactResult.getArtifact();
-
+      for (MavenArtifact artifact : mavenArtifacts) {
         File artifactFile = artifact.getFile();
         File pluginArtifact = new File(pluginDirectory, artifactFile.getName());
         try (FileInputStream fin = new FileInputStream(artifactFile);

@@ -16,8 +16,8 @@ import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogBuilder;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogButton;
-import com.remondis.limbus.engine.aether.AetherUtil;
 import com.remondis.limbus.engine.api.DeployService;
+import com.remondis.limbus.engine.api.maven.MavenArtifactService;
 import com.remondis.limbus.launcher.EngineLauncher;
 import com.remondis.limbus.system.api.LimbusComponent;
 import com.remondis.limbus.utils.Files;
@@ -26,6 +26,9 @@ public class ShowEnvironment extends AbstractLimbusItem {
 
   @LimbusComponent
   protected DeployService deployService;
+  
+  @LimbusComponent
+  protected MavenArtifactService artifacts;
 
   public ShowEnvironment() {
     super("Environment");
@@ -50,28 +53,28 @@ public class ShowEnvironment extends AbstractLimbusItem {
 
       @Override
       public File call() throws Exception {
-        return AetherUtil.getUserHome();
+        return artifacts.getUserHome();
       }
     }, maven);
     addDirectoryInfo("Maven User Home:", new Callable<File>() {
 
       @Override
       public File call() throws Exception {
-        return AetherUtil.getUserMavenConfigurationHome();
+        return artifacts.getUserMavenConfigurationHome();
       }
     }, maven);
     addDirectoryInfo("Maven User Repository:", new Callable<File>() {
 
       @Override
       public File call() throws Exception {
-        return AetherUtil.getUserLocalRepository();
+        return artifacts.getUserLocalRepository();
       }
     }, maven);
     addDirectoryInfo("Maven User Settings:", new Callable<File>() {
 
       @Override
       public File call() throws Exception {
-        return AetherUtil.getUserSettingsFile();
+        return artifacts.getUserSettingsFile();
       }
     }, maven);
 

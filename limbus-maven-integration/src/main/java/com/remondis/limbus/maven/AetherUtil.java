@@ -1,4 +1,4 @@
-package com.remondis.limbus.engine.aether;
+package com.remondis.limbus.maven;
 
 import static com.remondis.limbus.utils.Files.getOrFailDirectory;
 import static com.remondis.limbus.utils.Files.getOrFailFile;
@@ -17,7 +17,6 @@ import org.apache.maven.settings.Settings;
 import org.apache.maven.settings.building.DefaultSettingsBuilder;
 import org.apache.maven.settings.building.DefaultSettingsBuilderFactory;
 import org.apache.maven.settings.building.DefaultSettingsBuildingRequest;
-import org.apache.maven.settings.building.SettingsBuildingException;
 import org.apache.maven.settings.building.SettingsBuildingRequest;
 import org.apache.maven.settings.building.SettingsBuildingResult;
 import org.eclipse.aether.DefaultRepositorySystemSession;
@@ -50,7 +49,6 @@ import org.eclipse.aether.util.repository.AuthenticationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.remondis.limbus.api.LimbusException;
 
 /**
  * This class handles the access to the Maven repositories for plugin deployment. It contains methods that can access
@@ -155,7 +153,7 @@ public class AetherUtil {
     return artifactResults;
   }
 
-  private static void logMavenSessionInfo() throws LimbusException {
+  private static void logMavenSessionInfo() throws Exception {
     try {
       StringBuilder logOverview = new StringBuilder("The following paths will be used for this Maven session:");
       logOverview.append("\n")
@@ -174,7 +172,7 @@ public class AetherUtil {
           .append(getUserSettingsFile());
       log.debug(logOverview.toString());
     } catch (Exception e) {
-      throw new LimbusException("Some of the required files or folders is not accessible!", e);
+      throw new Exception("Some of the required files or folders is not accessible!", e);
     }
   }
 
@@ -277,7 +275,7 @@ public class AetherUtil {
   // return local;
   // }
 
-  private static Settings getEffectiveSettings() throws SettingsBuildingException, LimbusException {
+  private static Settings getEffectiveSettings() throws Exception {
     try {
       SettingsBuildingRequest settingsBuildingRequest = new DefaultSettingsBuildingRequest();
       settingsBuildingRequest.setSystemProperties(System.getProperties());
@@ -292,7 +290,7 @@ public class AetherUtil {
       Settings effectiveSettings = settingsBuildingResult.getEffectiveSettings();
       return effectiveSettings;
     } catch (Exception e) {
-      throw new LimbusException("Some of the required files or folders is not accessible!", e);
+      throw new Exception("Some of the required files or folders is not accessible!", e);
     }
   }
 
