@@ -142,6 +142,11 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>limbus-maven-integration</artifactId>
 			<version>${project.version}</version>
+			<!-- The Limbus Maven Integration results in a non-modularized Jar. From 
+				a module's perspective, this Jar is cannot be referenced directly. The Maven 
+				Integration is indeed provided as a Java Service Loader Interface, hence 
+				this dependency should be declared as provided. -->
+			<scope>provided</scope>
 		</dependency>
 
 
