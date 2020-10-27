@@ -240,7 +240,7 @@ public interface LimbusEngine extends IInitializable<Exception> {
    * 
    * @param <T> The plugin type.
    * @param field The field to inject.
-   * @param pluginProxy The plugin instance (normally a proxy object).
+   * @param pluginInstance The plugin instance (normally a proxy object).
    * @param value The value to inject.
    */
   public <T extends LimbusPlugin> void performPropertyInjection(Field field, T pluginInstance, Object value);
