@@ -455,7 +455,8 @@ public class ReflectionUtil {
           while (jarEntries.hasMoreElements()) {
             String entryName = jarEntries.nextElement()
                 .getName();
-            if (entryName.startsWith(packageName) && entryName.length() > packageName.length() + 5) {
+            if (entryName.startsWith(packageName) && entryName.endsWith("class")
+                && entryName.length() > packageName.length() + 5) {
               entryName = entryName.substring(0, entryName.lastIndexOf('.'));
               String clsName = entryName.replaceAll("/", ".");
               names.add(clsName);
