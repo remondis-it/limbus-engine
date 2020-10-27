@@ -406,11 +406,30 @@ public class DeployServiceImpl extends Initializable<LimbusException> implements
   @Override
   public String toDeployName(String groupId, String artifactId, String extension, String version) {
     checkState();
+    return getDeployName(groupId, artifactId, extension, version);
+  }
+
+  /**
+   * Returns a deploy name from Maven coordinates.
+   * 
+   * @param groupId Group Id.
+   * @param artifactId Artifact Id.
+   * @param extension Extension.
+   * @param version Version.
+   * @return Returns the deployname.
+   */
+  public static String getDeployName(String groupId, String artifactId, String extension, String version) {
     extension = defaultExtensionIfNull(extension);
     return String.format("%s_%s_%s_%s", groupId, artifactId, extension, version);
   }
 
-  private String defaultExtensionIfNull(String extension) {
+  /**
+   * Returns the default Maven extension if extension is <code>null</code>.
+   * 
+   * @param extension The actual extension.
+   * @return Returns the default extension.
+   */
+  public static String defaultExtensionIfNull(String extension) {
     if (extension == null) {
       return DEFAULT_MAVEN_EXTENSION;
     } else {
