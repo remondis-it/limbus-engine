@@ -27,6 +27,6 @@ import com.remondis.limbus.system.api.PublicComponent;
 @PrivateComponent(ShowSharedClassPath.class)
 @PrivateComponent(ShowPluginClassPaths.class)
 @PrivateComponent(ShowDeployService.class)
-public class MaintenanceBundle {
+public class LimbusMaintenanceBundle {
 
 }

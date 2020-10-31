@@ -98,7 +98,7 @@ public class LimbusSecurityImpl extends Initializable<Exception> implements Limb
    * is logged and an empty {@link Permission} set is created to grant no permisssions.
    */
   private final void readSandboxDefaultPermissions() {
-    InputStream sandboxDefaultInput = LimbusSecurity.class.getResourceAsStream(SANDBOX_DEFAULT_PERMISSIONS);
+    InputStream sandboxDefaultInput = LimbusSecurityImpl.class.getResourceAsStream(SANDBOX_DEFAULT_PERMISSIONS);
     if (sandboxDefaultInput == null) {
       log.error(String.format("The default sandbox permission file was not found on classpath '%s'.",
           SANDBOX_DEFAULT_PERMISSIONS));
