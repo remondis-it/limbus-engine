@@ -1,5 +1,6 @@
 package com.remondis.limbus.engine;
 
+import static com.remondis.limbus.engine.api.maven.MavenArtifactService.defaultExtensionIfNull;
 import static com.remondis.limbus.utils.Files.createIfMissingDirectory;
 import static com.remondis.limbus.utils.Files.getCurrentDirectory;
 import static com.remondis.limbus.utils.Files.getOrFailDirectory;
@@ -421,20 +422,6 @@ public class DeployServiceImpl extends Initializable<LimbusException> implements
   public static String getDeployName(String groupId, String artifactId, String extension, String version) {
     extension = defaultExtensionIfNull(extension);
     return String.format("%s_%s_%s_%s", groupId, artifactId, extension, version);
-  }
-
-  /**
-   * Returns the default Maven extension if extension is <code>null</code>.
-   * 
-   * @param extension The actual extension.
-   * @return Returns the default extension.
-   */
-  public static String defaultExtensionIfNull(String extension) {
-    if (extension == null) {
-      return DEFAULT_MAVEN_EXTENSION;
-    } else {
-      return extension;
-    }
   }
 
   /**

@@ -5,10 +5,12 @@ import static java.util.Objects.nonNull;
 import java.io.File;
 import java.util.List;
 import java.util.ServiceLoader;
+import java.util.Set;
 
 import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.engine.api.maven.MavenArtifact;
 import com.remondis.limbus.engine.api.maven.MavenArtifactService;
+import com.remondis.limbus.engine.api.maven.MavenCoordinates;
 
 /**
  * This class provides an instance of {@link MavenArtifactService} located by the {@link ServiceLoader}. This
@@ -68,6 +70,11 @@ public class MavenArtifactServiceIntegrator extends Initializable<Exception> imp
   public List<MavenArtifact> resolveArtifactAndTransitiveDependencies(String groupId, String artifactId,
       String extension, String version) throws Exception {
     return delegate.resolveArtifactAndTransitiveDependencies(groupId, artifactId, extension, version);
+  }
+
+  @Override
+  public void downloadAndCopyMavenArtifacts(Set<MavenCoordinates> artifacts, File targetDirectory) throws Exception {
+    delegate.downloadAndCopyMavenArtifacts(artifacts, targetDirectory);
   }
 
 }
