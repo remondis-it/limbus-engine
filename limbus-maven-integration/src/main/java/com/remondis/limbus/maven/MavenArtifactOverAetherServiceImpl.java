@@ -11,13 +11,18 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.aether.resolution.ArtifactResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.remondis.limbus.engine.api.DeployService;
 import com.remondis.limbus.engine.api.maven.MavenArtifact;
 import com.remondis.limbus.engine.api.maven.MavenArtifactService;
 import com.remondis.limbus.engine.api.maven.MavenCoordinates;
 import com.remondis.limbus.utils.Lang;
 
 public class MavenArtifactOverAetherServiceImpl implements MavenArtifactService {
+
+  private static final Logger log = LoggerFactory.getLogger(DeployService.class);
 
   @Override
   public void initialize() throws Exception {
@@ -60,6 +65,8 @@ public class MavenArtifactOverAetherServiceImpl implements MavenArtifactService 
       String artifactId = coordinates.getArtifactId();
       String version = coordinates.getVersion();
 
+      log.info("Downloading Maven artifact: " + coordinates);
+
       // Normalize extension
       String extension = MavenArtifactService.defaultExtensionIfNull(null);
 
@@ -69,6 +76,7 @@ public class MavenArtifactOverAetherServiceImpl implements MavenArtifactService 
       for (MavenArtifact artifact : mavenArtifacts) {
         File artifactFile = artifact.getFile();
         File pluginArtifact = new File(targetDirectory, artifactFile.getName());
+        log.debug("...copying Maven artifact to: " + pluginArtifact.toString());
         try (FileInputStream fin = new FileInputStream(artifactFile);
             FileOutputStream fout = new FileOutputStream(pluginArtifact);) {
           Lang.copy(fin, fout);

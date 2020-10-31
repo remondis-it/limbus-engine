@@ -72,4 +72,10 @@ public class MavenCoordinates {
     this.extension = extension;
   }
 
+  @Override
+  public String toString() {
+    return "Maven artifact: " + groupId + ":" + artifactId + ":" + version + " (extension: " + extension
+        + ", classifier: " + classifier + ")";
+  }
+
 }
