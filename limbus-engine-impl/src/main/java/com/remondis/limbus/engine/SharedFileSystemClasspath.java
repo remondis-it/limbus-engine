@@ -56,7 +56,6 @@ public class SharedFileSystemClasspath extends Initializable<Exception> implemen
   }
 
   protected void createSharedClassPathFolder() throws FileAccessException {
-    filesystem.deleteFolder(LIB_FOLDER);
     filesystem.createFolder(LIB_FOLDER, false);
   }
 
