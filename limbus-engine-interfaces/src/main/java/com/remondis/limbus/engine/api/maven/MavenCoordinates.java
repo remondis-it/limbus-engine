@@ -5,15 +5,15 @@ package com.remondis.limbus.engine.api.maven;
  */
 public class MavenCoordinates {
 
-  private String groupId;
+  protected String groupId;
 
-  private String artifactId;
+  protected String artifactId;
 
-  private String version;
+  protected String version;
 
-  private String classifier;
+  protected String classifier;
 
-  private String extension;
+  protected String extension;
 
   public MavenCoordinates() {
     super();

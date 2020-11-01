@@ -1,6 +1,6 @@
 import com.remondis.limbus.engine.api.maven.MavenArtifactService;
 
-open module com.remondis.limbus.engine.implementation{exports com.remondis.limbus.engine;exports com.remondis.limbus.engine.logging;exports com.remondis.limbus.engine.actions;
+open module com.remondis.limbus.engine.implementation{exports com.remondis.limbus.engine;exports com.remondis.limbus.engine.logging;exports com.remondis.limbus.engine.actions;exports com.remondis.limbus.engine.maintenance;exports com.remondis.limbus.engine.security;
 
 uses MavenArtifactService;
 
