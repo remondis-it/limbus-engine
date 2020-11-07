@@ -33,9 +33,8 @@ public abstract class LimbusServicePlugin extends Initializable<Exception> imple
   }
 
   @Override
-  public void initialize() throws Exception {
-    super.initialize();
-
+  protected void performInitialize() throws Exception {
+    super.performInitialize();
     this.pluginThread.start();
   }
 
@@ -48,7 +47,7 @@ public abstract class LimbusServicePlugin extends Initializable<Exception> imple
   }
 
   @Override
-  public void finish() {
+  protected void performFinish() {
     this.pluginThread.interrupt();
     try {
       this.pluginThread.join();
@@ -62,7 +61,6 @@ public abstract class LimbusServicePlugin extends Initializable<Exception> imple
               .getName())).printStackTrace();
     }
 
-    super.finish();
+    super.performFinish();
   }
-
 }
