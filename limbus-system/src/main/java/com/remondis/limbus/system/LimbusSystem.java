@@ -77,27 +77,27 @@ import com.remondis.limbus.utils.ReflectionUtil;
  * @author schuettec
  *
  */
-public final class LimbusSystem extends Initializable<LimbusSystemException> {
+public class LimbusSystem extends Initializable<LimbusSystemException> {
 
   private static final Logger log = LoggerFactory.getLogger(LimbusSystem.class);
 
   protected static final ObjectFactory DEFAULT_FACTORY = new ReflectiveObjectFactory();
 
-  private SystemConfiguration configuration;
+  protected SystemConfiguration configuration;
 
-  private ObjectFactory objectFactory;
+  protected ObjectFactory objectFactory;
 
-  private Map<Class<? extends IInitializable<?>>, Component> publicComponents;
+  protected Map<Class<? extends IInitializable<?>>, Component> publicComponents;
 
-  private List<Component> allComponents;
+  protected List<Component> allComponents;
 
-  private List<InfoRecord> infoRecords;
+  protected List<InfoRecord> infoRecords;
 
-  private AtomicBoolean denyRequests = new AtomicBoolean(false);
+  protected AtomicBoolean denyRequests = new AtomicBoolean(false);
 
-  private List<Component> initializeOrder;
+  protected List<Component> initializeOrder;
 
-  private EventMulticaster<LimbusSystemListener> listeners;
+  protected EventMulticaster<LimbusSystemListener> listeners;
 
   public LimbusSystem() {
     this.listeners = EventMulticasterFactory.create(LimbusSystemListener.class);
@@ -110,7 +110,7 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     this.objectFactory = objectFactory;
   }
 
-  LimbusSystem(SystemConfiguration configuration) {
+  protected LimbusSystem(SystemConfiguration configuration) {
     this();
     Lang.denyNull("configuration", configuration);
     this.objectFactory = configuration.getObjectFactory();
@@ -119,14 +119,14 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     addAllFromSystemConfiguration(configuration);
   }
 
-  private void addAllFromSystemConfiguration(SystemConfiguration configuration) {
+  protected void addAllFromSystemConfiguration(SystemConfiguration configuration) {
     List<ComponentConfiguration> components = configuration.getComponents();
     for (ComponentConfiguration c : components) {
       this.configuration.addComponentConfiguration(c);
     }
   }
 
-  private List<InfoRecord> lazyInfoRecord() {
+  protected List<InfoRecord> lazyInfoRecord() {
     if (infoRecords == null) {
       this.infoRecords = new LinkedList<InfoRecord>();
     }
@@ -146,7 +146,7 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
    * @param supplier
    *        The supplier or a new {@link InfoRecord}. Only evaluated if the info feature is currently enabled.
    */
-  private void infoRecord(Supplier<InfoRecord> supplier) {
+  protected void infoRecord(Supplier<InfoRecord> supplier) {
     List<InfoRecord> infoRecords = lazyInfoRecord();
     if (infoRecords != null) {
       infoRecords.add(supplier.get());
@@ -178,19 +178,19 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
    */
   public <I extends IInitializable<?>> void addComponentConfiguration(Class<I> componentType, boolean failOnError) {
     Lang.denyNull("componentType", componentType);
-    ComponentConfiguration component = new ComponentConfiguration(componentType, failOnError);
+    ComponentConfiguration component = createComponentConfiguration(componentType, failOnError);
     configuration.addComponentConfiguration(component);
   }
 
   public <I extends IInitializable<?>> void removePrivateComponentConfiguration(Class<I> componentType) {
     Lang.denyNull("componentType", componentType);
-    ComponentConfiguration component = new ComponentConfiguration(componentType, false);
+    ComponentConfiguration component = createComponentConfiguration(componentType, false);
     configuration.removeComponentConfiguration(component);
   }
 
   public <T extends IInitializable<?>> void removePublicComponentConfiguration(Class<T> requestType) {
     Lang.denyNull("requestType", requestType);
-    ComponentConfiguration component = new ComponentConfiguration(requestType, null);
+    ComponentConfiguration component = createComponentConfiguration(requestType);
     configuration.removeComponentConfiguration(component);
   }
 
@@ -210,7 +210,7 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
       Class<I> componentType) {
     Lang.denyNull("componentType", componentType);
     // schuettec - 06.03.2017 : Public components are always required.
-    ComponentConfiguration component = new ComponentConfiguration(requestType, componentType, true);
+    ComponentConfiguration component = createComponentConfiguration(requestType, componentType);
     configuration.addComponentConfiguration(component);
   }
 
@@ -250,15 +250,15 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     return _hasComponent(requestType);
   }
 
-  private boolean _hasComponent(Class<?> requestType) {
+  protected boolean _hasComponent(Class<?> requestType) {
     return publicComponents.containsKey(requestType);
   }
 
-  private Object getInstance(Class<?> requestType) {
+  protected Object getInstance(Class<?> requestType) {
     return _getComponent(requestType).getPublicReference();
   }
 
-  private Component _getComponent(Class<?> requestType) {
+  protected Component _getComponent(Class<?> requestType) {
     if (publicComponents.containsKey(requestType)) {
       Component component = publicComponents.get(requestType);
       return component;
@@ -267,7 +267,7 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     }
   }
 
-  private void denyOnDemand() {
+  protected void denyOnDemand() {
     if (denyRequests.get()) {
       throw new IllegalStateException(
           "The Limbus system is currently starting/stopping and no components can be requested.");
@@ -309,12 +309,12 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     }
   }
 
-  private void firePostInitializeEvent() {
+  protected void firePostInitializeEvent() {
     listeners.multicastSilently()
         .postInitialize();
   }
 
-  private void firePreDestroyEvent() {
+  protected void firePreDestroyEvent() {
     listeners.multicastSilently()
         .preDestroy();
     listeners.clear();
@@ -328,11 +328,11 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     logInfoRecords();
   }
 
-  private void logInfoRecordsOnDemand() {
+  protected void logInfoRecordsOnDemand() {
     logInfoRecords();
   }
 
-  private void logInfoRecords() {
+  protected void logInfoRecords() {
     StringBuilder b = new StringBuilder("Dumping the component info records collected:\n");
     b.append(InfoRecord.toRecordHeader())
         .append("\n");
@@ -344,7 +344,7 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     log.info(b.toString());
   }
 
-  private void initializeComponent(Component component) throws LimbusComponentException {
+  protected void initializeComponent(Component component) throws LimbusComponentException {
     ComponentConfiguration conf = component.getConfiguration();
     IInitializable<?> instance = component.getInstance();
     try {
@@ -364,11 +364,11 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     }
   }
 
-  private void removeComponent(Component component) {
+  protected void removeComponent(Component component) {
     finishComponentOnDemand(component);
   }
 
-  private void finishComponentOnDemand(Component component) {
+  protected void finishComponentOnDemand(Component component) {
     if (isInitializedComponent(component)) {
       try {
         finishComponent(component);
@@ -378,7 +378,7 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     }
   }
 
-  private void finishComponent(Component component) throws Exception {
+  protected void finishComponent(Component component) throws Exception {
     IInitializable<?> instance = component.getInstance();
 
     try {
@@ -389,19 +389,19 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     }
   }
 
-  private Supplier<InfoRecord> errorOnFinish(Component component) {
+  protected Supplier<InfoRecord> errorOnFinish(Component component) {
     return () -> {
       return new InfoRecord(component, ComponentStatus.ERROR);
     };
   }
 
-  private Supplier<InfoRecord> finishedRecord(Component component) {
+  protected Supplier<InfoRecord> finishedRecord(Component component) {
     return () -> {
       return new InfoRecord(component, ComponentStatus.FINISHED);
     };
   }
 
-  private void createAllComponents(List<ComponentConfiguration> components) throws LimbusSystemException {
+  protected void createAllComponents(List<ComponentConfiguration> components) throws LimbusSystemException {
     for (ComponentConfiguration conf : components) {
       try {
         createComponent(conf);
@@ -414,7 +414,7 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     }
   }
 
-  private void handleComponentException(ComponentConfiguration conf, Exception cause) throws LimbusSystemException {
+  protected void handleComponentException(ComponentConfiguration conf, Exception cause) throws LimbusSystemException {
     if (conf.isFailOnError()) {
       throw new LimbusSystemException(requiredComponentFailMessage(conf), cause);
     } else {
@@ -422,16 +422,16 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     }
   }
 
-  private String optionalComponentFailMessage(ComponentConfiguration conf) {
+  protected String optionalComponentFailMessage(ComponentConfiguration conf) {
     return String.format("Cannot initialize system component %s - skipping this component because it's optional.",
         conf.getComponentType());
   }
 
-  private String requiredComponentFailMessage(ComponentConfiguration conf) {
+  protected String requiredComponentFailMessage(ComponentConfiguration conf) {
     return String.format("Cannot initialize required system component %s.", conf.getComponentType());
   }
 
-  private void forAllComponents(Collection<Component> allComponents, ComponentConsumer consumer)
+  protected void forAllComponents(Collection<Component> allComponents, ComponentConsumer consumer)
       throws LimbusSystemException {
     for (Component component : allComponents) {
       ComponentConfiguration configuration = component.getConfiguration();
@@ -443,12 +443,12 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     }
   }
 
-  private void injectDependencies(Component component) throws LimbusComponentException {
+  protected void injectDependencies(Component component) throws LimbusComponentException {
     Stack<Component> dependencyPath = new Stack<>();
     _injectDependenciesRecursive(component, dependencyPath);
   }
 
-  private boolean _injectDependenciesRecursive(Component component, Stack<Component> dependencyPath)
+  protected boolean _injectDependenciesRecursive(Component component, Stack<Component> dependencyPath)
       throws LimbusComponentException {
     // Track path of dependencies
     dependencyPath.add(component);
@@ -494,7 +494,7 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     return hasInitialized;
   }
 
-  private void injectValue(Field f, Object instance, Object value) throws LimbusComponentException {
+  protected void injectValue(Field f, Object instance, Object value) throws LimbusComponentException {
     boolean factoryInjectionSuccessfull = this.objectFactory.injectValue(f, instance, value);
     if (!factoryInjectionSuccessfull) {
       boolean setterInjectionSuccessful = setterInjectValue(f, instance, value);
@@ -504,7 +504,7 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     }
   }
 
-  private Class<?> getRequestTypeFromAnnotationOrField(Field f, LimbusComponent annotation) {
+  protected Class<?> getRequestTypeFromAnnotationOrField(Field f, LimbusComponent annotation) {
     if (annotation.value() == Void.class) {
       return f.getType();
     } else {
@@ -512,7 +512,7 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     }
   }
 
-  private void denyCyclicDependencies(Stack<Component> dependencyPath, Component requestor, Component dependency) {
+  protected void denyCyclicDependencies(Stack<Component> dependencyPath, Component requestor, Component dependency) {
     if (dependencyPath.contains(dependency)) {
       int iReq = dependencyPath.indexOf(requestor);
       int iDep = dependencyPath.indexOf(dependency);
@@ -533,13 +533,13 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     }
   }
 
-  private Stack<Component> forkDependencyPath(Stack<Component> dependencyPath) {
+  protected Stack<Component> forkDependencyPath(Stack<Component> dependencyPath) {
     Stack<Component> newPath = new Stack<>();
     newPath.addAll(dependencyPath);
     return newPath;
   }
 
-  private boolean initializeComponentOnDemand(final Component dependency) throws LimbusComponentException {
+  protected boolean initializeComponentOnDemand(final Component dependency) throws LimbusComponentException {
     // schuettec - 09.05.2017 : Do not rely on isInitialized() because this relies to heavy on implementations and
     // mocking is more difficult because we always have to specify the correct answer on invocation of isInitialized().
     if (isInitializedComponent(dependency)) {
@@ -550,11 +550,11 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     }
   }
 
-  private boolean isInitializedComponent(final Component component) {
+  protected boolean isInitializedComponent(final Component component) {
     return initializeOrder.contains(component);
   }
 
-  private Supplier<InfoRecord> exceptionRecord(final Component dependency) {
+  protected Supplier<InfoRecord> exceptionRecord(final Component dependency) {
     return () -> {
       ComponentStatus status = ComponentStatus.UNAVAILABLE;
       if (dependency.getConfiguration()
@@ -565,13 +565,13 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
     };
   }
 
-  private Supplier<InfoRecord> initializedRecord(final Component dependency) {
+  protected Supplier<InfoRecord> initializedRecord(final Component dependency) {
     return () -> {
       return new InfoRecord(dependency, ComponentStatus.INITIALIZED);
     };
   }
 
-  private void createComponent(ComponentConfiguration conf) throws LimbusComponentException {
+  protected void createComponent(ComponentConfiguration conf) throws LimbusComponentException {
     Class<? extends IInitializable<?>> componentType = conf.getComponentType();
     try {
       IInitializable<?> instance = null;
@@ -604,7 +604,7 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
    * @param instance
    *        The component instance to check and subscribe on demand.
    */
-  private void addListenerOnDemand(IInitializable<?> instance) {
+  protected void addListenerOnDemand(IInitializable<?> instance) {
     // Add Limbus system event subscriber
     if (instance instanceof LimbusSystemListener) {
       LimbusSystemListener limbusSystemListener = (LimbusSystemListener) instance;
@@ -644,7 +644,21 @@ public final class LimbusSystem extends Initializable<LimbusSystemException> {
 
   }
 
-  private void handleExceptionOnFinish(Throwable e) {
+  private <I extends IInitializable<?>> ComponentConfiguration createComponentConfiguration(Class<I> componentType,
+      boolean failOnError) {
+    return new ComponentConfigurationImpl(componentType, failOnError);
+  }
+
+  private <T extends IInitializable<?>> ComponentConfigurationImpl createComponentConfiguration(Class<T> requestType) {
+    return new ComponentConfigurationImpl(requestType, null);
+  }
+
+  private <T extends IInitializable<?>, I extends T> ComponentConfiguration createComponentConfiguration(
+      Class<T> requestType, Class<I> componentType) {
+    return new ComponentConfigurationImpl(requestType, componentType, true);
+  }
+
+  protected void handleExceptionOnFinish(Throwable e) {
     log.warn(
         "Error while finishing a component. This operation was expected to be silent - this is an implementation fault.",
         e);

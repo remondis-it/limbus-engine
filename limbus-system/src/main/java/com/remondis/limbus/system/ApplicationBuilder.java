@@ -89,7 +89,7 @@ public class ApplicationBuilder {
                 .findFirst();
             if (requestType.isPresent()) {
               // TODO: We should support failOnError. Maybe with @LimbusComponent(failOnError=...) on components.
-              configuration.addComponentConfiguration(new ComponentConfiguration(requestType.get(), cls, true));
+              configuration.addComponentConfiguration(new ComponentConfigurationImpl(requestType.get(), cls, true));
               return false;
             } else {
               return true;
@@ -97,7 +97,7 @@ public class ApplicationBuilder {
           })
           .forEach(cls ->
           // TODO: We should support failOnError. Maybe with @LimbusComponent(failOnError=...) on components.
-          configuration.addComponentConfiguration(new ComponentConfiguration(cls, true)));
+          configuration.addComponentConfiguration(new ComponentConfigurationImpl(cls, true)));
 
     } catch (Exception e) {
       throw new LimbusSystemException("Cannot determine classes for package " + packageName, e);
@@ -154,12 +154,12 @@ public class ApplicationBuilder {
   @SuppressWarnings("unchecked")
   private static ComponentConfiguration getConfigurationComponentFromPublicAnnotation(PublicComponent publicComponent) {
     Class requestType = publicComponent.requestType();
-    return new ComponentConfiguration(requestType, publicComponent.type(), publicComponent.failOnError());
+    return new ComponentConfigurationImpl(requestType, publicComponent.type(), publicComponent.failOnError());
   }
 
   private static ComponentConfiguration getConfigurationComponentFromPrivateAnnotation(
       PrivateComponent privateComponent) {
-    return new ComponentConfiguration(privateComponent.value(), privateComponent.failOnError());
+    return new ComponentConfigurationImpl(privateComponent.value(), privateComponent.failOnError());
   }
 
   private static Predicate<? super Class> filterLimbusComponentAnnotation() {

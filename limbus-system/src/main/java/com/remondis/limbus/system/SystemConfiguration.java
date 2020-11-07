@@ -96,7 +96,7 @@ public final class SystemConfiguration implements Serializable {
    */
   <T extends IInitializable<?>> void removeByRequestType(Class<T> requestType) {
     Lang.denyNull("requestType", requestType);
-    ComponentConfiguration conf = new ComponentConfiguration(requestType, null);
+    ComponentConfiguration conf = new ComponentConfigurationImpl(requestType, null);
     components.remove(conf);
   }
 
@@ -132,7 +132,7 @@ public final class SystemConfiguration implements Serializable {
    */
   public <T extends IInitializable<?>> boolean containsRequestType(Class<T> requestType) {
     Lang.denyNull("requestType", requestType);
-    return containsComponentConfiguration(new ComponentConfiguration(requestType, null));
+    return containsComponentConfiguration(new ComponentConfigurationImpl(requestType, null));
   }
 
   /*
@@ -162,12 +162,12 @@ public final class SystemConfiguration implements Serializable {
 
   public boolean hasPrivateComponent(Class<? extends IInitializable<?>> componentType) {
     Lang.denyNull("componentType", componentType);
-    return containsComponentConfiguration(new ComponentConfiguration(null, componentType));
+    return containsComponentConfiguration(new ComponentConfigurationImpl(null, componentType));
   }
 
   public void removePrivateComponent(Class<? extends IInitializable<?>> componentType) {
     Lang.denyNull("componentType", componentType);
-    removeComponentConfiguration(new ComponentConfiguration(null, componentType));
+    removeComponentConfiguration(new ComponentConfigurationImpl(null, componentType));
   }
 
 }
