@@ -190,6 +190,8 @@ class Deployment extends Initializable<LimbusClasspathException> {
       _initializePlugin(interactionProxy);
     }
     cachePlugin(pluginClassName, interactionProxy);
+    // Add to multicaster
+    lifecycleMulticaster.addSubscriber(limbusPlugin);
     return interactionProxy;
   }
 
@@ -258,9 +260,6 @@ class Deployment extends Initializable<LimbusClasspathException> {
         return null;
       }
     });
-
-    // Add to multicaster
-    lifecycleMulticaster.addSubscriber(limbusPlugin);
   }
 
   private <T extends LimbusPlugin> T createPlugin(String classname, Class<T> expectedType)
