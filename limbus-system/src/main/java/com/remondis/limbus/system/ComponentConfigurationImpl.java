@@ -1,6 +1,10 @@
 package com.remondis.limbus.system;
 
+import static java.util.Objects.isNull;
+
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
+import java.util.Objects;
 
 import com.remondis.limbus.api.IInitializable;
 
@@ -35,7 +39,7 @@ public class ComponentConfigurationImpl implements Serializable, ComponentConfig
   /**
    * The implementation type for this component.
    */
-  private Class<? extends IInitializable<?>> componentType;
+  private WeakReference<Class<? extends IInitializable<?>>> componentType;
 
   /**
    * Creates a new private component configuration with the specified required flag.
@@ -56,7 +60,7 @@ public class ComponentConfigurationImpl implements Serializable, ComponentConfig
       boolean failOnError) {
     // schuettec - 16.02.2017 : Private components may not have a request type.
     this.requestType = null;
-    this.componentType = componentType;
+    this.componentType = new WeakReference<Class<? extends IInitializable<?>>>(componentType);
     this.failOnError = failOnError;
   }
 
@@ -96,7 +100,7 @@ public class ComponentConfigurationImpl implements Serializable, ComponentConfig
   protected <T extends IInitializable<?>, I extends T> ComponentConfigurationImpl(Class<T> requestType,
       Class<I> componentType, boolean failOnError) {
     this.requestType = requestType;
-    this.componentType = componentType;
+    this.componentType = new WeakReference<Class<? extends IInitializable<?>>>(componentType);
     this.failOnError = failOnError;
   }
 
@@ -113,7 +117,13 @@ public class ComponentConfigurationImpl implements Serializable, ComponentConfig
    */
   @Override
   public Class<? extends IInitializable<?>> getComponentType() {
-    return componentType;
+    Class<? extends IInitializable<?>> reference = componentType.get();
+    if (isNull(reference)) {
+      throw new NoSuchComponentException(
+          "The specified component type is not available. Maybe the target was undeployed?");
+    } else {
+      return reference;
+    }
   }
 
   /**
