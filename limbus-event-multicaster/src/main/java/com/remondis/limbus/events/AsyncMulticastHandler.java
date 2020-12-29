@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
 public class AsyncMulticastHandler<I> extends MulticastHandler<I> implements AsyncEventMulticaster<I> {
 
   private ExecutorService executor;
+  private boolean closed = true;
 
   AsyncMulticastHandler(Class subscriberInterface) {
     super(subscriberInterface);
@@ -93,8 +94,13 @@ public class AsyncMulticastHandler<I> extends MulticastHandler<I> implements Asy
     };
   }
 
+  public boolean isClosed() {
+    return closed;
+  }
+
   @Override
   public void close() throws Exception {
+    this.closed = true;
     AccessController.doPrivileged(new PrivilegedAction<Void>() {
 
       @Override

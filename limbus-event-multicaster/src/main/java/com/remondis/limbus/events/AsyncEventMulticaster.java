@@ -13,4 +13,16 @@ package com.remondis.limbus.events;
  */
 public interface AsyncEventMulticaster<I> extends EventMulticaster<I>, AutoCloseable {
 
+  /**
+   * @return Returns <code>true</code> if this multicaster is already closed, otherwise returns <code>false</code>.
+   */
+  public boolean isClosed();
+
+  /**
+   * @return Returns <code>true</code> if this multicaster is open and ready for use, otherwise returns
+   *         <code>false</code>.
+   */
+  public default boolean isOpen() {
+    return !isClosed();
+  }
 }
