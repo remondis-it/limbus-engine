@@ -42,7 +42,7 @@ public class EventMulticasterFactory {
    *
    * @return Returns the {@link EventMulticaster}.
    */
-  public static <I> EventMulticaster<I> createAsync(Class<I> subscriberType) {
+  public static <I> AsyncEventMulticaster<I> createAsync(Class<I> subscriberType) {
     Lang.denyNull("subscriber type", subscriberType);
     ReflectionUtil.denyNotInterface(subscriberType);
     AsyncMulticastHandler<I> handler = new AsyncMulticastHandler<I>(subscriberType);
