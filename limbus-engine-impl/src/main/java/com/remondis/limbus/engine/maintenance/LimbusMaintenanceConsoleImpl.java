@@ -367,7 +367,7 @@ public class LimbusMaintenanceConsoleImpl extends Initializable<Exception> imple
           // Setup terminal and screen layers
 
           DefaultTerminalFactory factory = new DefaultTerminalFactory();
-          factory.setPreferTerminalEmulator(false);
+          factory.setPreferTerminalEmulator(true);
           factory.setTerminalEmulatorFrameAutoCloseTrigger(TerminalEmulatorAutoCloseTrigger.CloseOnExitPrivateMode);
           terminal = factory.createTerminal();
           screen = new TerminalScreen(terminal);
