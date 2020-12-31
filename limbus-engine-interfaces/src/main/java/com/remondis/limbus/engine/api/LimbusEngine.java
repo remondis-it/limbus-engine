@@ -297,6 +297,11 @@ public interface LimbusEngine extends IInitializable<Exception> {
   public Classpath getSharedClasspath();
 
   /**
+   * @return Returns the class loader that holds classes shared across all plugin classpaths.
+   */
+  public ClassLoader getSharedClassLoader();
+
+  /**
    * @return Returns all deployed plugin classpaths.
    */
   public Set<Classpath> getPluginClasspaths();

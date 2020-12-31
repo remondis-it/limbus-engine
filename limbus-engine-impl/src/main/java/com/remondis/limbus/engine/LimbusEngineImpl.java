@@ -546,6 +546,10 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
     return sharedClassPathProvider.getSharedClasspath();
   }
 
+  public ClassLoader getSharedClassLoader() {
+    return sharedClassLoader;
+  }
+
   @Override
   public Set<Classpath> getPluginClasspaths() {
     checkState();

@@ -28,6 +28,11 @@
 				<artifactId>limbus-engine-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.remondis.limbus</groupId>
+				<artifactId>limbus-engine-interfaces</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
 			<!-- Limbus Engine Implementation -->
 			<dependency>

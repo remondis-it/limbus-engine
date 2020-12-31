@@ -3,7 +3,9 @@ package com.remondis.limbus.maven;
 import static com.remondis.limbus.utils.Files.getOrFailDirectory;
 import static com.remondis.limbus.utils.Files.getOrFailFile;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,8 +52,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class handles the access to the Maven repositories for plugin deployment. It contains methods that can access
- * the local Maven installation and the settings (settings.xml) of the current user to retrieve dependencies.
+ * This class handles the access to the Maven repositories for plugin
+ * deployment. It contains methods that can access the local Maven installation
+ * and the settings (settings.xml) of the current user to retrieve dependencies.
  *
  * @author schuettec
  *
@@ -64,7 +67,8 @@ public class AetherUtil {
   }
 
   // public static File getGlobalSettingsFile() throws LimbusClasspathException {
-  // return LimbusUtil.getOrFailFile("global maven settings", new File(getMavenHome(), "conf/settings.xml"));
+  // return LimbusUtil.getOrFailFile("global maven settings", new
+  // File(getMavenHome(), "conf/settings.xml"));
   // }
 
   // public static File getMavenHome() throws LimbusClasspathException {
@@ -97,23 +101,22 @@ public class AetherUtil {
   }
 
   /**
-   * This method resolves a Maven artifact and all of its transitive dependencies by its coordinates. This method tries
-   * to resolve the artifacts from the local repository and in case they are not available from there it downloads them
+   * This method resolves a Maven artifact and all of its transitive dependencies
+   * by its coordinates. This method tries to resolve the artifacts from the local
+   * repository and in case they are not available from there it downloads them
    * from the known repositories discovered in the settings.xml.
    *
    * <p>
-   * Note: This method excludes the following scopes from the dependencies: <tt>provided, system, test</tt>.
+   * Note: This method excludes the following scopes from the dependencies:
+   * <tt>provided, system, test</tt>.
    * </p>
    *
-   * @param groupId
-   *        The groupId
-   * @param artifactId
-   *        The artifactId
-   * @param extension
-   *        The file extension
-   * @param version
-   *        The version
-   * @return Returns the list of the requestes artifact and all of its transitive dependencies.
+   * @param groupId The groupId
+   * @param artifactId The artifactId
+   * @param extension The file extension
+   * @param version The version
+   * @return Returns the list of the requestes artifact and all of its transitive
+   *         dependencies.
    * @throws Exception
    */
   public static List<ArtifactResult> resolveArtifactAndTransitiveDependencies(String groupId, String artifactId,
@@ -129,7 +132,8 @@ public class AetherUtil {
 
     List<RemoteRepository> remotes = getConfiguredRemoteRepositories(effectiveSettings);
 
-    // Add the local repository to the list of repositories to resolve the artifact from
+    // Add the local repository to the list of repositories to resolve the artifact
+    // from
     // List<RemoteRepository> resolveFrom = addLocalRepositoryAsRemote(remotes);
     List<RemoteRepository> resolveFrom = remotes;
 
@@ -166,7 +170,8 @@ public class AetherUtil {
           .append(getUserLocalRepository())
           .append("\n")
           // .append(" Maven path (M2_HOME): ").append(getMavenHome()).append("\n")
-          // .append("Global settings XML file: ").append(getGlobalSettingsFile()).append("\n")
+          // .append("Global settings XML file:
+          // ").append(getGlobalSettingsFile()).append("\n")
           .append("  User settings XML file: ")
           .append(getUserSettingsFile());
       log.debug(logOverview.toString());
@@ -206,12 +211,21 @@ public class AetherUtil {
       DependencyRequest dependencyRequest = new DependencyRequest(collectRequest, filter);
       DependencyResult resolveDependencies = system.resolveDependencies(session, dependencyRequest);
 
-      // Note: The dependency graph is not filtered! So if a visitor walks through the graph it must apply the filters
+      // Note: The dependency graph is not filtered! So if a visitor walks through the
+      // graph it must apply the filters
       // again!
+      ByteArrayOutputStream dependencyDumpStream = new ByteArrayOutputStream();
+      PrintStream dumpStream = new PrintStream(dependencyDumpStream);
       resolveDependencies.getRoot()
-          .accept(new FilteringDependencyVisitor(new ConsoleDependencyGraphDumper(), filter));
+          .accept(new FilteringDependencyVisitor(new ConsoleDependencyGraphDumper(dumpStream), filter));
 
-      return resolveDependencies.getArtifactResults();
+      List<ArtifactResult> artifactResults = resolveDependencies.getArtifactResults();
+
+      if (log.isDebugEnabled()) {
+        log.debug("Artifact resolved - printing dependency tree:\n" + new String(dependencyDumpStream.toByteArray()));
+      }
+
+      return artifactResults;
 
     } catch (DependencyResolutionException e) {
       throw new Exception("Cannot resolve transitive dependencies for " + pArtifact, e);
@@ -219,16 +233,16 @@ public class AetherUtil {
   }
 
   /**
-   * Creates the list of remote repositories references in the settings.xml and configures the authentication for them
-   * in order to access those repositories for later artifact resolution.
+   * Creates the list of remote repositories references in the settings.xml and
+   * configures the authentication for them in order to access those repositories
+   * for later artifact resolution.
    *
    * <p>
-   * This method also recognizes the configured active profiles from the settings.xml to get the effective
-   * configuration.
+   * This method also recognizes the configured active profiles from the
+   * settings.xml to get the effective configuration.
    * </p>
    *
-   * @param effectiveSettings
-   *        The effective settings.
+   * @param effectiveSettings The effective settings.
    * @return
    */
   private static List<RemoteRepository> getConfiguredRemoteRepositories(Settings effectiveSettings) {
@@ -247,14 +261,15 @@ public class AetherUtil {
             .build();
 
         /*
-         * NOTE: At this point we ignore the proxy settings from settings.xml because that gives an error related to
-         * NTLM proxies which are "currently not supported" by Maven.
-         * According to this article
-         * https://maven.apache.org/guides/mini/guide-proxies.html
-         * we temporarily skip proxy configuration for the remotes.
+         * NOTE: At this point we ignore the proxy settings from settings.xml because
+         * that gives an error related to NTLM proxies which are
+         * "currently not supported" by Maven. According to this article
+         * https://maven.apache.org/guides/mini/guide-proxies.html we temporarily skip
+         * proxy configuration for the remotes.
          */
         // Build proxy config for this repo
-        // org.apache.maven.settings.Proxy mavenProxy = effectiveSettings.getActiveProxy();
+        // org.apache.maven.settings.Proxy mavenProxy =
+        // effectiveSettings.getActiveProxy();
         // Proxy proxy = toProxy(mavenProxy);
 
         RemoteRepository remoteRepo = new RemoteRepository.Builder(repo.getId(), "default", repo.getUrl())
@@ -267,7 +282,8 @@ public class AetherUtil {
     return remotes;
   }
 
-  // private static RemoteRepository getLocalRepositoryAsRemote() throws MalformedURLException, LimbusException
+  // private static RemoteRepository getLocalRepositoryAsRemote() throws
+  // MalformedURLException, LimbusException
   // {
   // RemoteRepository local = new RemoteRepository.Builder("local", "default",
   // getUserLocalRepository().toURI().toURL().toString()).build();
@@ -298,7 +314,8 @@ public class AetherUtil {
   // if (mavenProxy != null) {
   // AuthenticationBuilder authBuilder = new AuthenticationBuilder();
   // authBuilder.addUsername(mavenProxy.getUsername()).addPassword(mavenProxy.getPassword());
-  // result = new Proxy(mavenProxy.getProtocol(), mavenProxy.getHost(), mavenProxy.getPort(), authBuilder.build());
+  // result = new Proxy(mavenProxy.getProtocol(), mavenProxy.getHost(),
+  // mavenProxy.getPort(), authBuilder.build());
   // }
   // return result;
   // }
