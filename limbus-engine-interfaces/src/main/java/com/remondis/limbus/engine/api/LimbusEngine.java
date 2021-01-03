@@ -200,15 +200,10 @@ public interface LimbusEngine extends IInitializable<Exception> {
       LimbusLifecycleHook<T> lifecycleHook, boolean initialize) throws LimbusException, NoSuchDeploymentException;
 
   /**
-   * /**
-   * Provides access to deployed plugins of this {@link LimbusEngine}. <b>Attention: Use this method with care!
-   * Plugins are loaded by their specific classloaders, therefore any call to a plugin must be performed with the
-   * specific thread context classloader set.</b>
-   * <p>
-   * <b>Do not cache the instances to the returned plugins! Plugins may be undeployed from the container anytime
-   * during runtime so it is important to keep those references in the engines lifecycle and honor the undeploy
-   * events.</b>
-   * </p>
+   * Provides access to deployed plugins of this {@link LimbusEngine}.
+   * This method returns a reference to a plugin instance that is wrapped by a proxy class to handle the calls to the
+   * specific instance. Therefore any call to the reference returned by this method is intercepted and performed within
+   * a {@link LimbusContext}.
    *
    * @param <S> The supported interface.
    * @param <T> The plugin type

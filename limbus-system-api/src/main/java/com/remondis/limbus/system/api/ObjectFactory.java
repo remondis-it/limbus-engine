@@ -50,7 +50,7 @@ public interface ObjectFactory {
    *         Implementations may return proxy objects here.
    */
   public default IInitializable<?> createPublicReference(Class<? extends IInitializable<?>> requestType,
-      Class<? extends IInitializable<?>> componentType, IInitializable<?> instance) {
+      Class<? extends IInitializable<?>> componentType, IInitializable<?> instance) throws Exception {
     return instance;
   }
 

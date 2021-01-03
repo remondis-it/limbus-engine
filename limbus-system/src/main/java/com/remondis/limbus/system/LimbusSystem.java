@@ -21,7 +21,6 @@ import com.remondis.limbus.api.IInitializable;
 import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.events.EventMulticaster;
 import com.remondis.limbus.events.EventMulticasterFactory;
-import com.remondis.limbus.system.api.LimbusApplication;
 import com.remondis.limbus.system.api.LimbusComponent;
 import com.remondis.limbus.system.api.LimbusContainer;
 import com.remondis.limbus.system.api.LimbusSystemListener;
@@ -303,10 +302,10 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
         }
       });
       denyRequests.set(false);
-      firePostInitializeEvent();
     } finally {
       logInfoRecordsOnDemand();
     }
+    firePostInitializeEvent();
   }
 
   protected void firePostInitializeEvent() {
