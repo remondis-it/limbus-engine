@@ -13,6 +13,7 @@ import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,7 +87,7 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
 
   protected ObjectFactory objectFactory;
 
-  protected Map<Class<? extends IInitializable<?>>, Component> publicComponents;
+  protected Map<Class<? extends IInitializable<?>>, List<Component>> publicComponents;
 
   protected List<Component> allComponents;
 
@@ -230,9 +231,36 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
    *        The request type of the component.
    * @return Returns the system component.
    */
+  public <T extends IInitializable<?>> List<T> getComponents(Class<T> requestType) {
+    checkState();
+    denyOnDemand();
+    // schuettec - 20.02.2017 : The Limbus System is itself a public component
+    return getInstances(requestType);
+  }
+
+  /**
+   * Checks if a Limbus component is available through this Limbus System.
+   *
+   * @param requestType
+   *        The request type of the component.
+   * @return Returns <code>true</code> if the component is available, <code>false</code> otherwise.
+   *
+   */
+  public <T extends IInitializable<?>> boolean hasComponents(Class<T> requestType) {
+    return _hasComponent(requestType);
+  }
+
+  /**
+   * Provides access to a public component by its request type.
+   *
+   * @param requestType
+   *        The request type of the component.
+   * @return Returns the system component.
+   */
   public <T extends IInitializable<?>> T getComponent(Class<T> requestType) {
     checkState();
     denyOnDemand();
+    denyMultipleComponents(requestType);
     // schuettec - 20.02.2017 : The Limbus System is itself a public component
     return ReflectionUtil.getAsExpectedType(getInstance(requestType), requestType);
   }
@@ -246,6 +274,7 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
    *
    */
   public <T extends IInitializable<?>> boolean hasComponent(Class<T> requestType) {
+    denyMultipleComponents(requestType);
     return _hasComponent(requestType);
   }
 
@@ -257,12 +286,35 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
     return _getComponent(requestType).getPublicReference();
   }
 
-  protected Component _getComponent(Class<?> requestType) {
+  protected <T> List<T> getInstances(Class<T> requestType) {
+    return _getComponents(requestType).stream()
+        .map(Component::getPublicReference)
+        .map(initializable -> ReflectionUtil.getAsExpectedType(initializable, requestType))
+        .collect(Collectors.toList());
+  }
+
+  protected List<Component> _getComponents(Class<?> requestType) {
     if (publicComponents.containsKey(requestType)) {
-      Component component = publicComponents.get(requestType);
-      return component;
+      return publicComponents.get(requestType);
     } else {
       throw new NoSuchComponentException(requestType);
+    }
+  }
+
+  protected Component _getComponent(Class<?> requestType) {
+    if (publicComponents.containsKey(requestType)) {
+      denyMultipleComponents(requestType);
+      List<Component> components = publicComponents.get(requestType);
+      return components.get(0);
+    } else {
+      throw new NoSuchComponentException(requestType);
+    }
+  }
+
+  protected void denyMultipleComponents(Class<?> requestType) {
+    List<Component> components = publicComponents.get(requestType);
+    if (components.size() > 1) {
+      throw SingleComponentExpectedException.moreThanOneComponentAvailable(requestType);
     }
   }
 
@@ -584,7 +636,15 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
         instance = objectFactory.createObject(requestType, componentType);
         publicReference = objectFactory.createPublicReference(requestType, componentType, instance);
 
-        publicComponents.put(requestType, new Component(conf, instance, publicReference));
+        Component component = new Component(conf, instance, publicReference);
+        if (publicComponents.containsKey(requestType)) {
+          List<Component> components = publicComponents.get(requestType);
+          components.add(component);
+        } else {
+          List<Component> components = new LinkedList<>();
+          components.add(component);
+          publicComponents.put(requestType, components);
+        }
       } else {
         instance = objectFactory.createObject(componentType);
         publicReference = instance;
