@@ -342,7 +342,7 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
       b.append(info.toString())
           .append("\n");
     }
-    log.info(b.toString());
+    log.debug(b.toString());
   }
 
   protected void initializeComponent(Component component) throws LimbusComponentException {
