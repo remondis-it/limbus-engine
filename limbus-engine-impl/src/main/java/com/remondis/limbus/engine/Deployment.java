@@ -104,20 +104,45 @@ class Deployment extends Initializable<LimbusClasspathException> {
   }
 
   /**
-   * Creates a new proxy wrapping a plugin instance by supporting the specified interface. The interface must be
-   * implemented by the plugin and note: <strong>The proxy class is defined using the classloader of the specified
-   * interface.</strong>
+   * Provides access to deployed plugins of this {@link LimbusEngine}. This method creates a proxy around the plugin
+   * instance implementing the specified supported interface. This is done so that the returned proxy can be cast to
+   * this particular types. <b>Note: The plugin must implement the specified supported interfaces!</b>
+   * 
+   * @param <S> The supported interface.
+   * @param <T> The plugin type
+   * @param classpath
+   *        The classpath the plugin is expected to be available in.
+   * @param classname The classname of the plugin.
+   * @param pluginInterface The plugin type .
+   * @param supportedIntefaces The interface the plugin proxy should support. <strong>Note: The plugin must implement
+   *        the
+   *        specified interface.</strong>
+   * @param toDefineIn The {@link ClassLoader} to define the proxy class in.
+   * @param lifecycleHook
+   *        (Optional) The lifecycle hook to be executed. <b>The lifecycle hook specified here will only be set on
+   *        first plugin request.</b>
+   * @param initialize If <code>true</code> the plugin is initialized, if <code>false</code> the caller is responsible
+   *        to initialize the plugin using a {@link LimbusContextAction}.
+   * @return Returns a proxy to the plugin instance that supports the specified interface.
+   * @throws LimbusException
+   *         Thrown if the plugin could not be initialized, the plugin was not found, the classpath is not
+   *         deployed or the expected type does not match.
+   * 
    */
+  @SuppressWarnings({
+      "rawtypes", "unchecked"
+  })
   protected <S, T extends LimbusPlugin> S createPluginProxy(String classname, Class<T> pluginInterface,
-      Class<S> supportedInteface, LimbusLifecycleHook<T> lifecycleHook, boolean initialize) throws LimbusException {
+      Class<S>[] supportedIntefaces, ClassLoader toDefineIn, LimbusLifecycleHook<T> lifecycleHook, boolean initialize)
+      throws LimbusException {
     try {
       T plugin = getPlugin(classname, pluginInterface, lifecycleHook, initialize);
       LifecycleProxyHandler invocationHandler = (LifecycleProxyHandler) Proxy.getInvocationHandler(plugin);
-      LimbusPlugin pluginObject = invocationHandler.getPluginObjectOrFail();
       // schuettec - 27.01.2017 : Let the proxy will be defined in the classloader of the supported interface.
-      return (S) Proxy.newProxyInstance(supportedInteface.getClassLoader(), new Class<?>[] {
-          pluginInterface, supportedInteface
-      }, invocationHandler);
+      Class<?>[] interfaces = new Class<?>[supportedIntefaces.length + 1];
+      interfaces[0] = pluginInterface;
+      System.arraycopy(supportedIntefaces, 0, interfaces, 1, supportedIntefaces.length);
+      return (S) Proxy.newProxyInstance(toDefineIn, interfaces, invocationHandler);
     } catch (LimbusClasspathException e) {
       // schuettec - 27.01.2017 : Wrap the classpath exception into a LimbusException. It is indeed worth to throw a
       // classpath exception here, but this would change the minor version and breaks backwards compatibility.
@@ -159,10 +184,11 @@ class Deployment extends Initializable<LimbusClasspathException> {
   }
 
   /**
-   * This method processes a plugin instance that is assumed to not being cached. This method takes care of creating a
-   * strong reference to the plugin wich is assumed to be the only strong reference to this plugin instance. Then a
-   * proxy object is created to interact with the plugin instance. The proxy object itself only holds a weak reference
-   * to the plugin. After this the plugin is initialized and the plugin type is added to the local plugin cache.
+   * This method processes a plugin instance and manages caching and creates a proxy for the plugin instance.
+   * This method takes care of creating a strong reference to the plugin wich is assumed to be the only strong reference
+   * to this plugin instance. Then a proxy object is created to interact with the plugin instance. The proxy object
+   * itself only holds a weak reference to the plugin. After this the plugin is initialized and the plugin type is added
+   * to the local plugin cache.
    *
    * @param The
    *        classname of the requested plugin. <b>Important: The classname of the plugin is the identifying element

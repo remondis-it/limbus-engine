@@ -249,12 +249,13 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
 
   @Override
   public <T extends LimbusPlugin, S extends T> S getPluginAsInterface(Classpath classpath, String classname,
-      Class<T> pluginInterface, Class<S> supportedInteface, LimbusLifecycleHook<T> lifecycleHook, boolean initialize)
-      throws LimbusException {
+      Class<T> pluginInterface, Class<S>[] supportedIntefaces, ClassLoader toDefineIn,
+      LimbusLifecycleHook<T> lifecycleHook, boolean initialize) throws LimbusException {
     checkState();
     if (deploymentMap.containsKey(classpath)) {
       Deployment deployment = deploymentMap.get(classpath);
-      return deployment.createPluginProxy(classname, pluginInterface, supportedInteface, lifecycleHook, initialize);
+      return deployment.createPluginProxy(classname, pluginInterface, supportedIntefaces, toDefineIn, lifecycleHook,
+          initialize);
     } else {
       throw new NoSuchDeploymentException("The specified classpath is not deployed on this container.");
     }
@@ -546,6 +547,7 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
     return sharedClassPathProvider.getSharedClasspath();
   }
 
+  @Override
   public ClassLoader getSharedClassLoader() {
     return sharedClassLoader;
   }

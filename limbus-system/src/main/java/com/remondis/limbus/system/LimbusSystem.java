@@ -302,10 +302,12 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
         }
       });
       denyRequests.set(false);
-    } finally {
       logInfoRecordsOnDemand();
+      firePostInitializeEvent();
+    } catch (Exception e) {
+      logInfoRecordsOnDemand();
+      throw e;
     }
-    firePostInitializeEvent();
   }
 
   protected void firePostInitializeEvent() {

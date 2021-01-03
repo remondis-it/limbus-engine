@@ -110,13 +110,12 @@ public interface LimbusEngine extends IInitializable<Exception> {
   public ByteArrayOutputStream[] stopRecordChannel(Classpath classpath, Thread thread) throws NoSuchDeploymentException;
 
   /**
-   * Provides access to deployed plugins of this {@link LimbusEngine}. <b>Attention: Use this method with care!
-   * Plugins are loaded by their specific classloaders, therefore any call to a plugin must be performed with the
-   * specific thread context classloader set.</b>
+   * Provides access to deployed plugins of this {@link LimbusEngine}.
    * <p>
-   * <b>Do not cache the instances to the returned plugins! Plugins may be undeployed from the container anytime
-   * during runtime so it is important to keep those references in the engines lifecycle and honor the undeploy
-   * events.</b>
+   * The plugin instances returned by this method are wrapped in a proxy class. Any call to the plugin interface will
+   * check that the plugin is available before the real call is performed. This ensures that the plugin may be
+   * undeployed at any time and no direct references to the plugin's instance can be cached.</b>
+   * Plus that, any call to a plugin instance is performed within the scope of the respective {@link LimbusContext}.
    * </p>
    *
    * @param classpath
@@ -138,13 +137,12 @@ public interface LimbusEngine extends IInitializable<Exception> {
   }
 
   /**
-   * Provides access to deployed plugins of this {@link LimbusEngine}. <b>Attention: Use this method with care!
-   * Plugins are loaded by their specific classloaders, therefore any call to a plugin must be performed with the
-   * specific thread context classloader set.</b>
+   * Provides access to deployed plugins of this {@link LimbusEngine}.
    * <p>
-   * The plugin instances returned by this method are wrapped and any call to the plugin interface will check that the
-   * plugin is available before the real call is performed. This ensures that the plugin may be undeployed at any time
-   * and no direct references to the plugin's instance can be cached.</b>
+   * The plugin instances returned by this method are wrapped in a proxy class. Any call to the plugin interface will
+   * check that the plugin is available before the real call is performed. This ensures that the plugin may be
+   * undeployed at any time and no direct references to the plugin's instance can be cached.</b>
+   * Plus that, any call to a plugin instance is performed within the scope of the respective {@link LimbusContext}.
    * </p>
    *
    * @param classpath
@@ -169,13 +167,12 @@ public interface LimbusEngine extends IInitializable<Exception> {
   }
 
   /**
-   * Provides access to deployed plugins of this {@link LimbusEngine}. <b>Attention: Use this method with care!
-   * Plugins are loaded by their specific classloaders, therefore any call to a plugin must be performed with the
-   * specific thread context classloader set.</b>
+   * Provides access to deployed plugins of this {@link LimbusEngine}.
    * <p>
-   * <b>Do not cache the instances to the returned plugins! Plugins may be undeployed from the container anytime
-   * during runtime so it is important to keep those references in the engines lifecycle and honor the undeploy
-   * events.</b>
+   * The plugin instances returned by this method are wrapped in a proxy class. Any call to the plugin interface will
+   * check that the plugin is available before the real call is performed. This ensures that the plugin may be
+   * undeployed at any time and no direct references to the plugin's instance can be cached.</b>
+   * Plus that, any call to a plugin instance is performed within the scope of the respective {@link LimbusContext}.
    * </p>
    *
    * @param classpath
@@ -200,19 +197,20 @@ public interface LimbusEngine extends IInitializable<Exception> {
       LimbusLifecycleHook<T> lifecycleHook, boolean initialize) throws LimbusException, NoSuchDeploymentException;
 
   /**
-   * Provides access to deployed plugins of this {@link LimbusEngine}.
-   * This method returns a reference to a plugin instance that is wrapped by a proxy class to handle the calls to the
-   * specific instance. Therefore any call to the reference returned by this method is intercepted and performed within
-   * a {@link LimbusContext}.
-   *
+   * Provides access to deployed plugins of this {@link LimbusEngine}. This method creates a proxy around the plugin
+   * instance implementing the specified supported interface. This is done so that the returned proxy can be cast to
+   * this particular types. <b>Note: The plugin must implement the specified supported interfaces!</b>
+   * 
    * @param <S> The supported interface.
    * @param <T> The plugin type
    * @param classpath
    *        The classpath the plugin is expected to be available in.
    * @param classname The classname of the plugin.
    * @param pluginInterface The plugin type .
-   * @param supportedInteface The interface the plugin proxy should support. <strong>Note: The plugin must implement the
+   * @param supportedIntefaces The interface the plugin proxy should support. <strong>Note: The plugin must implement
+   *        the
    *        specified interface.</strong>
+   * @param toDefineIn The {@link ClassLoader} to define the proxy class in.
    * @param lifecycleHook
    *        (Optional) The lifecycle hook to be executed. <b>The lifecycle hook specified here will only be set on
    *        first plugin request.</b>
@@ -225,8 +223,8 @@ public interface LimbusEngine extends IInitializable<Exception> {
    * 
    */
   public <T extends LimbusPlugin, S extends T> S getPluginAsInterface(Classpath classpath, String classname,
-      Class<T> pluginInterface, Class<S> supportedInteface, LimbusLifecycleHook<T> lifecycleHook, boolean initialize)
-      throws LimbusException;
+      Class<T> pluginInterface, Class<S>[] supportedIntefaces, ClassLoader toDefineIn,
+      LimbusLifecycleHook<T> lifecycleHook, boolean initialize) throws LimbusException;
 
   /**
    * Since the {@link LimbusEngine} only exposes proxy objects for plugin instances, Java Bean property introspection is
