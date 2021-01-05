@@ -260,6 +260,7 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
   public <T extends IInitializable<?>> T getComponent(Class<T> requestType) {
     checkState();
     denyOnDemand();
+    denyNoComponent(requestType);
     denyMultipleComponents(requestType);
     // schuettec - 20.02.2017 : The Limbus System is itself a public component
     return ReflectionUtil.getAsExpectedType(getInstance(requestType), requestType);
@@ -307,6 +308,12 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
       List<Component> components = publicComponents.get(requestType);
       return components.get(0);
     } else {
+      throw new NoSuchComponentException(requestType);
+    }
+  }
+
+  private void denyNoComponent(@SuppressWarnings("rawtypes") Class requestType) {
+    if (!publicComponents.containsKey(requestType)) {
       throw new NoSuchComponentException(requestType);
     }
   }
