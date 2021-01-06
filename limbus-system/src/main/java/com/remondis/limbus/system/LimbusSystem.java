@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -106,10 +107,6 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
     this.objectFactory = configuration.getObjectFactory();
   }
 
-  public void setObjectFactory(ObjectFactory objectFactory) {
-    this.objectFactory = objectFactory;
-  }
-
   protected LimbusSystem(SystemConfiguration configuration) {
     this();
     Lang.denyNull("configuration", configuration);
@@ -117,6 +114,10 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
     // schuettec - 21.02.2017 : Add all items from the system configuration through the public add methods, because the
     // system configuration may be deserialized in an invalid state.
     addAllFromSystemConfiguration(configuration);
+  }
+
+  public void setObjectFactory(ObjectFactory objectFactory) {
+    this.objectFactory = objectFactory;
   }
 
   protected void addAllFromSystemConfiguration(SystemConfiguration configuration) {
@@ -131,6 +132,15 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
       this.infoRecords = new LinkedList<InfoRecord>();
     }
     return infoRecords;
+  }
+
+  /**
+   * @return Returns a {@link Set} of all registered request types that are available.
+   */
+  public Set<Class<? extends IInitializable<?>>> getRequestTypes() {
+    return publicComponents.keySet()
+        .stream()
+        .collect(Collectors.toSet());
   }
 
   /**
