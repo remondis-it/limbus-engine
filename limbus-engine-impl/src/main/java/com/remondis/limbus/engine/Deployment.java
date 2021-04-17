@@ -143,7 +143,7 @@ class Deployment extends Initializable<LimbusClasspathException> {
       interfaces[0] = pluginInterface;
       System.arraycopy(supportedIntefaces, 0, interfaces, 1, supportedIntefaces.length);
       return (S) Proxy.newProxyInstance(toDefineIn, interfaces, invocationHandler);
-    } catch (LimbusClasspathException e) {
+    } catch (Exception e) {
       // schuettec - 27.01.2017 : Wrap the classpath exception into a LimbusException. It is indeed worth to throw a
       // classpath exception here, but this would change the minor version and breaks backwards compatibility.
       String message;
