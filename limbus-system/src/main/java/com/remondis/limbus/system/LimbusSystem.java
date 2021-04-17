@@ -357,7 +357,7 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
          * A component can already be initialized, because another dependency
          * path triggered initialization before.
          */
-        if (!initializeOrder.contains(component)) {
+        if (!isInitializedComponent(component)) {
           injectDependencies(component);
         }
       });
@@ -366,7 +366,7 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
          * A component can already be initialized, because another dependency
          * path triggered initialization before.
          */
-        if (!initializeOrder.contains(component)) {
+        if (!isInitializedComponent(component)) {
           initializeComponentOnDemand(component);
         }
       });
@@ -621,7 +621,13 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
   }
 
   protected boolean isInitializedComponent(final Component component) {
-    return initializeOrder.contains(component);
+    return initializeOrder.stream()
+        .filter(c -> c.getConfiguration()
+            .getComponentType()
+            .equals(component.getConfiguration()
+                .getComponentType()))
+        .findAny()
+        .isPresent();
   }
 
   protected Supplier<InfoRecord> exceptionRecord(final Component dependency) {
