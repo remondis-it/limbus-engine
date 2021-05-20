@@ -2,6 +2,8 @@ package com.remondis.limbus.system;
 
 import static com.remondis.limbus.utils.ReflectionUtil.fieldInjectValue;
 import static com.remondis.limbus.utils.ReflectionUtil.setterInjectValue;
+import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toList;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -301,14 +303,14 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
     return _getComponents(requestType).stream()
         .map(Component::getPublicReference)
         .map(initializable -> ReflectionUtil.getAsExpectedType(initializable, requestType))
-        .collect(Collectors.toList());
+        .collect(toList());
   }
 
   protected List<Component> _getComponents(Class<?> requestType) {
     if (publicComponents.containsKey(requestType)) {
       return publicComponents.get(requestType);
     } else {
-      throw new NoSuchComponentException(requestType);
+      return emptyList();
     }
   }
 
