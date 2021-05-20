@@ -1,5 +1,7 @@
 package com.remondis.limbus.engine.security;
 
+import static java.util.Collections.emptySet;
+
 import java.io.InputStream;
 import java.net.URL;
 import java.security.Permission;
@@ -85,12 +87,14 @@ public class LimbusSecurityImpl extends Initializable<Exception> implements Limb
     }
   }
 
-  /**
-   * @return Returns the default sandbox permissions defined by Limbus security.
-   */
   @Override
   public final Set<Permission> getSandboxDefaultPermissions() {
     return Collections.unmodifiableSet(new HashSet<>(defaultPermissions));
+  }
+
+  @Override
+  public Set<Permission> getSharedClasspathDefaultPermissions() {
+    return emptySet();
   }
 
   /**

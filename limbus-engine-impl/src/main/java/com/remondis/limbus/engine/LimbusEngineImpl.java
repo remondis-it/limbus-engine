@@ -38,6 +38,7 @@ import com.remondis.limbus.engine.api.NoSuchDeploymentException;
 import com.remondis.limbus.engine.api.SharedClasspathProvider;
 import com.remondis.limbus.engine.api.SimpleVeto;
 import com.remondis.limbus.engine.api.UndeployVetoException;
+import com.remondis.limbus.engine.api.security.LimbusSecurity;
 import com.remondis.limbus.events.EventMulticaster;
 import com.remondis.limbus.events.EventMulticasterFactory;
 import com.remondis.limbus.files.LimbusFileService;
@@ -60,6 +61,9 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
   public String GROUP_ID = null;
   public String ARTIFACT_ID = null;
   public String VERSION = null;
+
+  @LimbusComponent
+  private LimbusSecurity limbusSecurity;
 
   @LimbusComponent
   private SharedClasspathProvider sharedClassPathProvider;
@@ -384,6 +388,7 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
     Classpath sharedClasspath = sharedClassPathProvider.getSharedClasspath();
     this.sharedClassLoader = new SharedClassLoader(filesystem, LimbusEngine.class.getClassLoader(),
         getAllowedPackagePrefixes(), sharedClasspath.getClasspath());
+    this.sharedClassLoader.setPermissions(limbusSecurity.getSharedClasspathDefaultPermissions());
     Deployment sharedDeployment = new Deployment(sharedClasspath, sharedClassLoader);
     deploymentMap.put(sharedClasspath, sharedDeployment);
     try {
