@@ -23,15 +23,20 @@ public class ThreadContextUtil {
 
     @SuppressWarnings("unchecked")
     <T> T getBean(Class<T> beanType) {
-      String variableKey = getVariableKey(beanType);
       T value = null;
-      if (threadVariables.containsKey(variableKey)) {
+      String variableKey = getVariableKey(beanType);
+      if (hasBean(beanType)) {
         value = (T) threadVariables.get(variableKey);
       } else {
         value = createBean(beanType);
         threadVariables.put(variableKey, value);
       }
       return value;
+    }
+
+    public boolean hasBean(Class<?> beanType) {
+      String variableKey = getVariableKey(beanType);
+      return threadVariables.containsKey(variableKey);
     }
 
     <T> T createBean(Class<T> beanType) {
@@ -59,9 +64,9 @@ public class ThreadContextUtil {
    * @param threadContextObject The type of the thread context bean.
    * @return Returns the thread context bean of the current thread.
    */
-  public static <T> T getThreadContext(Class<T> threadContextObject) {
+  public static <T> T getThreadContext(Class<T> threadContextBean) {
     ThreadContextHolder threadContextHolder = getOrCreateThreadContextHolder();
-    return threadContextHolder.getBean(threadContextObject);
+    return threadContextHolder.getBean(threadContextBean);
   }
 
   /**
@@ -69,6 +74,15 @@ public class ThreadContextUtil {
    */
   public static void clearThreadContext() {
     threadLocal.remove();
+  }
+
+  public static boolean hasThreadContext(Class<?> threadContextBean) {
+    ThreadContextHolder threadContextHolder = threadLocal.get();
+    if (isNull(threadContextHolder)) {
+      return false;
+    } else {
+      return threadContextHolder.hasBean(threadContextBean);
+    }
   }
 
   private static ThreadContextHolder getOrCreateThreadContextHolder() {
