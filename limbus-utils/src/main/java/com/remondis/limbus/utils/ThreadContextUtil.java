@@ -54,6 +54,11 @@ public class ThreadContextUtil {
       return beanType.getName();
     }
 
+    public void removeBean(Class<?> beanType) {
+      String variableKey = getVariableKey(beanType);
+      threadVariables.remove(variableKey);
+    }
+
   }
 
   /**
@@ -67,6 +72,11 @@ public class ThreadContextUtil {
   public static <T> T getThreadContext(Class<T> threadContextBean) {
     ThreadContextHolder threadContextHolder = getOrCreateThreadContextHolder();
     return threadContextHolder.getBean(threadContextBean);
+  }
+
+  public static void removeThreadContext(Class<?> threadContextBean) {
+    ThreadContextHolder threadContextHolder = getOrCreateThreadContextHolder();
+    threadContextHolder.removeBean(threadContextBean);
   }
 
   /**
