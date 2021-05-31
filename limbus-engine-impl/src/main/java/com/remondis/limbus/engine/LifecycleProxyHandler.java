@@ -64,6 +64,10 @@ public class LifecycleProxyHandler<P extends LimbusPlugin> implements Invocation
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
     P plugin = getPluginObjectOrFail();
 
+    if (hasLifecycleHook()) {
+      lifecycleHook.beforeContextInvocation(plugin, proxy, method, args);
+    }
+
     // schuettec - 30.01.2017 : Perform all calls on the plugin object within a context action!
     return context.doContextAction(new LimbusContextAction<Object, Throwable>() {
       @Override
@@ -76,6 +80,9 @@ public class LifecycleProxyHandler<P extends LimbusPlugin> implements Invocation
 
         try {
           Method pluginMethod = getPluginMethod(method, plugin);
+          if (hasLifecycleHook()) {
+            lifecycleHook.withinContextInvocation(plugin, proxy, method, args);
+          }
           if (args == null) {
             return pluginMethod.invoke(plugin);
           } else {
@@ -84,6 +91,9 @@ public class LifecycleProxyHandler<P extends LimbusPlugin> implements Invocation
         } catch (InvocationTargetException e) {
           // schuettec - 31.01.2017 : Skip InvocationTargetException and throw the cause only if it exists
           Throwable cause = e.getCause();
+          if (hasLifecycleHook()) {
+            lifecycleHook.withinContextError(plugin, proxy, method, args, e);
+          }
           if (cause == null) {
             throw e;
           } else {
@@ -96,7 +106,7 @@ public class LifecycleProxyHandler<P extends LimbusPlugin> implements Invocation
 
       private Method getPluginMethod(Method method, P plugin) {
         // schuettec - 31.01.2017 : We have to find the corresponding method ourselves because abstract classes in the
-        // inhertiance hierarchy cannot be called.
+        // inheritance hierarchy cannot be called.
         Class<? extends LimbusPlugin> pluginClass = plugin.getClass();
         try {
           Method pluginMethod = pluginClass.getMethod(method.getName(), method.getParameterTypes());
