@@ -129,6 +129,13 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
     }
   }
 
+  /**
+   * @return Returns a list of all components registered.
+   */
+  public List<Component> getAllComponents() {
+    return allComponents;
+  }
+
   protected List<InfoRecord> lazyInfoRecord() {
     if (infoRecords == null) {
       this.infoRecords = new LinkedList<InfoRecord>();
