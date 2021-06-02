@@ -37,9 +37,14 @@ public abstract class LimbusServicePlugin extends Initializable<Exception> imple
 
       @Override
       public Thread run() {
-        return new Thread(LimbusServicePlugin.this, "ServicePlugin - " + getClass().getSimpleName());
+        return new Thread(LimbusServicePlugin.this, getThreadName());
       }
+
     });
+  }
+
+  private String getThreadName() {
+    return "ServicePlugin - " + getClass().getCanonicalName();
   }
 
   @Override
