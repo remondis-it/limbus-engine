@@ -417,7 +417,7 @@ public class Lang {
    *        The exception
    * @return The stacktrace of the exception as string.
    */
-  public static String exceptionAsString(Exception exception) {
+  public static String exceptionAsString(Throwable exception) {
     Lang.denyNull("exception", exception);
     StringWriter sw = new StringWriter();
     PrintWriter pw = new PrintWriter(sw);
