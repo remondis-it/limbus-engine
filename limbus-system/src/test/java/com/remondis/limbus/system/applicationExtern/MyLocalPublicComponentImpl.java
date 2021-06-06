@@ -5,6 +5,6 @@ import com.remondis.limbus.system.api.LimbusComponent;
 import com.remondis.limbus.system.application.LocalPublicComponent;
 
 @LimbusComponent
-public class PossibleLocalPublicComponentOverrideImpl extends Initializable<Exception> implements LocalPublicComponent {
+public class MyLocalPublicComponentImpl extends Initializable<Exception> implements LocalPublicComponent {
 
 }

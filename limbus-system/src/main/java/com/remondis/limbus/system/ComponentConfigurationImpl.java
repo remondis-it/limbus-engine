@@ -4,17 +4,12 @@ import static java.util.Objects.isNull;
 
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
-import java.util.Objects;
 
 import com.remondis.limbus.api.IInitializable;
 
 /**
  * This class defines a component configuration which consists of the type of component to be created and a (super-)type
  * that is used to request this component instance.
- *
- * <p>
- * The identifying attribute for this class is the request type.
- * </p>
  *
  * @author schuettec
  */
@@ -152,24 +147,15 @@ public class ComponentConfigurationImpl implements Serializable, ComponentConfig
     return requestType != null;
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see java.lang.Object#hashCode()
-   */
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
+    result = prime * result + ((componentType == null) ? 0 : componentType.hashCode());
     result = prime * result + ((requestType == null) ? 0 : requestType.hashCode());
     return result;
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -179,13 +165,14 @@ public class ComponentConfigurationImpl implements Serializable, ComponentConfig
     if (getClass() != obj.getClass())
       return false;
     ComponentConfigurationImpl other = (ComponentConfigurationImpl) obj;
-    if (requestType == null) {
-      if (other.requestType == null) {
-        return this.getComponentType()
-            .equals(other.getComponentType());
-      } else {
+    if (componentType == null) {
+      if (other.componentType != null)
         return false;
-      }
+    } else if (!componentType.equals(other.componentType))
+      return false;
+    if (requestType == null) {
+      if (other.requestType != null)
+        return false;
     } else if (!requestType.equals(other.requestType))
       return false;
     return true;

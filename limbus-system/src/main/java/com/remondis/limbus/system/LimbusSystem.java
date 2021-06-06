@@ -3,6 +3,7 @@ package com.remondis.limbus.system;
 import static com.remondis.limbus.utils.ReflectionUtil.fieldInjectValue;
 import static com.remondis.limbus.utils.ReflectionUtil.setterInjectValue;
 import static java.util.Collections.emptyList;
+import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.toList;
 
 import java.lang.reflect.Field;
@@ -203,14 +204,12 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
 
   public <I extends IInitializable<?>> void removePrivateComponentConfiguration(Class<I> componentType) {
     Lang.denyNull("componentType", componentType);
-    ComponentConfiguration component = createComponentConfiguration(componentType, false);
-    configuration.removeComponentConfiguration(component);
+    configuration.removePrivateComponent(componentType);
   }
 
   public <T extends IInitializable<?>> void removePublicComponentConfiguration(Class<T> requestType) {
     Lang.denyNull("requestType", requestType);
-    ComponentConfiguration component = createComponentConfiguration(requestType);
-    configuration.removeComponentConfiguration(component);
+    configuration.removePublicComponent(requestType);
   }
 
   /**
@@ -240,7 +239,7 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
    *        The component's request type to remove.
    */
   public <T extends IInitializable<?>> void removeComponentConfiguration(Class<T> requestType) {
-    configuration.removeByRequestType(requestType);
+    configuration.removePublicComponent(requestType);
   }
 
   /**
@@ -339,7 +338,7 @@ public class LimbusSystem extends Initializable<LimbusSystemException> {
 
   protected void denyMultipleComponents(Class<?> requestType) {
     List<Component> components = publicComponents.get(requestType);
-    if (components.size() > 1) {
+    if (nonNull(components) && components.size() > 1) {
       throw SingleComponentExpectedException.moreThanOneComponentAvailable(requestType);
     }
   }
