@@ -19,6 +19,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -30,6 +31,7 @@ import java.util.jar.JarFile;
  */
 public class ReflectionUtil {
 
+  private static final Set<Class<?>> BUILD_IN_TYPES;
   private static final Map<Class<?>, Object> DEFAULT_VALUES;
 
   static {
@@ -45,9 +47,22 @@ public class ReflectionUtil {
     map.put(float.class, 0f);
     map.put(double.class, 0d);
     DEFAULT_VALUES = Collections.unmodifiableMap(map);
+
+    BUILD_IN_TYPES = new HashSet<>();
+    BUILD_IN_TYPES.add(Boolean.class);
+    BUILD_IN_TYPES.add(Character.class);
+    BUILD_IN_TYPES.add(Byte.class);
+    BUILD_IN_TYPES.add(Short.class);
+    BUILD_IN_TYPES.add(Integer.class);
+    BUILD_IN_TYPES.add(Long.class);
+    BUILD_IN_TYPES.add(Float.class);
+    BUILD_IN_TYPES.add(Double.class);
+    BUILD_IN_TYPES.add(String.class);
+
   }
 
   private static final Map<String, Class<?>> primitiveNameMap = new HashMap<>();
+  private static final Map<Class<?>, Class<?>> wrapperMap = new HashMap<>();
 
   static {
     primitiveNameMap.put(boolean.class.getName(), boolean.class);
@@ -59,6 +74,38 @@ public class ReflectionUtil {
     primitiveNameMap.put(double.class.getName(), double.class);
     primitiveNameMap.put(float.class.getName(), float.class);
     primitiveNameMap.put(void.class.getName(), void.class);
+
+    wrapperMap.put(boolean.class, Boolean.class);
+    wrapperMap.put(byte.class, Byte.class);
+    wrapperMap.put(char.class, Character.class);
+    wrapperMap.put(short.class, Short.class);
+    wrapperMap.put(int.class, Integer.class);
+    wrapperMap.put(long.class, Long.class);
+    wrapperMap.put(double.class, Double.class);
+    wrapperMap.put(float.class, Float.class);
+    wrapperMap.put(void.class, Void.class);
+  }
+
+  /**
+   * Checks if the specified type is a Java build-in type. The build-in types are the object versions of the Java
+   * primitives like {@link Integer}, {@link Long} but also {@link String}.
+   *
+   * @param type The type to check
+   * @return Returns <code>true</code> if the specified type is a java build-in type.
+   */
+  public static boolean isBuildInType(Class<?> type) {
+    return BUILD_IN_TYPES.contains(type);
+  }
+
+  /**
+   * Checks if the specified type is a Java build-in type. The build-in types are the object versions of the Java
+   * primitives like {@link Integer}, {@link Long} but also {@link String}.
+   *
+   * @param type The type to check
+   * @return Returns <code>true</code> if the specified type is a java build-in type.
+   */
+  public static boolean isBuildInOrPrimitiveType(Class<?> type) {
+    return type.isPrimitive() || BUILD_IN_TYPES.contains(type);
   }
 
   /**
