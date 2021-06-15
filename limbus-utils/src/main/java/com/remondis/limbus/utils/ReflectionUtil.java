@@ -428,6 +428,47 @@ public class ReflectionUtil {
    * @throws Exception
    *         Thrown if the proxy threw an exception.
    */
+  public static Object invokeMethodReflectively(String methodName, Object targetObject,
+      @SuppressWarnings("rawtypes") Class[] parameterTypes, Object... args)
+      throws IllegalAccessException, SecurityException, NoSuchMethodException, Exception {
+    // if (Proxy.isProxyClass(clazz)) {
+    // schuettec - 08.02.2017 : Find the method on the specified proxy.
+    Method effectiveMethod = targetObject.getClass()
+        .getMethod(methodName, parameterTypes);
+    // }
+    try {
+      if (args == null) {
+        return effectiveMethod.invoke(targetObject);
+      } else {
+        return effectiveMethod.invoke(targetObject, args);
+      }
+    } catch (InvocationTargetException e) {
+      handleInvocationTargetException(e);
+      return null; // Will never happen because handleInvocationTargetException will always throw.
+    }
+  }
+
+  /**
+   * This method calls a method on the specified object. <b>This method takes into account, that the specified object
+   * can also be a proxy instance.</b> In this case, the method to be called must be redefined by searching it on the
+   * proxy. (Proxy instances are not classes of the type the method was declared in.)
+   *
+   * @param method
+   *        The method to be invoked
+   * @param targetObject
+   *        The target object or proxy instance.
+   * @param args
+   *        (Optional) Arguments to pass to the invoked method or <code>null</code> indicating no parameters.
+   * @return Returns the return value of the method on demand.
+   * @throws IllegalAccessException
+   *         Thrown on any access error.
+   * @throws SecurityException
+   *         Thrown if the reflective operation is not allowed
+   * @throws NoSuchMethodException
+   *         Thrown if the proxy instance does not provide the desired method.
+   * @throws Exception
+   *         Thrown if the proxy threw an exception.
+   */
   public static Object invokeMethodProxySafe(Method method, Object targetObject, Object... args)
       throws IllegalAccessException, SecurityException, NoSuchMethodException, Exception {
     Method effectiveMethod = method;
@@ -447,7 +488,6 @@ public class ReflectionUtil {
       handleInvocationTargetException(e);
       return null; // Will never happen because handleInvocationTargetException will always throw.
     }
-
   }
 
   /**

@@ -23,6 +23,7 @@ import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.staging.LimbusStage;
 import com.remondis.limbus.staging.LimbusStaging;
 import com.remondis.limbus.staging.LimbusStagingDeployment;
+import com.remondis.limbus.utils.ReflectionUtil;
 
 /**
  * Java 9 and later compatibility:
@@ -88,6 +89,13 @@ public class LimbusIntegrationTest implements DeploymentListener {
     Classpath classpath = engine.getClasspath(DEPLOY_NAME);
     LimbusPlugin plugin = engine.getPlugin(classpath, TestPlugin.class.getName(), LimbusPlugin.class);
     assertNotNull(plugin);
+
+    System.out.println(plugin);
+    // Call anonymous method (anonymous: method is not defined in one of the plugins interfaces)
+    Class targetClass = plugin.getClass();
+    String retVal = (String) ReflectionUtil.invokeMethodReflectively("anonymousMethod", plugin, new Class[] {});
+
+    assertNotNull(retVal);
 
     try {
       engine.undeployPlugin(classpath);
