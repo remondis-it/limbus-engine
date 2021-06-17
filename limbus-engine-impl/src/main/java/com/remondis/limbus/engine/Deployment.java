@@ -2,7 +2,10 @@ package com.remondis.limbus.engine;
 
 import static com.remondis.limbus.engine.LimbusUtil.denyClassNotFound;
 import static com.remondis.limbus.engine.LimbusUtil.isLimbusPlugin;
+import static com.remondis.limbus.engine.api.InvocationResult.noReturn;
+import static com.remondis.limbus.engine.api.InvocationResult.returnValue;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.net.URLClassLoader;
 import java.util.LinkedList;
@@ -18,6 +21,7 @@ import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.api.LimbusClasspathException;
 import com.remondis.limbus.api.LimbusException;
 import com.remondis.limbus.api.LimbusPlugin;
+import com.remondis.limbus.engine.api.InvocationResult;
 import com.remondis.limbus.engine.api.LimbusContext;
 import com.remondis.limbus.engine.api.LimbusContextAction;
 import com.remondis.limbus.engine.api.LimbusLifecycleHook;
@@ -392,5 +396,41 @@ class Deployment extends Initializable<LimbusClasspathException> {
    */
   private LimbusContextPublic createWeakContext() {
     return new LimbusContextPublic(limbusContext);
+  }
+
+  public <T extends LimbusPlugin> InvocationResult invokePluginMethodReflectively(String classname,
+      Class<T> expectedType, LimbusLifecycleHook<T> lifecycleHook, boolean initialize, String name,
+      Class[] parameterTypes, Object[] parameters) throws LimbusException {
+
+    LimbusPlugin plugin = unwrapPluginInstance(getPlugin(classname, LimbusPlugin.class, null, initialize));
+    return limbusContext.doContextAction(new LimbusContextAction<InvocationResult, RuntimeException>() {
+
+      @Override
+      public InvocationResult doAction() throws RuntimeException {
+        try {
+          Object returnValue;
+          Method pluginMethod = LifecycleProxyHandler.getPluginMethodBySignature(plugin, name, parameterTypes);
+          if (parameters == null) {
+            returnValue = pluginMethod.invoke(plugin);
+          } else {
+            returnValue = pluginMethod.invoke(plugin, parameters);
+          }
+          if (ReflectionUtil.hasReturnType(pluginMethod)) {
+            return returnValue(returnValue);
+          } else {
+            return noReturn();
+          }
+        } catch (RuntimeException e) {
+          throw e;
+        } catch (Exception e) {
+          throw new RuntimeException("Cannot reflectively call plugin method due to exception.", e);
+        }
+      }
+    });
+  }
+
+  private LimbusPlugin unwrapPluginInstance(LimbusPlugin plugin) {
+    LifecycleProxyHandler proxyHandler = (LifecycleProxyHandler) Proxy.getInvocationHandler(plugin);
+    return proxyHandler.getPluginObjectOrFail();
   }
 }

@@ -227,6 +227,24 @@ public interface LimbusEngine extends IInitializable<Exception> {
       LimbusLifecycleHook<T> lifecycleHook, boolean initialize) throws LimbusException;
 
   /**
+   * Performs a reflective plugin method invocation. This way, plugin methods can be called, that are not part of a
+   * plugin interface. Use this method to call anonymous methods in a plugin. <b>Note: The method invocation is
+   * performed
+   * within a {@link LimbusContextAction}</b>
+   * 
+   * @param <T> The plugin type.
+   * @param plugin The plugin instance.
+   * @param name The method name.
+   * @param parameterTypes The array of parameter types to resolve the method.
+   * @param parameters The actual parameter values to call the method.
+   * @return Returns the return value of the method invocation.
+   */
+  @SuppressWarnings("rawtypes")
+  public <T extends LimbusPlugin> InvocationResult invokePluginMethodReflectively(Classpath classpath, String classname,
+      Class<T> expectedType, LimbusLifecycleHook<T> lifecycleHook, boolean initialize, String name,
+      Class[] parameterTypes, Object[] parameters) throws LimbusException, NoSuchDeploymentException;
+
+  /**
    * Since the {@link LimbusEngine} only exposes proxy objects for plugin instances, Java Bean property introspection is
    * not possible without unwrapping the plugin type. This method makes sure that the plugin type is introspected
    * safely.

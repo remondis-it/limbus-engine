@@ -30,6 +30,7 @@ import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.api.LimbusException;
 import com.remondis.limbus.api.LimbusPlugin;
 import com.remondis.limbus.engine.api.DeploymentListener;
+import com.remondis.limbus.engine.api.InvocationResult;
 import com.remondis.limbus.engine.api.LimbusContext;
 import com.remondis.limbus.engine.api.LimbusEngine;
 import com.remondis.limbus.engine.api.LimbusLifecycleHook;
@@ -260,6 +261,24 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
       Deployment deployment = deploymentMap.get(classpath);
       return deployment.createPluginProxy(classname, pluginInterface, supportedIntefaces, toDefineIn, lifecycleHook,
           initialize);
+    } else {
+      throw new NoSuchDeploymentException("The specified classpath is not deployed on this container.");
+    }
+  }
+
+  @SuppressWarnings({
+      "rawtypes"
+  })
+  @Override
+  public <T extends LimbusPlugin> InvocationResult invokePluginMethodReflectively(Classpath classpath, String classname,
+      Class<T> expectedType, LimbusLifecycleHook<T> lifecycleHook, boolean initialize, String name,
+      Class[] parameterTypes, Object[] parameters) throws LimbusException, NoSuchDeploymentException {
+
+    checkState();
+    if (deploymentMap.containsKey(classpath)) {
+      Deployment deployment = deploymentMap.get(classpath);
+      return deployment.invokePluginMethodReflectively(classname, expectedType, lifecycleHook, initialize, name,
+          parameterTypes, parameters);
     } else {
       throw new NoSuchDeploymentException("The specified classpath is not deployed on this container.");
     }

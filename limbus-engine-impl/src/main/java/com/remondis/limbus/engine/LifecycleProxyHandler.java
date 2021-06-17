@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import com.remondis.limbus.api.IInitializable;
 import com.remondis.limbus.api.LimbusPlugin;
@@ -104,26 +105,46 @@ public class LifecycleProxyHandler<P extends LimbusPlugin> implements Invocation
         }
       }
 
-      private Method getPluginMethod(Method method, P plugin) {
-        // schuettec - 31.01.2017 : We have to find the corresponding method ourselves because abstract classes in the
-        // inheritance hierarchy cannot be called.
-        Class<? extends LimbusPlugin> pluginClass = plugin.getClass();
-        try {
-          Method pluginMethod = pluginClass.getMethod(method.getName(), method.getParameterTypes());
-          return pluginMethod;
-        } catch (NoSuchMethodException e) {
-          // schuettec - 31.01.2017 : CONVENTION: A plugin must implement all methods from its plugin interface
-          // (technically this is ensured by the compiler).
-          throw new LimbusConventionError(String.format(
-              "The plugin implementation %s does not implement the method %s from it's plugin interface %s.",
-              pluginClass.getName(), method.toGenericString(), method.getDeclaringClass()
-                  .getName()));
-        } catch (SecurityException e) {
-          throw e;
-        }
-      }
     });
 
+  }
+
+  private Method getPluginMethod(Method method, P plugin) {
+    // schuettec - 31.01.2017 : We have to find the corresponding method ourselves because abstract classes in the
+    // inheritance hierarchy cannot be called.
+    Class<? extends LimbusPlugin> pluginClass = plugin.getClass();
+    try {
+      Method pluginMethod = pluginClass.getMethod(method.getName(), method.getParameterTypes());
+      return pluginMethod;
+    } catch (NoSuchMethodException e) {
+      // schuettec - 31.01.2017 : CONVENTION: A plugin must implement all methods from its plugin interface
+      // (technically this is ensured by the compiler).
+      throw new LimbusConventionError(
+          String.format("The plugin implementation %s does not implement the method %s from it's plugin interface %s.",
+              pluginClass.getName(), method.toGenericString(), method.getDeclaringClass()
+                  .getName()));
+    } catch (SecurityException e) {
+      throw e;
+    }
+  }
+
+  @SuppressWarnings({
+      "unchecked", "rawtypes"
+  })
+  static <P> Method getPluginMethodBySignature(P plugin, String name, Class[] parameterTypes) {
+    Class pluginClass = plugin.getClass();
+    try {
+      Method pluginMethod = pluginClass.getMethod(name, parameterTypes);
+      return pluginMethod;
+    } catch (NoSuchMethodException e) {
+      // schuettec - 31.01.2017 : CONVENTION: A plugin must implement all methods from its plugin interface
+      // (technically this is ensured by the compiler).
+      throw new LimbusConventionError(
+          String.format("The plugin implementation %s does not implement the method %s($s).", pluginClass.getName(),
+              pluginClass.getName(), Arrays.toString(parameterTypes)));
+    } catch (SecurityException e) {
+      throw e;
+    }
   }
 
   /**
