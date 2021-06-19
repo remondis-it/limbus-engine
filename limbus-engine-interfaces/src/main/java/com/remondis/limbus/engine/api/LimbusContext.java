@@ -24,4 +24,5 @@ public interface LimbusContext {
    *         Thrown on any error.
    */
   public <R, E extends Throwable> R doContextAction(LimbusContextAction<R, E> callable) throws E;
+
 }

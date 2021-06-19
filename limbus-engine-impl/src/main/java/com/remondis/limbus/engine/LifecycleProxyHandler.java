@@ -62,6 +62,18 @@ public class LifecycleProxyHandler<P extends LimbusPlugin> implements Invocation
     this.lifecycleHook = lifecycleHook;
   }
 
+  /**
+   * @return Returns the plugin's implementation class. Do not cache strong references to this class.
+   * @deprecated This method is deprecated to warn: When caching plugin classes classloader leaks might occur when the
+   *             plugin is undeployed, because the loaded classes of the plugin cannot be garbage collected if strong
+   *             references are being held.
+   */
+  @Deprecated
+  @SuppressWarnings("unchecked")
+  public Class<P> getPluginClass() {
+    return (Class<P>) getPluginObjectOrFail().getClass();
+  }
+
   @Override
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
     P plugin = getPluginObjectOrFail();
