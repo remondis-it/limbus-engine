@@ -59,7 +59,7 @@ class Deployment extends Initializable<LimbusClasspathException> {
 
     this.classpath = classpath;
     this.pluginRegistry = new ConcurrentHashMap<String, LimbusPlugin>();
-    this.limbusContext = new LimbusContextInternal(classloader);
+    this.limbusContext = new LimbusContextInternal(classpath, classloader);
     this.lifecycleMulticaster = EventMulticasterFactory.create(LimbusPlugin.class);
     this.strongReferences = new LinkedList<>();
   }

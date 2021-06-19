@@ -2,6 +2,7 @@ package com.remondis.limbus.engine;
 
 import java.lang.ref.WeakReference;
 
+import com.remondis.limbus.api.Classpath;
 import com.remondis.limbus.engine.api.LimbusContext;
 import com.remondis.limbus.engine.api.LimbusContextAction;
 import com.remondis.limbus.engine.api.PluginUndeployedException;
@@ -33,6 +34,11 @@ public final class LimbusContextPublic implements LimbusContext {
       throw new PluginUndeployedException("The requested plugin was undeployed.");
     }
     return c;
+  }
+
+  @Override
+  public Classpath getClasspath() {
+    return getContextOrFail().getClasspath();
   }
 
 }

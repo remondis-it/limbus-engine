@@ -138,6 +138,9 @@ public class PluginClassLoader extends URLClassLoader {
     }
   }
 
+  public void getProtectionDomain() {
+  }
+
   private boolean trackStreams() {
     return properties.getBoolean("trackStreams");
   }

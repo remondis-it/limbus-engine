@@ -1,5 +1,7 @@
 package com.remondis.limbus.engine.api;
 
+import com.remondis.limbus.api.Classpath;
+
 /**
  * This interface provides a way to perform an action in the plugin's context.
  *
@@ -7,6 +9,11 @@ package com.remondis.limbus.engine.api;
  *
  */
 public interface LimbusContext {
+  /**
+   * @return Returns the classpath of the current context.
+   */
+  public Classpath getClasspath();
+
   /**
    * Performs a context action in the plugin's deploy context.
    *

@@ -2,14 +2,18 @@ package com.remondis.limbus.engine;
 
 import static com.remondis.limbus.engine.LimbusUtil.getCurrentThreadLocals;
 
+import java.lang.ref.WeakReference;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
+import com.remondis.limbus.api.Classpath;
+import com.remondis.limbus.api.LimbusPlugin;
 import com.remondis.limbus.engine.api.LimbusContext;
 import com.remondis.limbus.engine.api.LimbusContextAction;
+import com.remondis.limbus.engine.api.PluginUndeployedException;
 import com.remondis.limbus.utils.Lang;
 
 /**
@@ -23,6 +27,7 @@ import com.remondis.limbus.utils.Lang;
 public final class LimbusContextInternal implements LimbusContext {
 
   private PluginClassLoader classloader;
+  private Classpath classpath;
 
   @SuppressWarnings("rawtypes")
   private Set<ThreadLocal> threadLocalsSet;
@@ -30,11 +35,8 @@ public final class LimbusContextInternal implements LimbusContext {
   /**
    * Constructs an empty limbus context.
    */
-  public LimbusContextInternal() {
-    threadLocalsSet = new HashSet<>();
-  }
-
-  LimbusContextInternal(PluginClassLoader classloader) {
+  LimbusContextInternal(Classpath classpath, PluginClassLoader classloader) {
+    this.classpath = classpath;
     this.classloader = classloader;
     threadLocalsSet = new HashSet<>();
   }
@@ -119,5 +121,10 @@ public final class LimbusContextInternal implements LimbusContext {
     // Remove the classloader
     classloader = null;
 
+  }
+
+  @Override
+  public Classpath getClasspath() {
+    return classpath;
   }
 }

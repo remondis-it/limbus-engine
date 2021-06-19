@@ -11,6 +11,7 @@ import java.util.Arrays;
 
 import com.remondis.limbus.api.IInitializable;
 import com.remondis.limbus.api.LimbusPlugin;
+import com.remondis.limbus.engine.api.Interception;
 import com.remondis.limbus.engine.api.LimbusContextAction;
 import com.remondis.limbus.engine.api.LimbusLifecycleHook;
 import com.remondis.limbus.engine.api.PluginUndeployedException;
@@ -65,10 +66,6 @@ public class LifecycleProxyHandler<P extends LimbusPlugin> implements Invocation
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
     P plugin = getPluginObjectOrFail();
 
-    if (hasLifecycleHook()) {
-      lifecycleHook.beforeContextInvocation(plugin, proxy, method, args);
-    }
-
     // schuettec - 30.01.2017 : Perform all calls on the plugin object within a context action!
     return context.doContextAction(new LimbusContextAction<Object, Throwable>() {
       @Override
@@ -81,20 +78,27 @@ public class LifecycleProxyHandler<P extends LimbusPlugin> implements Invocation
 
         try {
           Method pluginMethod = getPluginMethod(method, plugin);
+          Interception interception = new Interception() {
+
+            @Override
+            public Object proceed() throws Throwable {
+              if (args == null) {
+                return pluginMethod.invoke(plugin);
+              } else {
+                return pluginMethod.invoke(plugin, args);
+              }
+            }
+          };
           if (hasLifecycleHook()) {
-            lifecycleHook.withinContextInvocation(plugin, proxy, method, args);
-          }
-          if (args == null) {
-            return pluginMethod.invoke(plugin);
+            return lifecycleHook.withinContextInvocation(context.getClasspath(), plugin, proxy, method, args,
+                interception);
           } else {
-            return pluginMethod.invoke(plugin, args);
+            return interception.proceed();
           }
+
         } catch (InvocationTargetException e) {
           // schuettec - 31.01.2017 : Skip InvocationTargetException and throw the cause only if it exists
           Throwable cause = e.getCause();
-          if (hasLifecycleHook()) {
-            lifecycleHook.withinContextError(plugin, proxy, method, args, e);
-          }
           if (cause == null) {
             throw e;
           } else {
