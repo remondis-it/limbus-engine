@@ -50,7 +50,7 @@ public class PluginClassLoader extends URLClassLoader {
   /**
    * If <code>true</code> the classloader will do some cleaning on close().
    */
-  protected boolean performCleaning = true;
+  protected boolean performCleaning = false;
 
   /**
    * Holds the shared class loader that enables us to delegate find class.
@@ -136,6 +136,9 @@ public class PluginClassLoader extends URLClassLoader {
             String.format("Cannot request required permissions to connect to the URL %s", url.toString()), e);
       }
     }
+  }
+
+  public void getProtectionDomain() {
   }
 
   private boolean trackStreams() {

@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.remondis.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
-		<version>3.1.0</version>
+		<version>3.1.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>limbus-engine-impl</artifactId>
 	<name>Limbus Engine Implementation</name>
@@ -35,17 +35,24 @@
 		<engine.launcher.mainClass>com.remondis.limbus.launcher.EngineLauncher</engine.launcher.mainClass>
 		<!-- Formatter configuration -->
 		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
-
-		<!-- Dependency Versions -->
-		<!-- Aether API Version -->
-		<aetherVersion>1.0.2.v20150114</aetherVersion>
-		<!-- Wagon Version -->
-		<wagonVersion>1.0</wagonVersion>
-		<!-- Maven API Version -->
-		<mavenVersion>3.3.3</mavenVersion>
 	</properties>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+						<manifestEntries>
+							<Add-Opens>java.base/java.lang=com.remondis.limbus.engine.implementation</Add-Opens>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -130,73 +137,25 @@
 			<artifactId>limbus-launcher</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- Limbus Maven Integration -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>limbus-maven-integration</artifactId>
+			<version>${project.version}</version>
+			<!-- The Limbus Maven Integration results in a non-modularized Jar. From 
+				a module's perspective, this Jar is cannot be referenced directly. The Maven 
+				Integration is indeed provided as a Java Service Loader Interface, hence 
+				this dependency should be declared as provided. -->
+			<scope>provided</scope>
+		</dependency>
 
 
 		<!-- Lanterna is used to implement the maintenance console -->
 		<dependency>
 			<groupId>com.googlecode.lanterna</groupId>
 			<artifactId>lanterna</artifactId>
-			<version>3.1.0-alpha1</version>
+			<version>3.2.0-alpha1</version>
 		</dependency>
-
-
-		<!-- Aether API to access Maven -->
-		<dependency>
-			<groupId>org.eclipse.aether</groupId>
-			<artifactId>aether-api</artifactId>
-			<version>${aetherVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.aether</groupId>
-			<artifactId>aether-util</artifactId>
-			<version>${aetherVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.aether</groupId>
-			<artifactId>aether-impl</artifactId>
-			<version>${aetherVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.aether</groupId>
-			<artifactId>aether-connector-basic</artifactId>
-			<version>${aetherVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.aether</groupId>
-			<artifactId>aether-transport-file</artifactId>
-			<version>${aetherVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.aether</groupId>
-			<artifactId>aether-transport-http</artifactId>
-			<version>${aetherVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.aether</groupId>
-			<artifactId>aether-transport-wagon</artifactId>
-			<version>${aetherVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.maven.wagon</groupId>
-			<artifactId>wagon-ssh</artifactId>
-			<version>${wagonVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-settings-builder</artifactId>
-			<version>${mavenVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-aether-provider</artifactId>
-			<version>${mavenVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.plexus</groupId>
-			<artifactId>plexus-utils</artifactId>
-			<version>3.0.24</version>
-		</dependency>
-
 
 		<!-- Test environment -->
 		<dependency>

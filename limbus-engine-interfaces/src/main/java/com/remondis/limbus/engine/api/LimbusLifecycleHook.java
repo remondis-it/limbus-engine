@@ -10,7 +10,7 @@ import com.remondis.limbus.api.LimbusPlugin;
  * @author schuettec
  *
  */
-public interface LimbusLifecycleHook<T extends LimbusPlugin> {
+public interface LimbusLifecycleHook<T extends LimbusPlugin> extends LimbusPluginInterceptor {
 
   /**
    * Called by the Limbus engine before a lifecycle of a {@link LimbusPlugin} is started. Implementors can perform

@@ -16,37 +16,29 @@ public class SystemConfigurationTest {
   public void test() {
 
     SystemConfiguration sys = new SystemConfiguration();
-    sys.addComponentConfiguration(new ComponentConfiguration(OptionalComponent.class, false));
+    sys.addComponentConfiguration(new ComponentConfigurationImpl(OptionalComponent.class, false));
     assertFalse(sys.containsRequestType(OptionalComponent.class));
-    assertTrue(sys.containsComponentConfiguration(new ComponentConfiguration(OptionalComponent.class, false)));
-    assertTrue(sys.containsComponentConfiguration(new ComponentConfiguration(OptionalComponent.class, true)));
 
-    sys.removeComponentConfiguration(new ComponentConfiguration(OptionalComponent.class, true));
+    sys.removePrivateComponent(OptionalComponent.class);
     assertFalse(sys.containsRequestType(OptionalComponent.class));
-    assertFalse(sys.containsComponentConfiguration(new ComponentConfiguration(OptionalComponent.class, false)));
-    assertFalse(sys.containsComponentConfiguration(new ComponentConfiguration(OptionalComponent.class, true)));
 
-    sys.addComponentConfiguration(new ComponentConfiguration(Aggregator.class, AggregatorImpl.class));
+    sys.addComponentConfiguration(new ComponentConfigurationImpl(Aggregator.class, AggregatorImpl.class));
     assertTrue(sys.containsRequestType(Aggregator.class));
-    sys.removeComponentConfiguration(new ComponentConfiguration(Aggregator.class, null));
+    sys.removePublicComponent(Aggregator.class);
     assertFalse(sys.containsRequestType(Aggregator.class));
 
-    sys.addComponentConfiguration(new ComponentConfiguration(Aggregator.class, AggregatorImpl.class));
+    sys.addComponentConfiguration(new ComponentConfigurationImpl(Aggregator.class, AggregatorImpl.class));
     assertTrue(sys.containsRequestType(Aggregator.class));
-    sys.removeByRequestType(Aggregator.class);
+    sys.removePublicComponent(Aggregator.class);
     assertFalse(sys.containsRequestType(Aggregator.class));
 
-    sys.addComponentConfiguration(new ComponentConfiguration(AggregatorImpl.class, true));
-    sys.addComponentConfiguration(new ComponentConfiguration(AnotherAggregatorImpl.class, true));
+    sys.addComponentConfiguration(new ComponentConfigurationImpl(AggregatorImpl.class, true));
+    sys.addComponentConfiguration(new ComponentConfigurationImpl(AnotherAggregatorImpl.class, true));
 
     assertFalse(sys.containsRequestType(AggregatorImpl.class));
     assertFalse(sys.containsRequestType(AnotherAggregatorImpl.class));
-    assertTrue(sys.containsComponentConfiguration(new ComponentConfiguration(AggregatorImpl.class, false)));
-    assertTrue(sys.containsComponentConfiguration(new ComponentConfiguration(AnotherAggregatorImpl.class, true)));
-    sys.removeComponentConfiguration(new ComponentConfiguration(AggregatorImpl.class, true));
-    sys.removeComponentConfiguration(new ComponentConfiguration(AnotherAggregatorImpl.class, true));
-    assertFalse(sys.containsComponentConfiguration(new ComponentConfiguration(AggregatorImpl.class, false)));
-    assertFalse(sys.containsComponentConfiguration(new ComponentConfiguration(AnotherAggregatorImpl.class, true)));
+    sys.removePrivateComponent(AggregatorImpl.class);
+    sys.removePrivateComponent(AnotherAggregatorImpl.class);
 
   }
 

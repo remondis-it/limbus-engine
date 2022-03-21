@@ -89,6 +89,15 @@ public class LimbusStagingDeployment {
     addResourceToStagingHandler(resource, jarURL);
   }
 
+  private void addResourceToStagingHandler(byte[] resource, URL jarURL) {
+    if (Handler.CURRENT_INSTANCE == null) {
+      throw new IllegalStateException(
+          "The staging resource URL handler is not available. Call LimbusStaging.prepareEnvironment() before using LimbusStage.");
+    } else {
+      Handler.CURRENT_INSTANCE.addResource(jarURL, resource);
+    }
+  }
+
   /**
    * @return Returns the deployName of the resulting plugin deployment.
    */
@@ -122,6 +131,28 @@ public class LimbusStagingDeployment {
   }
 
   /**
+   * Adds a set of default permissions. Like reading system properties.
+   * 
+   * @return Returns this object for method chaining.
+   */
+  public LimbusStagingDeployment grantDefaultPermissions() {
+    this.permissions.addAll(getDefaultPermissions());
+    return this;
+  }
+
+  /**
+   * Adds the specified {@link Permission} to this deployment.
+   * 
+   * @param permission The {@link Permission} to add.
+   * @return Returns this instance for method chaining.
+   */
+  public LimbusStagingDeployment addPermission(Permission permission) {
+    requireNonNull(permission, "permission must not be null!");
+    this.permissions.add(permission);
+    return this;
+  }
+
+  /**
    * @return Returns the {@link Set} of default permissions.
    */
   public static Set<Permission> getDefaultPermissions() {
@@ -129,15 +160,6 @@ public class LimbusStagingDeployment {
     defaultPermissions.add(new PropertyPermission("*", "read"));
     defaultPermissions.add(new RuntimePermission("accessClassInPackage.sun.util.logging.resources"));
     return defaultPermissions;
-  }
-
-  private void addResourceToStagingHandler(byte[] resource, URL jarURL) {
-    if (Handler.CURRENT_INSTANCE == null) {
-      throw new IllegalStateException(
-          "The staging resource URL handler is not available. Call LimbusStaging.prepareEnvironment() before using LimbusStage.");
-    } else {
-      Handler.CURRENT_INSTANCE.addResource(jarURL, resource);
-    }
   }
 
   private String createJarURL(String archiveName) {

@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.remondis.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
-		<version>3.1.0</version>
+		<version>3.1.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>limbus-depchain-host</artifactId>
 	<packaging>pom</packaging>
@@ -26,6 +26,11 @@
 			<dependency>
 				<groupId>com.remondis.limbus</groupId>
 				<artifactId>limbus-engine-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.remondis.limbus</groupId>
+				<artifactId>limbus-engine-interfaces</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
@@ -119,6 +124,7 @@
 				<groupId>org.assertj</groupId>
 				<artifactId>assertj-core</artifactId>
 				<version>3.16.0</version>
+				<scope>test</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

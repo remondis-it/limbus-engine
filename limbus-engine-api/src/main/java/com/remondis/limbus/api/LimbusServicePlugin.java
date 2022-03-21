@@ -1,5 +1,9 @@
 package com.remondis.limbus.api;
 
+import static java.security.AccessController.doPrivileged;
+
+import java.security.PrivilegedAction;
+
 /**
  * This abstract class implements a service plugin for use with the runtime engine. A {@link LimbusServicePlugin} is
  * basically an {@link IInitializable} type so it can be added as system component to the runtime engine. The plugin
@@ -29,14 +33,31 @@ public abstract class LimbusServicePlugin extends Initializable<Exception> imple
   private Thread pluginThread;
 
   public LimbusServicePlugin() {
-    pluginThread = new Thread(this, "ServicePlugin - " + getClass().getSimpleName());
+    this.pluginThread = doPrivileged(new PrivilegedAction<Thread>() {
+
+      @Override
+      public Thread run() {
+        return new Thread(LimbusServicePlugin.this, getThreadName());
+      }
+
+    });
+  }
+
+  private String getThreadName() {
+    return "ServicePlugin - " + getClass().getCanonicalName();
   }
 
   @Override
-  public void initialize() throws Exception {
-    super.initialize();
+  protected void performInitialize() throws Exception {
+    super.performInitialize();
+    doPrivileged(new PrivilegedAction<Void>() {
 
-    this.pluginThread.start();
+      @Override
+      public Void run() {
+        pluginThread.start();
+        return null;
+      }
+    });
   }
 
   /**
@@ -48,21 +69,27 @@ public abstract class LimbusServicePlugin extends Initializable<Exception> imple
   }
 
   @Override
-  public void finish() {
-    this.pluginThread.interrupt();
-    try {
-      this.pluginThread.join();
-    } catch (InterruptedException e) {
-      // Do not use a logger here. Logging would require dependencies that will present at classloading time, but
-      // not
-      // when running in a plugin's runtime context.
-      new Exception(String.format(
-          "The thread of this limbus service plugin (%s) was requested to stop but didn't respond in the allowed time.",
-          this.getClass()
-              .getName())).printStackTrace();
-    }
+  protected void performFinish() {
+    doPrivileged(new PrivilegedAction<Void>() {
 
-    super.finish();
+      @Override
+      public Void run() {
+        pluginThread.interrupt();
+        try {
+          pluginThread.join();
+        } catch (InterruptedException e) {
+          // Do not use a logger here. Logging would require dependencies that will present at classloading time, but
+          // not
+          // when running in a plugin's runtime context.
+          new Exception(String.format(
+              "The thread of this limbus service plugin (%s) was requested to stop but didn't respond in the allowed time.",
+              this.getClass()
+                  .getName())).printStackTrace();
+        }
+        return null;
+      }
+    });
+
+    super.performFinish();
   }
-
 }

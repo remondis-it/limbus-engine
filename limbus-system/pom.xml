@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.remondis.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
-		<version>3.1.0</version>
+		<version>3.1.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>limbus-system</artifactId>
 	<name>Limbus System</name>
@@ -39,21 +39,21 @@ This module delivers an optional system component that visualizes the object gra
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<argLine>
-					--add-opens
+						--add-opens
 						com.remondis.limbus.system/com.remondis.limbus.system=com.remondis.limbus.utils
-					--add-opens
+						--add-opens
 						com.remondis.limbus.system/com.remondis.limbus.system.external=com.remondis.limbus.utils
-					--add-opens
+						--add-opens
 						com.remondis.limbus.system/com.remondis.limbus.system.external.circular=com.remondis.limbus.utils
-					--add-opens
+						--add-opens
 						com.remondis.limbus.system/com.remondis.limbus.system.bundle=com.remondis.limbus.utils
-					--add-opens
+						--add-opens
 						com.remondis.limbus.system/com.remondis.limbus.system.applicationExtern=com.remondis.limbus.utils
-					--add-opens
+						--add-opens
 						com.remondis.limbus.system/com.remondis.limbus.system.application=com.remondis.limbus.utils
-					--add-opens
+						--add-opens
 						com.remondis.limbus.system/com.remondis.limbus.system.application.subpackage=com.remondis.limbus.utils
-						</argLine>
+					</argLine>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -64,6 +64,7 @@ This module delivers an optional system component that visualizes the object gra
 			<groupId>${project.groupId}</groupId>
 			<artifactId>limbus-engine-api</artifactId>
 			<version>${project.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- Limbus System API -->

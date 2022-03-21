@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.remondis.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
-		<version>3.1.0</version>
+		<version>3.1.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>limbus-showcase-launcher</artifactId>
 
@@ -23,7 +23,7 @@
 		<!-- Engine Final JAR name (without spaces!) -->
 		<engine.deploy.finalName>limbus-showcase-launcher</engine.deploy.finalName>
 		<!-- Engine Launcher Main Class -->
-		<engine.launcher.mainClass>com.remondis.limbus.EngineShowcaseLauncher</engine.launcher.mainClass>
+		<engine.launcher.mainClass>com.remondis.limbus.showcase.launcher.EngineShowcaseLauncher</engine.launcher.mainClass>
 		<!-- Formatter configuration -->
 		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
 	</properties>

@@ -13,6 +13,7 @@ import javax.swing.SwingUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.gui2.ActionListBox;
 import com.googlecode.lanterna.gui2.BasicWindow;
@@ -367,6 +368,7 @@ public class LimbusMaintenanceConsoleImpl extends Initializable<Exception> imple
           // Setup terminal and screen layers
 
           DefaultTerminalFactory factory = new DefaultTerminalFactory();
+          factory.setInitialTerminalSize(new TerminalSize(140, 180));
           factory.setPreferTerminalEmulator(true);
           factory.setTerminalEmulatorFrameAutoCloseTrigger(TerminalEmulatorAutoCloseTrigger.CloseOnExitPrivateMode);
           terminal = factory.createTerminal();

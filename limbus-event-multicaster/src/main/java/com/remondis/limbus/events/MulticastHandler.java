@@ -32,76 +32,74 @@ import com.remondis.limbus.utils.ReflectionUtil;
  *
  * @param <I>
  */
-final class MulticastHandler<I> implements EventMulticaster<I> {
+class MulticastHandler<I> implements EventMulticaster<I> {
 
-  private static final Logger log = LoggerFactory.getLogger(MulticastHandler.class);
+  protected static final Logger log = LoggerFactory.getLogger(MulticastHandler.class);
 
   private ConcurrentLinkedQueue<I> subscribers;
 
   private I localProxy;
   private I silentLocalProxy;
 
-  /**
-   * Holds the handler that re-throws exceptions from subscribers
-   */
-  private InvocationHandler throwingInvocationHandler = new InvocationHandler() {
+  protected InvocationHandler createSilentInvocationHandler() {
+    return new InvocationHandler() {
 
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-      Iterator<I> it = subscribers.iterator();
-      while (it.hasNext()) {
-        I subscriber = it.next();
-        try {
-          method.invoke(subscriber, args);
-        } catch (InvocationTargetException e) {
-          // Translate to the cause of the invocation target exception because thats the business logic exception.
-          throw e.getCause();
-        } catch (Exception e) {
-          String message = String.format("Cannot multicast event to subscriber of type %s", subscriber.getClass()
-              .getName());
-          throw new Exception(message, e);
+      @Override
+      public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        Iterator<I> it = subscribers.iterator();
+        while (it.hasNext()) {
+          I subscriber = it.next();
+
+          try {
+            method.invoke(subscriber, args);
+          } catch (InvocationTargetException e) {
+            // Skip exceptions thrown from the implementation.
+            // Translate to the cause of the invocation target exception because thats the business logic exception.
+            // Be silent but log exceptions due to implementation faults.
+            logInvocationError(subscriber, e.getCause());
+          } catch (Exception e) {
+            // Be silent but log exceptions due to implementation faults.
+            logInvocationError(subscriber, e);
+          }
         }
+        return null;
       }
-      return null;
-    }
-  };
 
-  /**
-   * Holds the invocation handler that supresses exceptions from subscribers
-   */
-  private InvocationHandler silentInvocationHandler = new InvocationHandler() {
+      protected void logInvocationError(I subscriber, Throwable e) {
+        log.debug(String.format("Cannot multicast event to subscriber of type %s", subscriber.getClass()
+            .getName()), e);
+      }
+    };
+  }
 
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-      Iterator<I> it = subscribers.iterator();
-      while (it.hasNext()) {
-        I subscriber = it.next();
+  protected InvocationHandler createExceptionInvocationHandler() {
+    return new InvocationHandler() {
 
-        try {
-          method.invoke(subscriber, args);
-        } catch (InvocationTargetException e) {
-          // Skip exceptions thrown from the implementation.
-          // Translate to the cause of the invocation target exception because thats the business logic exception.
-          // Be silent but log exceptions due to implementation faults.
-          logInvocationError(subscriber, e.getCause());
-        } catch (Exception e) {
-          // Be silent but log exceptions due to implementation faults.
-          logInvocationError(subscriber, e);
+      @Override
+      public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        Iterator<I> it = subscribers.iterator();
+        while (it.hasNext()) {
+          I subscriber = it.next();
+          try {
+            method.invoke(subscriber, args);
+          } catch (InvocationTargetException e) {
+            // Translate to the cause of the invocation target exception because thats the business logic exception.
+            throw e.getCause();
+          } catch (Exception e) {
+            String message = String.format("Cannot multicast event to subscriber of type %s", subscriber.getClass()
+                .getName());
+            throw new Exception(message, e);
+          }
         }
+        return null;
       }
-      return null;
-    }
-
-    private void logInvocationError(I subscriber, Throwable e) {
-      log.debug(String.format("Cannot multicast event to subscriber of type %s", subscriber.getClass()
-          .getName()), e);
-    }
-  };
+    };
+  }
 
   MulticastHandler(Class<I> subscriberInterface) {
+    this.silentLocalProxy = createMulticasterProxy(subscriberInterface, createSilentInvocationHandler());
+    this.localProxy = createMulticasterProxy(subscriberInterface, createExceptionInvocationHandler());
     this.subscribers = new ConcurrentLinkedQueue<I>();
-    this.localProxy = createMulticasterProxy(subscriberInterface, throwingInvocationHandler);
-    this.silentLocalProxy = createMulticasterProxy(subscriberInterface, silentInvocationHandler);
   }
 
   @Override

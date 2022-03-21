@@ -1,6 +1,7 @@
 package com.remondis.limbus.engine.api;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Field;
 import java.security.Permission;
 import java.util.Set;
 
@@ -109,13 +110,12 @@ public interface LimbusEngine extends IInitializable<Exception> {
   public ByteArrayOutputStream[] stopRecordChannel(Classpath classpath, Thread thread) throws NoSuchDeploymentException;
 
   /**
-   * Provides access to deployed plugins of this {@link LimbusEngine}. <b>Attention: Use this method with care!
-   * Plugins are loaded by their specific classloaders, therefore any call to a plugin must be performed with the
-   * specific thread context classloader set.</b>
+   * Provides access to deployed plugins of this {@link LimbusEngine}.
    * <p>
-   * <b>Do not cache the instances to the returned plugins! Plugins may be undeployed from the container anytime
-   * during runtime so it is important to keep those references in the engines lifecycle and honor the undeploy
-   * events.</b>
+   * The plugin instances returned by this method are wrapped in a proxy class. Any call to the plugin interface will
+   * check that the plugin is available before the real call is performed. This ensures that the plugin may be
+   * undeployed at any time and no direct references to the plugin's instance can be cached.</b>
+   * Plus that, any call to a plugin instance is performed within the scope of the respective {@link LimbusContext}.
    * </p>
    *
    * @param classpath
@@ -131,17 +131,18 @@ public interface LimbusEngine extends IInitializable<Exception> {
    * @throws NoSuchDeploymentException
    *         Thrown if the classpath is not deployed on this container.
    */
-  public <T extends LimbusPlugin> T getPlugin(Classpath classpath, String classname, Class<T> expectedType)
-      throws LimbusException, NoSuchDeploymentException;
+  public default <T extends LimbusPlugin> T getPlugin(Classpath classpath, String classname, Class<T> expectedType)
+      throws LimbusException, NoSuchDeploymentException {
+    return getPlugin(classpath, classname, expectedType, null);
+  }
 
   /**
-   * Provides access to deployed plugins of this {@link LimbusEngine}. <b>Attention: Use this method with care!
-   * Plugins are loaded by their specific classloaders, therefore any call to a plugin must be performed with the
-   * specific thread context classloader set.</b>
+   * Provides access to deployed plugins of this {@link LimbusEngine}.
    * <p>
-   * The plugin instances returned by this method are wrapped and any call to the plugin interface will check that the
-   * plugin is available before the real call is performed. This ensures that the plugin may be undeployed at any time
-   * and no direct references to the plugin's instance can be cached.</b>
+   * The plugin instances returned by this method are wrapped in a proxy class. Any call to the plugin interface will
+   * check that the plugin is available before the real call is performed. This ensures that the plugin may be
+   * undeployed at any time and no direct references to the plugin's instance can be cached.</b>
+   * Plus that, any call to a plugin instance is performed within the scope of the respective {@link LimbusContext}.
    * </p>
    *
    * @param classpath
@@ -160,8 +161,100 @@ public interface LimbusEngine extends IInitializable<Exception> {
    * @throws NoSuchDeploymentException
    *         Thrown if the classpath is not deployed on this container.
    */
+  public default <T extends LimbusPlugin> T getPlugin(Classpath classpath, String classname, Class<T> expectedType,
+      LimbusLifecycleHook<T> lifecycleHook) throws LimbusException, NoSuchDeploymentException {
+    return getPlugin(classpath, classname, expectedType, lifecycleHook, true);
+  }
+
+  /**
+   * Provides access to deployed plugins of this {@link LimbusEngine}.
+   * <p>
+   * The plugin instances returned by this method are wrapped in a proxy class. Any call to the plugin interface will
+   * check that the plugin is available before the real call is performed. This ensures that the plugin may be
+   * undeployed at any time and no direct references to the plugin's instance can be cached.</b>
+   * Plus that, any call to a plugin instance is performed within the scope of the respective {@link LimbusContext}.
+   * </p>
+   *
+   * @param classpath
+   *        The classpath the plugin is expected to be available in.
+   * @param classname
+   *        The classname of the plugin.
+   * @param expectedType
+   *        The expected plugin type. The plugin type must be derived from {@link LimbusPlugin}.
+   * @param lifecycleHook
+   *        (Optional) The lifecycle hook to be executed. <b>The lifecycle hook specified here will only be set on
+   *        first plugin request.</b>
+   * @param initialize If <code>true</code> the plugin is initialized, if <code>false</code> the caller is responsible
+   *        to initialize the plugin using a {@link LimbusContextAction}.
+   * @return Returns the plugin if available.
+   * @throws LimbusException
+   *         Thrown if the plugin could not be initialized, the plugin was not found, the classpath is not
+   *         deployed or the expected type does not match.
+   * @throws NoSuchDeploymentException
+   *         Thrown if the classpath is not deployed on this container.
+   */
   public <T extends LimbusPlugin> T getPlugin(Classpath classpath, String classname, Class<T> expectedType,
-      LimbusLifecycleHook<T> lifecycleHook) throws LimbusException, NoSuchDeploymentException;
+      LimbusLifecycleHook<T> lifecycleHook, boolean initialize) throws LimbusException, NoSuchDeploymentException;
+
+  /**
+   * Provides access to deployed plugins of this {@link LimbusEngine}. This method creates a proxy around the plugin
+   * instance implementing the specified supported interface. This is done so that the returned proxy can be cast to
+   * this particular types. <b>Note: The plugin must implement the specified supported interfaces!</b>
+   * 
+   * @param <S> The supported interface.
+   * @param <T> The plugin type
+   * @param classpath
+   *        The classpath the plugin is expected to be available in.
+   * @param classname The classname of the plugin.
+   * @param pluginInterface The plugin type .
+   * @param supportedIntefaces The interface the plugin proxy should support. <strong>Note: The plugin must implement
+   *        the
+   *        specified interface.</strong>
+   * @param toDefineIn The {@link ClassLoader} to define the proxy class in.
+   * @param lifecycleHook
+   *        (Optional) The lifecycle hook to be executed. <b>The lifecycle hook specified here will only be set on
+   *        first plugin request.</b>
+   * @param initialize If <code>true</code> the plugin is initialized, if <code>false</code> the caller is responsible
+   *        to initialize the plugin using a {@link LimbusContextAction}.
+   * @return Returns a proxy to the plugin instance that supports the specified interface.
+   * @throws LimbusException
+   *         Thrown if the plugin could not be initialized, the plugin was not found, the classpath is not
+   *         deployed or the expected type does not match.
+   * 
+   */
+  public <T extends LimbusPlugin, S extends T> S getPluginAsInterface(Classpath classpath, String classname,
+      Class<T> pluginInterface, Class<S>[] supportedIntefaces, ClassLoader toDefineIn,
+      LimbusLifecycleHook<T> lifecycleHook, boolean initialize) throws LimbusException;
+
+  /**
+   * Performs a reflective plugin method invocation. This way, plugin methods can be called, that are not part of a
+   * plugin interface. Use this method to call anonymous methods in a plugin. <b>Note: The method invocation is
+   * performed
+   * within a {@link LimbusContextAction}</b>
+   * 
+   * @param <T> The plugin type.
+   * @param plugin The plugin instance.
+   * @param name The method name.
+   * @param parameterTypes The array of parameter types to resolve the method.
+   * @param parameters The actual parameter values to call the method.
+   * @return Returns the return value of the method invocation.
+   */
+  @SuppressWarnings("rawtypes")
+  public <T extends LimbusPlugin> InvocationResult invokePluginMethodReflectively(Classpath classpath, String classname,
+      Class<T> expectedType, LimbusLifecycleHook<T> lifecycleHook, boolean initialize, String name,
+      Class[] parameterTypes, Object[] parameters) throws LimbusException, NoSuchDeploymentException;
+
+  /**
+   * Since the {@link LimbusEngine} only exposes proxy objects for plugin instances, Java Bean property introspection is
+   * not possible without unwrapping the plugin type. This method makes sure that the plugin type is introspected
+   * safely.
+   * 
+   * @param <T> The plugin type.
+   * @param field The field to inject.
+   * @param pluginInstance The plugin instance (normally a proxy object).
+   * @param value The value to inject.
+   */
+  public <T extends LimbusPlugin> void performPropertyInjection(Field field, T pluginInstance, Object value);
 
   /**
    * Deploys a classpath on this Limbus container and restricts the classpath using the specified set of permissions.
@@ -213,6 +306,11 @@ public interface LimbusEngine extends IInitializable<Exception> {
    * @return Returns the description of the currently deployed shared classpath.
    */
   public Classpath getSharedClasspath();
+
+  /**
+   * @return Returns the class loader that holds classes shared across all plugin classpaths.
+   */
+  public ClassLoader getSharedClassLoader();
 
   /**
    * @return Returns all deployed plugin classpaths.

@@ -209,4 +209,12 @@ public interface LimbusFileService extends IInitializable<Exception> {
    */
   public void renameFile(String filePath, String newFilename) throws FileAccessException;
 
+  /**
+   * Creates the desired file.
+   * 
+   * @param filePath The path of the file.
+   * @throws FileAccessException Thrown on any error.
+   */
+  public void touchFile(String filePath) throws FileAccessException;
+
 }

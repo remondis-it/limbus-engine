@@ -31,6 +31,13 @@ public @interface PublicComponent {
   Class<? extends IInitializable<?>> requestType();
 
   /**
+   * @return If <code>true</code> any components with the specified request type are removed from the system
+   *         configuration and replaced by this public component. If <code>false</code> this public component is added
+   *         as candidate.
+   */
+  boolean override() default false;
+
+  /**
    * @return The type of the public component implementation.
    */
   Class<? extends IInitializable<?>> type();

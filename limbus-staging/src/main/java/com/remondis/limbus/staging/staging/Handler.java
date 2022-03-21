@@ -1,6 +1,9 @@
 package com.remondis.limbus.staging.staging;
 
+import static java.util.Objects.nonNull;
+
 import java.io.IOException;
+import java.net.FileNameMap;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
@@ -58,11 +61,19 @@ public class Handler extends URLStreamHandler {
   protected URLConnection openConnection(URL u) throws IOException {
     synchronized (lock) {
       try {
+        // TODO: This is quite a dirty hack. What should we do if the reference "runtime" is requested?
+        if (nonNull(u.getRef()) && u.getRef()
+            .equalsIgnoreCase("runtime")) {
+          u = new URL(u.toExternalForm()
+              .replaceFirst("#runtime", ""));
+        }
+
         byte[] fileContent;
         fileContent = resources.get(u);
         if (fileContent == null) {
           throw new IOException("No deployment for URL " + u.toString());
         }
+
         StreamConnection connection = new StreamConnection(u, fileContent);
         connection.connect();
         return connection;

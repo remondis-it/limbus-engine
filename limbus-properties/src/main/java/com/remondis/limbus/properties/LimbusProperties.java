@@ -1,5 +1,7 @@
 package com.remondis.limbus.properties;
 
+import static java.lang.String.valueOf;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -187,7 +189,7 @@ public class LimbusProperties {
    *        The object to put as string value.
    */
   public void put(String key, Object object) {
-    put(key, String.valueOf(object));
+    put(key, valueOf(object));
   }
 
   /**

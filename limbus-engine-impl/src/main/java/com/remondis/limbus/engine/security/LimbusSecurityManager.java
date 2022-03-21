@@ -3,6 +3,7 @@ package com.remondis.limbus.engine.security;
 import java.security.AccessController;
 import java.security.Permission;
 import java.security.PrivilegedAction;
+import java.security.ProtectionDomain;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,6 +26,8 @@ import com.remondis.limbus.utils.Lang;
  *
  */
 public class LimbusSecurityManager extends SecurityManager {
+
+  private static final RuntimePermission MODFIY_THREAD_PERMISSION = new RuntimePermission("modifyThreadGroup");
 
   /**
    * Holds the Limbus Security Manager properties.
@@ -51,6 +54,12 @@ public class LimbusSecurityManager extends SecurityManager {
     if (logRequests() && hasContextClassLoaderFilter()) {
       filterPattern = Pattern.compile(contextClassLoaderFilter());
     }
+  }
+
+  @Override
+  public void checkAccess(ThreadGroup g) {
+    super.checkAccess(g);
+    checkPermission(MODFIY_THREAD_PERMISSION);
   }
 
   @Override

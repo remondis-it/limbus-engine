@@ -28,6 +28,7 @@ import com.remondis.limbus.engine.api.DeployService;
 import com.remondis.limbus.engine.api.LimbusEngine;
 import com.remondis.limbus.engine.api.NoSuchDeploymentException;
 import com.remondis.limbus.engine.api.UndeployVetoException;
+import com.remondis.limbus.engine.api.maven.MavenArtifactService;
 import com.remondis.limbus.engine.api.security.LimbusSecurity;
 import com.remondis.limbus.system.api.LimbusComponent;
 import com.remondis.limbus.utils.Lang;
@@ -138,7 +139,7 @@ public class ShowDeployService extends AbstractLimbusItem {
       pluginData.addComponent(txtVersion, GridLayout.createLayoutData(Alignment.FILL, Alignment.CENTER));
 
       pluginData.addComponent(new Label("Extension:"), GridLayout.createLayoutData(Alignment.END, Alignment.CENTER));
-      final TextBox txtExtension = createMavenCoordTextBox(DeployService.DEFAULT_MAVEN_EXTENSION);
+      final TextBox txtExtension = createMavenCoordTextBox(MavenArtifactService.DEFAULT_MAVEN_EXTENSION);
       pluginData.addComponent(txtExtension, GridLayout.createLayoutData(Alignment.FILL, Alignment.CENTER));
 
       pluginData.addComponent(new EmptySpace());

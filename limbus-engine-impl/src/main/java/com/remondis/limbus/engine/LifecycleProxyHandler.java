@@ -1,12 +1,17 @@
 package com.remondis.limbus.engine;
 
+import static com.remondis.limbus.utils.ReflectionUtil.fieldInjectValue;
+
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import com.remondis.limbus.api.IInitializable;
 import com.remondis.limbus.api.LimbusPlugin;
+import com.remondis.limbus.engine.api.Interception;
 import com.remondis.limbus.engine.api.LimbusContextAction;
 import com.remondis.limbus.engine.api.LimbusLifecycleHook;
 import com.remondis.limbus.engine.api.PluginUndeployedException;
@@ -57,6 +62,18 @@ public class LifecycleProxyHandler<P extends LimbusPlugin> implements Invocation
     this.lifecycleHook = lifecycleHook;
   }
 
+  /**
+   * @return Returns the plugin's implementation class. Do not cache strong references to this class.
+   * @deprecated This method is deprecated to warn: When caching plugin classes classloader leaks might occur when the
+   *             plugin is undeployed, because the loaded classes of the plugin cannot be garbage collected if strong
+   *             references are being held.
+   */
+  @Deprecated
+  @SuppressWarnings("unchecked")
+  public Class<P> getPluginClass() {
+    return (Class<P>) getPluginObjectOrFail().getClass();
+  }
+
   @Override
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
     P plugin = getPluginObjectOrFail();
@@ -73,11 +90,24 @@ public class LifecycleProxyHandler<P extends LimbusPlugin> implements Invocation
 
         try {
           Method pluginMethod = getPluginMethod(method, plugin);
-          if (args == null) {
-            return pluginMethod.invoke(plugin);
+          Interception interception = new Interception() {
+
+            @Override
+            public Object proceed() throws Throwable {
+              if (args == null) {
+                return pluginMethod.invoke(plugin);
+              } else {
+                return pluginMethod.invoke(plugin, args);
+              }
+            }
+          };
+          if (hasLifecycleHook()) {
+            return lifecycleHook.withinContextInvocation(context.getClasspath(), plugin, proxy, method, args,
+                interception);
           } else {
-            return pluginMethod.invoke(plugin, args);
+            return interception.proceed();
           }
+
         } catch (InvocationTargetException e) {
           // schuettec - 31.01.2017 : Skip InvocationTargetException and throw the cause only if it exists
           Throwable cause = e.getCause();
@@ -91,26 +121,46 @@ public class LifecycleProxyHandler<P extends LimbusPlugin> implements Invocation
         }
       }
 
-      private Method getPluginMethod(Method method, P plugin) {
-        // schuettec - 31.01.2017 : We have to find the corresponding method ourselves because abstract classes in the
-        // inhertiance hierarchy cannot be called.
-        Class<? extends LimbusPlugin> pluginClass = plugin.getClass();
-        try {
-          Method pluginMethod = pluginClass.getMethod(method.getName(), method.getParameterTypes());
-          return pluginMethod;
-        } catch (NoSuchMethodException e) {
-          // schuettec - 31.01.2017 : CONVENTION: A plugin must implement all methods from its plugin interface
-          // (technically this is ensured by the compiler).
-          throw new LimbusConventionError(String.format(
-              "The plugin implementation %s does not implement the method %s from it's plugin interface %s.",
-              pluginClass.getName(), method.toGenericString(), method.getDeclaringClass()
-                  .getName()));
-        } catch (SecurityException e) {
-          throw e;
-        }
-      }
     });
 
+  }
+
+  private Method getPluginMethod(Method method, P plugin) {
+    // schuettec - 31.01.2017 : We have to find the corresponding method ourselves because abstract classes in the
+    // inheritance hierarchy cannot be called.
+    Class<? extends LimbusPlugin> pluginClass = plugin.getClass();
+    try {
+      Method pluginMethod = pluginClass.getMethod(method.getName(), method.getParameterTypes());
+      return pluginMethod;
+    } catch (NoSuchMethodException e) {
+      // schuettec - 31.01.2017 : CONVENTION: A plugin must implement all methods from its plugin interface
+      // (technically this is ensured by the compiler).
+      throw new LimbusConventionError(
+          String.format("The plugin implementation %s does not implement the method %s from it's plugin interface %s.",
+              pluginClass.getName(), method.toGenericString(), method.getDeclaringClass()
+                  .getName()));
+    } catch (SecurityException e) {
+      throw e;
+    }
+  }
+
+  @SuppressWarnings({
+      "unchecked", "rawtypes"
+  })
+  static <P> Method getPluginMethodBySignature(P plugin, String name, Class[] parameterTypes) {
+    Class pluginClass = plugin.getClass();
+    try {
+      Method pluginMethod = pluginClass.getMethod(name, parameterTypes);
+      return pluginMethod;
+    } catch (NoSuchMethodException e) {
+      // schuettec - 31.01.2017 : CONVENTION: A plugin must implement all methods from its plugin interface
+      // (technically this is ensured by the compiler).
+      throw new LimbusConventionError(
+          String.format("The plugin implementation %s does not implement the method %s($s).", pluginClass.getName(),
+              pluginClass.getName(), Arrays.toString(parameterTypes)));
+    } catch (SecurityException e) {
+      throw e;
+    }
   }
 
   /**
@@ -172,12 +222,32 @@ public class LifecycleProxyHandler<P extends LimbusPlugin> implements Invocation
     }
   }
 
-  private P getPluginObjectOrFail() {
+  P getPluginObjectOrFail() {
     P p = pluginRef.get();
     if (p == null) {
       throw new PluginUndeployedException("The requested plugin was undeployed.");
     }
     return p;
+  }
+
+  /**
+   * Performs a Java Bean property injection on the specified field using the original plugin instance. This is usually
+   * not possible
+   * to perform on the proxy objects, so this method was introduced.
+   * 
+   * @param f The field to use.
+   * @param value The value to use.
+   */
+  public void performPropertyInjection(Field f, Object value) {
+    // Make sure this is done within a context action since plugin code is executed.
+    context.doContextAction(() -> {
+      P instance = getPluginObjectOrFail();
+      // boolean setterInjectionSuccessful = setterInjectValue(f, instance, value);
+      // if (!setterInjectionSuccessful) {
+      fieldInjectValue(f, instance, value);
+      // }
+      return null;
+    });
   }
 
 }

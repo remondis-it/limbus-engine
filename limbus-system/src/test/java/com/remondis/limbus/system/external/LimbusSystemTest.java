@@ -3,7 +3,6 @@ package com.remondis.limbus.system.external;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.withSettings;
@@ -92,8 +91,8 @@ public class LimbusSystemTest {
     system.addComponentConfiguration(Producer.class, ProducerImpl.class);
     system.addComponentConfiguration(Aggregator.class, AnotherAggregatorImpl.class);
     system.initialize();
-    Aggregator component = system.getComponent(Aggregator.class);
-    assertTrue(component instanceof AnotherAggregatorImpl);
+    List<Aggregator> components = system.getComponents(Aggregator.class);
+    assertEquals(2, components.size());
   }
 
   @Test // Happy Path
@@ -114,31 +113,6 @@ public class LimbusSystemTest {
 
     AggregatorImpl aggregatorImpl = (AggregatorImpl) aggregator;
     assertNotNull(aggregatorImpl.getSystem());
-  }
-
-  @Test // Duplicate component configurations are allowed.
-  public void test_config_with_duplicates() throws LimbusSystemException, SerializeException {
-    LimbusSystem system = new LimbusSystem();
-    system.addComponentConfiguration(Aggregator.class, AggregatorImpl.class);
-    system.addComponentConfiguration(Consumer.class, ConsumerImpl.class);
-    system.addComponentConfiguration(Aggregator.class, AnotherAggregatorImpl.class);
-    system.addComponentConfiguration(Filter.class, FilterImpl.class);
-    system.addComponentConfiguration(Producer.class, ProducerImpl.class);
-
-    system.initialize();
-    Aggregator component = system.getComponent(Aggregator.class);
-    String message = component.getMessage();
-    // The Filter will reverse the message
-    String expected = new StringBuilder(ProducerImpl.MESSAGE).reverse()
-        .toString();
-    assertEquals(expected, message);
-
-    assertNotNull(system.getComponent(Aggregator.class));
-    assertNotNull(system.getComponent(Consumer.class));
-    assertNotNull(system.getComponent(Filter.class));
-    assertNotNull(system.getComponent(Producer.class));
-
-    system.finish();
   }
 
   @Test
