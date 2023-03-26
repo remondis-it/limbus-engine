@@ -1,5 +1,7 @@
 package com.remondis.limbus.system.api;
 
+import java.lang.reflect.Field;
+
 import com.remondis.limbus.api.IInitializable;
 
 /**
@@ -48,8 +50,23 @@ public interface ObjectFactory {
    *         Implementations may return proxy objects here.
    */
   public default IInitializable<?> createPublicReference(Class<? extends IInitializable<?>> requestType,
-      Class<? extends IInitializable<?>> componentType, IInitializable<?> instance) {
+      Class<? extends IInitializable<?>> componentType, IInitializable<?> instance) throws Exception {
     return instance;
+  }
+
+  /**
+   * Injects a value into the specified instance. The injection strategy is
+   * defined by this method.
+   * 
+   * @param f The field to inject.
+   * @param instance The instance to injecto into.
+   * @param value The value to inject.
+   * @return Returns <code>true</code> if the injection was successfull. If
+   *         <code>false</code> is returned, the framework tries some fallback
+   *         methods to inject the value.
+   */
+  public default boolean injectValue(Field f, Object instance, Object value) {
+    return false;
   }
 
 }

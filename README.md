@@ -3,6 +3,7 @@
 # Table of Contents
 1. [Overview](#overview)
 2. [Modules](#modules)
+3. [Compatibility with Java 9 and later](#compatibility-with-java-9-and-later)
 
 ## Overview
 
@@ -33,4 +34,21 @@ The Limbus Engine consists of many different components that are managed as Mave
 - `limbus-system`  Core component managing system componentents as well as an implementation of a Dependency Injection (CDI) mechanism.
 - `limbus-task-scheduler`  System component managing periodically called tasks supporting adaptive scheduling intervals.
 - `limbus-vfs`   System component providing an API for the file system abstraction. Provides an implementation to access the real filesystem and an implementation providing an in-memory file system for easy support of integrations tests
+
+
+## Compatibility with Java 9 and later
+
+Currently the Limbus Engine performs a few class-leak prevention operations like scanning the ThreadLocals that were created but not freed by plugin code. Those operations use reflective access to 'java.base' module. By default this is not allowed in Java 9 and later.
+
+Currently there is no switch to disable this features in Limbus Engine. So currently use the following argument when starting a JVM:
+
+```
+--add-opens java.base/java.lang=com.remondis.limbus.engine.implementation
+```
+
+## Leak Prevention notes
+
+Currently ThreadLocal and ClassLoaders are scanned for possible classloader-leaks. Maybe some of those hacks are not necessary.
+
+- ThreadLocals are held using a WeakReference. Those references should clear themselves if no other stronger reference is existent. Maybe the operation in `com.remondis.limbus.engine.LimbusUtil.getCurrentThreadLocals()` is not needed anymore.
 

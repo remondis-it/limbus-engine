@@ -13,7 +13,14 @@ import com.remondis.limbus.api.IInitializable;
  */
 public interface LimbusSecurity extends IInitializable<Exception> {
   /**
-   * @return Returns the set of default permissions configured for this Limbus Engine instance.
+   * @return Returns the set of default permissions configured for this Limbus Engine instance to be used for the plugin
+   *         classloaders.
    */
   public Set<Permission> getSandboxDefaultPermissions();
+
+  /**
+   * @return Returns the set of default permissions configured for this Limbus Engine instance to be used for the shared
+   *         classloader.
+   */
+  public Set<Permission> getSharedClasspathDefaultPermissions();
 }

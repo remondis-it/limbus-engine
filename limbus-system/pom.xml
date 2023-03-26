@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.remondis.limbus</groupId>
 		<artifactId>limbus-parent</artifactId>
-		<version>3.0.1</version>
+		<version>3.1.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>limbus-system</artifactId>
 	<name>Limbus System</name>
@@ -32,12 +32,39 @@ This module delivers an optional system component that visualizes the object gra
 		<!-- Formatter configuration -->
 		<sharedDirectory>${project.parent.basedir}</sharedDirectory>
 	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>
+						--add-opens
+						com.remondis.limbus.system/com.remondis.limbus.system=com.remondis.limbus.utils
+						--add-opens
+						com.remondis.limbus.system/com.remondis.limbus.system.external=com.remondis.limbus.utils
+						--add-opens
+						com.remondis.limbus.system/com.remondis.limbus.system.external.circular=com.remondis.limbus.utils
+						--add-opens
+						com.remondis.limbus.system/com.remondis.limbus.system.bundle=com.remondis.limbus.utils
+						--add-opens
+						com.remondis.limbus.system/com.remondis.limbus.system.applicationExtern=com.remondis.limbus.utils
+						--add-opens
+						com.remondis.limbus.system/com.remondis.limbus.system.application=com.remondis.limbus.utils
+						--add-opens
+						com.remondis.limbus.system/com.remondis.limbus.system.application.subpackage=com.remondis.limbus.utils
+					</argLine>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	<dependencies>
 		<!-- Limbus Engine API -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>limbus-engine-api</artifactId>
 			<version>${project.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- Limbus System API -->
@@ -60,7 +87,7 @@ This module delivers an optional system component that visualizes the object gra
 			<artifactId>limbus-utils</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
 		<!-- Logging Facade -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

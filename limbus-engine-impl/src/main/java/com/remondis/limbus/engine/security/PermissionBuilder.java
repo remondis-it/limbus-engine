@@ -104,7 +104,6 @@ public final class PermissionBuilder {
    */
   public PermissionBuilder add() throws PermissionCreateException {
     Lang.denyNull("permissionClass", permissionClass);
-    Lang.denyNull("name", name);
     // Actions may be optional
     Permission permission = parsePermission(permissionClass, name, actions);
     this.permissions.add(permission);

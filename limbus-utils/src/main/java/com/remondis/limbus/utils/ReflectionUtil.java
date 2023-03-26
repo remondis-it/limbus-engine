@@ -19,6 +19,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -30,6 +31,7 @@ import java.util.jar.JarFile;
  */
 public class ReflectionUtil {
 
+  private static final Set<Class<?>> BUILD_IN_TYPES;
   private static final Map<Class<?>, Object> DEFAULT_VALUES;
 
   static {
@@ -45,9 +47,22 @@ public class ReflectionUtil {
     map.put(float.class, 0f);
     map.put(double.class, 0d);
     DEFAULT_VALUES = Collections.unmodifiableMap(map);
+
+    BUILD_IN_TYPES = new HashSet<>();
+    BUILD_IN_TYPES.add(Boolean.class);
+    BUILD_IN_TYPES.add(Character.class);
+    BUILD_IN_TYPES.add(Byte.class);
+    BUILD_IN_TYPES.add(Short.class);
+    BUILD_IN_TYPES.add(Integer.class);
+    BUILD_IN_TYPES.add(Long.class);
+    BUILD_IN_TYPES.add(Float.class);
+    BUILD_IN_TYPES.add(Double.class);
+    BUILD_IN_TYPES.add(String.class);
+
   }
 
   private static final Map<String, Class<?>> primitiveNameMap = new HashMap<>();
+  private static final Map<Class<?>, Class<?>> wrapperMap = new HashMap<>();
 
   static {
     primitiveNameMap.put(boolean.class.getName(), boolean.class);
@@ -59,6 +74,38 @@ public class ReflectionUtil {
     primitiveNameMap.put(double.class.getName(), double.class);
     primitiveNameMap.put(float.class.getName(), float.class);
     primitiveNameMap.put(void.class.getName(), void.class);
+
+    wrapperMap.put(boolean.class, Boolean.class);
+    wrapperMap.put(byte.class, Byte.class);
+    wrapperMap.put(char.class, Character.class);
+    wrapperMap.put(short.class, Short.class);
+    wrapperMap.put(int.class, Integer.class);
+    wrapperMap.put(long.class, Long.class);
+    wrapperMap.put(double.class, Double.class);
+    wrapperMap.put(float.class, Float.class);
+    wrapperMap.put(void.class, Void.class);
+  }
+
+  /**
+   * Checks if the specified type is a Java build-in type. The build-in types are the object versions of the Java
+   * primitives like {@link Integer}, {@link Long} but also {@link String}.
+   *
+   * @param type The type to check
+   * @return Returns <code>true</code> if the specified type is a java build-in type.
+   */
+  public static boolean isBuildInType(Class<?> type) {
+    return BUILD_IN_TYPES.contains(type);
+  }
+
+  /**
+   * Checks if the specified type is a Java build-in type. The build-in types are the object versions of the Java
+   * primitives like {@link Integer}, {@link Long} but also {@link String}.
+   *
+   * @param type The type to check
+   * @return Returns <code>true</code> if the specified type is a java build-in type.
+   */
+  public static boolean isBuildInOrPrimitiveType(Class<?> type) {
+    return type.isPrimitive() || BUILD_IN_TYPES.contains(type);
   }
 
   /**
@@ -381,6 +428,47 @@ public class ReflectionUtil {
    * @throws Exception
    *         Thrown if the proxy threw an exception.
    */
+  public static Object invokeMethodReflectively(String methodName, Object targetObject,
+      @SuppressWarnings("rawtypes") Class[] parameterTypes, Object... args)
+      throws IllegalAccessException, SecurityException, NoSuchMethodException, Exception {
+    // if (Proxy.isProxyClass(clazz)) {
+    // schuettec - 08.02.2017 : Find the method on the specified proxy.
+    Method effectiveMethod = targetObject.getClass()
+        .getMethod(methodName, parameterTypes);
+    // }
+    try {
+      if (args == null) {
+        return effectiveMethod.invoke(targetObject);
+      } else {
+        return effectiveMethod.invoke(targetObject, args);
+      }
+    } catch (InvocationTargetException e) {
+      handleInvocationTargetException(e);
+      return null; // Will never happen because handleInvocationTargetException will always throw.
+    }
+  }
+
+  /**
+   * This method calls a method on the specified object. <b>This method takes into account, that the specified object
+   * can also be a proxy instance.</b> In this case, the method to be called must be redefined by searching it on the
+   * proxy. (Proxy instances are not classes of the type the method was declared in.)
+   *
+   * @param method
+   *        The method to be invoked
+   * @param targetObject
+   *        The target object or proxy instance.
+   * @param args
+   *        (Optional) Arguments to pass to the invoked method or <code>null</code> indicating no parameters.
+   * @return Returns the return value of the method on demand.
+   * @throws IllegalAccessException
+   *         Thrown on any access error.
+   * @throws SecurityException
+   *         Thrown if the reflective operation is not allowed
+   * @throws NoSuchMethodException
+   *         Thrown if the proxy instance does not provide the desired method.
+   * @throws Exception
+   *         Thrown if the proxy threw an exception.
+   */
   public static Object invokeMethodProxySafe(Method method, Object targetObject, Object... args)
       throws IllegalAccessException, SecurityException, NoSuchMethodException, Exception {
     Method effectiveMethod = method;
@@ -400,7 +488,6 @@ public class ReflectionUtil {
       handleInvocationTargetException(e);
       return null; // Will never happen because handleInvocationTargetException will always throw.
     }
-
   }
 
   /**
@@ -455,7 +542,8 @@ public class ReflectionUtil {
           while (jarEntries.hasMoreElements()) {
             String entryName = jarEntries.nextElement()
                 .getName();
-            if (entryName.startsWith(packageName) && entryName.length() > packageName.length() + 5) {
+            if (entryName.startsWith(packageName) && entryName.endsWith("class")
+                && entryName.length() > packageName.length() + 5) {
               entryName = entryName.substring(0, entryName.lastIndexOf('.'));
               String clsName = entryName.replaceAll("/", ".");
               names.add(clsName);
@@ -488,6 +576,69 @@ public class ReflectionUtil {
           names.add(clsName);
         }
       }
+    }
+  }
+
+  static String fieldToSetter(String name) {
+    return "set" + name.substring(0, 1)
+        .toUpperCase() + name.substring(1);
+  }
+
+  /**
+   * Performs a setter injection.
+   * 
+   * @param f The field to inject into.
+   * @param instance The instance to inject into.
+   * @param value The value to inject.
+   * @return Returns <code>true</code> if the injection was possible, <code>false</code>
+   *         otherwise.
+   * @throws RuntimeException Thrown on any injection error.
+   */
+  public static boolean setterInjectValue(Field f, Object instance, Object value) throws RuntimeException {
+    try {
+      String setMethodName = fieldToSetter(f.getName());
+      try {
+        Method setMethod = f.getDeclaringClass()
+            .getMethod(setMethodName, f.getType());
+        invokeMethodProxySafe(setMethod, instance, value);
+        return true;
+      } catch (NoSuchMethodException e) {
+        return false;
+      }
+    } catch (Exception e) {
+      throw new RuntimeException(String.format("Cannot inject field %s in component %s with value %s.", f.getName(),
+          instance.getClass()
+              .getName(),
+          value.getClass()
+              .getName()),
+          e);
+    }
+  }
+
+  /**
+   * Performs a field injection.
+   * 
+   * @param f The field to inject into.
+   * @param instance The instance to inject into.
+   * @param value The value to inject.
+   * @throws LimbusComponentException Thrown on any injection error.
+   */
+  public static void fieldInjectValue(Field f, Object instance, Object value) {
+    try {
+      f.setAccessible(true);
+      f.set(instance, value);
+    } catch (IllegalArgumentException e) {
+      throw new RuntimeException(String.format("Cannot inject field %s in component %s with value %s.", f.getName(),
+          instance.getClass()
+              .getName(),
+          value.getClass()
+              .getName()),
+          e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException(
+          String.format("Cannot access field %s in component %s.", f.getName(), instance.getClass()
+              .getName()),
+          e);
     }
   }
 }

@@ -2,11 +2,18 @@ package com.remondis.limbus.engine;
 
 import static com.remondis.limbus.engine.LimbusUtil.getCurrentThreadLocals;
 
+import java.lang.ref.WeakReference;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
+import com.remondis.limbus.api.Classpath;
+import com.remondis.limbus.api.LimbusPlugin;
 import com.remondis.limbus.engine.api.LimbusContext;
 import com.remondis.limbus.engine.api.LimbusContextAction;
+import com.remondis.limbus.engine.api.PluginUndeployedException;
 import com.remondis.limbus.utils.Lang;
 
 /**
@@ -20,6 +27,7 @@ import com.remondis.limbus.utils.Lang;
 public final class LimbusContextInternal implements LimbusContext {
 
   private PluginClassLoader classloader;
+  private Classpath classpath;
 
   @SuppressWarnings("rawtypes")
   private Set<ThreadLocal> threadLocalsSet;
@@ -27,11 +35,8 @@ public final class LimbusContextInternal implements LimbusContext {
   /**
    * Constructs an empty limbus context.
    */
-  public LimbusContextInternal() {
-    threadLocalsSet = new HashSet<>();
-  }
-
-  LimbusContextInternal(PluginClassLoader classloader) {
+  LimbusContextInternal(Classpath classpath, PluginClassLoader classloader) {
+    this.classpath = classpath;
     this.classloader = classloader;
     threadLocalsSet = new HashSet<>();
   }
@@ -52,36 +57,56 @@ public final class LimbusContextInternal implements LimbusContext {
   @Override
   @SuppressWarnings("rawtypes")
   public <R, E extends Throwable> R doContextAction(LimbusContextAction<R, E> callable) throws E {
-    Lang.denyNull("Context action", callable);
+    AtomicReference<ClassLoader> contextClassLoaderBefore = new AtomicReference<>();
+    AtomicReference<Set<ThreadLocal>> beforeActionSnapshot = new AtomicReference<>();
+    AccessController.doPrivileged(new PrivilegedAction<Void>() {
 
-    // Safe the current context classloader
-    ClassLoader contextClassLoaderBefore = Thread.currentThread()
-        .getContextClassLoader();
+      @Override
+      public Void run() {
 
-    // Take the thread local before snaphsot.
-    Set<ThreadLocal> beforeActionSnapshot = getCurrentThreadLocals();
+        Lang.denyNull("Context action", callable);
 
-    // Add the plugin's thread locals recorded before
-    LimbusUtil.addThreadLocals(getThreadLocalsSet());
+        // Safe the current context classloader
+        contextClassLoaderBefore.set(Thread.currentThread()
+            .getContextClassLoader());
+
+        // Take the thread local before snaphsot.
+        beforeActionSnapshot.set(getCurrentThreadLocals());
+
+        // Add the plugin's thread locals recorded before
+        LimbusUtil.addThreadLocals(getThreadLocalsSet());
+
+        // Set the plugin context
+        Thread.currentThread()
+            .setContextClassLoader(getClassloader());
+        return null;
+      }
+    });
 
     try {
-      // Set the plugin context
-      Thread.currentThread()
-          .setContextClassLoader(getClassloader());
       // Perform the actual action
       R retVal = callable.doAction();
       // Return the actual compuation.
       return retVal;
     } finally {
-      // Restore the old context classloader
-      Thread.currentThread()
-          .setContextClassLoader(contextClassLoaderBefore);
+      AccessController.doPrivileged(new PrivilegedAction<Void>() {
 
-      // Take the thread local after snaphsot.
-      Set<ThreadLocal> afterActionSnapshot = getCurrentThreadLocals();
-      // Do the combi-action of removing all added thread locals and store the added ones to the plugin's thread local
-      // management.
-      LimbusUtil.storeThreadLocalsInDeployContext(beforeActionSnapshot, afterActionSnapshot, this);
+        @Override
+        public Void run() {
+          // Restore the old context classloader
+          Thread.currentThread()
+              .setContextClassLoader(contextClassLoaderBefore.get());
+
+          // Take the thread local after snaphsot.
+          Set<ThreadLocal> afterActionSnapshot = getCurrentThreadLocals();
+          // Do the combi-action of removing all added thread locals and store the added ones to the plugin's thread
+          // local
+          // management.
+          LimbusUtil.storeThreadLocalsInDeployContext(beforeActionSnapshot.get(), afterActionSnapshot,
+              LimbusContextInternal.this);
+          return null;
+        }
+      });
     }
   }
 
@@ -96,5 +121,10 @@ public final class LimbusContextInternal implements LimbusContext {
     // Remove the classloader
     classloader = null;
 
+  }
+
+  @Override
+  public Classpath getClasspath() {
+    return classpath;
   }
 }

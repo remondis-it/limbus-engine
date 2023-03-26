@@ -1,29 +1,26 @@
 package com.remondis.limbus.system.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.remondis.limbus.system.InfoRecord;
 import com.remondis.limbus.system.LimbusSystem;
 import com.remondis.limbus.system.LimbusSystemException;
-import com.remondis.limbus.system.application.subpackage.SubPrivateComponentImpl;
-import com.remondis.limbus.system.application.subpackage.SubPublicComponent;
-import com.remondis.limbus.system.application.subpackage.SubPublicComponentImpl;
 import com.remondis.limbus.system.applicationExtern.ExternalPrivateComponent;
-import com.remondis.limbus.system.applicationExtern.PossibleLocalPublicComponentOverrideImpl;
+import com.remondis.limbus.system.applicationExtern.MyLocalPublicComponentImpl;
 import com.remondis.limbus.system.bundle.BundlePrivateComponent;
 import com.remondis.limbus.system.bundle.BundlePublicComponent;
 import com.remondis.limbus.system.bundle.BundlePublicComponentImpl;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class LimbusApplicationTest {
 
   @Test
@@ -32,15 +29,11 @@ public class LimbusApplicationTest {
     system.initialize();
     assertTrue(system.hasComponent(LocalPublicComponent.class));
     LocalPublicComponent localPublicComponent = system.getComponent(LocalPublicComponent.class);
-    assertTrue(localPublicComponent instanceof PossibleLocalPublicComponentOverrideImpl);
+    assertTrue(localPublicComponent instanceof MyLocalPublicComponentImpl);
 
     assertTrue(system.hasComponent(AnotherPublicComponent.class));
     AnotherPublicComponent anotherPublicComponent = system.getComponent(AnotherPublicComponent.class);
     assertTrue(anotherPublicComponent instanceof AnotherPublicComponentImpl);
-
-    assertTrue(system.hasComponent(SubPublicComponent.class));
-    SubPublicComponent subPublicComponent = system.getComponent(SubPublicComponent.class);
-    assertTrue(subPublicComponent instanceof SubPublicComponentImpl);
 
     assertTrue(system.hasComponent(BundlePublicComponent.class));
     BundlePublicComponent bundlePublicComponent = system.getComponent(BundlePublicComponent.class);
@@ -48,43 +41,16 @@ public class LimbusApplicationTest {
 
     List<Class> privateComponents = getPrivateComponents(system);
     assertThat(privateComponents).containsExactlyInAnyOrder(BundlePrivateComponent.class,
-        ExternalPrivateComponent.class, LocalPrivateComponent.class, SubPrivateComponentImpl.class);
+        ExternalPrivateComponent.class);
 
   }
 
   @Test
-  public void annotationsShouldOverrideComponentScan() throws LimbusSystemException {
-    LimbusSystem system = LimbusSystem.fromApplication(TestApplicationWithOverrideAndExternalPrivateComponent.class);
-    system.initialize();
-    assertTrue(system.hasComponent(LocalPublicComponent.class));
-    LocalPublicComponent localPublicComponent = system.getComponent(LocalPublicComponent.class);
-    assertTrue(localPublicComponent instanceof PossibleLocalPublicComponentOverrideImpl);
-
-    assertTrue(system.hasComponent(SubPublicComponent.class));
-    SubPublicComponent subPublicComponent = system.getComponent(SubPublicComponent.class);
-    assertTrue(subPublicComponent instanceof SubPublicComponentImpl);
-
-    List<Class> privateComponents = getPrivateComponents(system);
-    assertThat(privateComponents).containsExactlyInAnyOrder(ExternalPrivateComponent.class, LocalPrivateComponent.class,
-        SubPrivateComponentImpl.class);
-
-  }
-
-  @Test
-  public void shouldStartSystemCorrectly() throws LimbusSystemException {
+  public void shouldStartEmptySystem() throws LimbusSystemException {
     LimbusSystem system = LimbusSystem.fromApplication(TestApplication.class);
     system.initialize();
-    assertTrue(system.hasComponent(LocalPublicComponent.class));
-    LocalPublicComponent localPublicComponent = system.getComponent(LocalPublicComponent.class);
-    assertTrue(localPublicComponent instanceof LocalPublicComponentImpl);
-
-    assertTrue(system.hasComponent(SubPublicComponent.class));
-    SubPublicComponent subPublicComponent = system.getComponent(SubPublicComponent.class);
-    assertTrue(subPublicComponent instanceof SubPublicComponentImpl);
-
-    List<Class> privateComponents = getPrivateComponents(system);
-    assertThat(privateComponents).containsExactlyInAnyOrder(LocalPrivateComponent.class, SubPrivateComponentImpl.class);
-
+    assertTrue(system.getAllComponents()
+        .isEmpty());
   }
 
   private List<Class> getPrivateComponents(LimbusSystem system) {

@@ -26,11 +26,6 @@ import com.remondis.limbus.api.LimbusException;
 public interface DeployService extends IInitializable<LimbusException>, DeploymentListener {
 
   /**
-   * This is the default Maven extension used for deployments in most cases.
-   */
-  public static final String DEFAULT_MAVEN_EXTENSION = "jar";
-
-  /**
    * @return Returns <code>true</code> if the hot deploy listener is active, <code>false</code> otherwise.
    */
   public boolean isHotDeployFolderActive();
@@ -48,10 +43,11 @@ public interface DeployService extends IInitializable<LimbusException>, Deployme
    *        The version
    * @param permissions
    *        The permissions to be granted for classes of this classpath.
+   * @return Returns the deploy name for the classpath.
    * @throws LimbusException
    *         Thrown on any error while downloading, processing or deploying the Maven artifact.
    */
-  public void deployMavenArtifact(String groupId, String artifactId, String extension, String version,
+  public String deployMavenArtifact(String groupId, String artifactId, String extension, String version,
       Set<Permission> permissions) throws LimbusException;
 
   /**

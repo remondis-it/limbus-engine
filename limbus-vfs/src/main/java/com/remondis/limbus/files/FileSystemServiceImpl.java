@@ -274,4 +274,17 @@ public class FileSystemServiceImpl extends Initializable<Exception> implements L
     }
   }
 
+  public void touchFile(String filePath) throws FileAccessException {
+    checkState();
+    denyNull("filePath", filePath);
+    File file = getUnchecked(filePath);
+    try {
+      if (!file.createNewFile()) {
+        throw new FileAccessException("Could not create file: " + filePath);
+      }
+    } catch (IOException e) {
+      throw new FileAccessException(file, e);
+    }
+  }
+
 }

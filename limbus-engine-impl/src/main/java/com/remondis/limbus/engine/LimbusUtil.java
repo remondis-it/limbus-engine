@@ -1,6 +1,5 @@
 package com.remondis.limbus.engine;
 
-import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -92,32 +91,21 @@ public final class LimbusUtil {
         Field tableField = threadLocalMapClass.getDeclaredField("table");
         tableField.setAccessible(true);
         Object table = tableField.get(threadLocalTable);
-
         if (table != null) {
-          // The key to the ThreadLocalMap is a WeakReference object. The referent field of this object
-          // is a reference to the actual ThreadLocal variable
-          Field referentField = Reference.class.getDeclaredField("referent");
-
-          if (referentField != null) {
-            referentField.setAccessible(true);
-
-            for (int i = 0; i < Array.getLength(table); i++) {
-              // Each entry in the table array of ThreadLocalMap is an Entry object
-              // representing the thread local reference and its value
-              Object entry = Array.get(table, i);
-              if (entry != null) {
-                ThreadLocal threadLocal = (ThreadLocal) referentField.get(entry);
-                // schuettec - 01.02.2017 : Reference value may be null here.
-                if (threadLocal != null) {
-                  threadLocalsSet.add(threadLocal);
-                }
+          for (int i = 0; i < Array.getLength(table); i++) {
+            // Each entry in the table array of ThreadLocalMap is an Entry object
+            // representing the thread local reference and its value
+            Object entry = Array.get(table, i);
+            if (entry != null) {
+              // ThreadLocal threadLocal = (ThreadLocal) referentField.get(entry);
+              ThreadLocal threadLocal = (ThreadLocal) ((WeakReference) entry).get();
+              // schuettec - 01.02.2017 : Reference value may be null here.
+              if (threadLocal != null) {
+                threadLocalsSet.add(threadLocal);
               }
             }
-
           }
-
         }
-
       }
 
       return threadLocalsSet;

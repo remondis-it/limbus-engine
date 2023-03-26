@@ -24,8 +24,28 @@ public class EventMulticasterFactory {
   public static <I> EventMulticaster<I> create(Class<I> subscriberType) {
     Lang.denyNull("subscriber type", subscriberType);
     ReflectionUtil.denyNotInterface(subscriberType);
-
     MulticastHandler<I> handler = new MulticastHandler<I>(subscriberType);
+    return handler;
+  }
+
+  /**
+   * Creates an <b>asynchronous</b> {@link EventMulticaster} for the specified subscriber type. The
+   * {@link EventMulticaster} created will forward thrown exceptions from subscribers. <b>Note: An exception aborts the
+   * notifaction of further subscribers.</b>
+   * 
+   * <p>
+   * The subscribers will be notified asynchronously in a separate thread.
+   * </p>
+   *
+   * @param subscriberType
+   *        The subscriber interface.
+   *
+   * @return Returns the {@link EventMulticaster}.
+   */
+  public static <I> AsyncEventMulticaster<I> createAsync(Class<I> subscriberType) {
+    Lang.denyNull("subscriber type", subscriberType);
+    ReflectionUtil.denyNotInterface(subscriberType);
+    AsyncMulticastHandler<I> handler = new AsyncMulticastHandler<I>(subscriberType);
     return handler;
   }
 

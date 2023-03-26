@@ -1,5 +1,6 @@
 package com.remondis.limbus.files;
 
+import static com.remondis.limbus.utils.Lang.closeQuietly;
 import static com.remondis.limbus.utils.Lang.denyNull;
 
 import java.io.ByteArrayInputStream;
@@ -444,5 +445,14 @@ public class InMemoryFilesystemImpl extends Initializable<Exception> implements 
     byte[] file = getFileContent(filePath);
     deleteFile(filePath);
     addContent(newFilePath, file);
+  }
+
+  @Override
+  public void touchFile(String filePath) throws FileAccessException {
+    try (OutputStream output = createFile(filePath)) {
+      closeQuietly(output);
+    } catch (IOException e) {
+      throw new FileAccessException("Could not create file: " + filePath, e);
+    }
   }
 }

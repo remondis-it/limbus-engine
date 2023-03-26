@@ -1,5 +1,6 @@
 package com.remondis.limbus.engine;
 
+import static com.remondis.limbus.engine.api.maven.MavenArtifactService.defaultExtensionIfNull;
 import static com.remondis.limbus.utils.Files.createIfMissingDirectory;
 import static com.remondis.limbus.utils.Files.getCurrentDirectory;
 import static com.remondis.limbus.utils.Files.getOrFailDirectory;
@@ -25,17 +26,16 @@ import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.eclipse.aether.artifact.Artifact;
-import org.eclipse.aether.resolution.ArtifactResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.remondis.limbus.api.Classpath;
 import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.api.LimbusException;
-import com.remondis.limbus.engine.aether.AetherUtil;
 import com.remondis.limbus.engine.api.DeployService;
 import com.remondis.limbus.engine.api.LimbusEngine;
+import com.remondis.limbus.engine.api.maven.MavenArtifact;
+import com.remondis.limbus.engine.api.maven.MavenArtifactService;
 import com.remondis.limbus.engine.api.security.LimbusSecurity;
 import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.properties.LimbusProperties;
@@ -96,6 +96,9 @@ public class DeployServiceImpl extends Initializable<LimbusException> implements
 
   @LimbusComponent
   protected LimbusFileService filesystem;
+
+  @LimbusComponent
+  protected MavenArtifactService artifacts;
 
   private Thread directoryWatcher;
   private WatchService watcher;
@@ -349,24 +352,8 @@ public class DeployServiceImpl extends Initializable<LimbusException> implements
     }
   }
 
-  /**
-   * Deploys a Maven artifact to this container.
-   *
-   * @param groupId
-   *        The group id
-   * @param artifactId
-   *        The artifact id
-   * @param extension
-   *        (optional) The extension, defaults to "jar".
-   * @param version
-   *        The version
-   * @param permissions
-   *        The permissions to be granted for classes of this classpath.
-   * @throws LimbusException
-   *         Thrown on any error while downloading, processing or deploying the Maven artifact.
-   */
   @Override
-  public void deployMavenArtifact(String groupId, String artifactId, String extension, String version,
+  public String deployMavenArtifact(String groupId, String artifactId, String extension, String version,
       Set<Permission> permissions) throws LimbusException {
     checkState();
 
@@ -376,12 +363,10 @@ public class DeployServiceImpl extends Initializable<LimbusException> implements
     try {
       File pluginDirectory = getCreateOrFailPluginDirectory(deployName);
 
-      List<ArtifactResult> artifacts = AetherUtil.resolveArtifactAndTransitiveDependencies(groupId, artifactId,
+      List<MavenArtifact> mavenArtifacts = artifacts.resolveArtifactAndTransitiveDependencies(groupId, artifactId,
           extension, version);
 
-      for (ArtifactResult artifactResult : artifacts) {
-        Artifact artifact = artifactResult.getArtifact();
-
+      for (MavenArtifact artifact : mavenArtifacts) {
         File artifactFile = artifact.getFile();
         File pluginArtifact = new File(pluginDirectory, artifactFile.getName());
         try (FileInputStream fin = new FileInputStream(artifactFile);
@@ -392,6 +377,8 @@ public class DeployServiceImpl extends Initializable<LimbusException> implements
 
       // Trigger deploy process
       deployFromFilesystem(deployName, permissions);
+
+      return deployName;
 
     } catch (Exception e) {
       // Clean deployed files from work
@@ -420,16 +407,21 @@ public class DeployServiceImpl extends Initializable<LimbusException> implements
   @Override
   public String toDeployName(String groupId, String artifactId, String extension, String version) {
     checkState();
-    extension = defaultExtensionIfNull(extension);
-    return String.format("%s_%s_%s_%s", groupId, artifactId, extension, version);
+    return getDeployName(groupId, artifactId, extension, version);
   }
 
-  private String defaultExtensionIfNull(String extension) {
-    if (extension == null) {
-      return DEFAULT_MAVEN_EXTENSION;
-    } else {
-      return extension;
-    }
+  /**
+   * Returns a deploy name from Maven coordinates.
+   * 
+   * @param groupId Group Id.
+   * @param artifactId Artifact Id.
+   * @param extension Extension.
+   * @param version Version.
+   * @return Returns the deployname.
+   */
+  public static String getDeployName(String groupId, String artifactId, String extension, String version) {
+    extension = defaultExtensionIfNull(extension);
+    return String.format("%s_%s_%s_%s", groupId, artifactId, extension, version);
   }
 
   /**

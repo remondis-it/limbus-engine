@@ -140,7 +140,7 @@ public class Classpath {
 
   @Override
   public String toString() {
-    return "Classpath [urlSet=" + urlSet + "]";
+    return "Classpath [deployName=" + deployName + ", urlSet=" + urlSet + "]";
   }
 
 }

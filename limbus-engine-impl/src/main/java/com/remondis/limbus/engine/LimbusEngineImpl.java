@@ -1,8 +1,14 @@
 package com.remondis.limbus.engine;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.requireNonNull;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
 import java.net.URLClassLoader;
 import java.security.Permission;
 import java.util.Arrays;
@@ -24,6 +30,7 @@ import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.api.LimbusException;
 import com.remondis.limbus.api.LimbusPlugin;
 import com.remondis.limbus.engine.api.DeploymentListener;
+import com.remondis.limbus.engine.api.InvocationResult;
 import com.remondis.limbus.engine.api.LimbusContext;
 import com.remondis.limbus.engine.api.LimbusEngine;
 import com.remondis.limbus.engine.api.LimbusLifecycleHook;
@@ -32,6 +39,7 @@ import com.remondis.limbus.engine.api.NoSuchDeploymentException;
 import com.remondis.limbus.engine.api.SharedClasspathProvider;
 import com.remondis.limbus.engine.api.SimpleVeto;
 import com.remondis.limbus.engine.api.UndeployVetoException;
+import com.remondis.limbus.engine.api.security.LimbusSecurity;
 import com.remondis.limbus.events.EventMulticaster;
 import com.remondis.limbus.events.EventMulticasterFactory;
 import com.remondis.limbus.files.LimbusFileService;
@@ -51,30 +59,12 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
 
   private static final String UNKNOWN = "unknown";
 
-  static {
-    Properties p = new Properties();
-    InputStream inputStream = null;
-    try {
-      inputStream = LimbusEngineImpl.class.getResourceAsStream("/version.properties");
-      p.load(inputStream);
-      GROUP_ID = p.getProperty("engine.groupId", "unkown");
-      ARTIFACT_ID = p.getProperty("engine.artifactId", "unkown");
-      VERSION = p.getProperty("engine.version", "unkown");
-    } catch (Exception e) {
-      GROUP_ID = UNKNOWN;
-      ARTIFACT_ID = UNKNOWN;
-      VERSION = UNKNOWN;
-      throw new IllegalStateException(
-          "No version information available. Please place a version.properties file in the classpath's root "
-              + "of this Limbus Engine implementation.");
-    } finally {
-      Lang.closeQuietly(inputStream);
-    }
-  }
+  public String GROUP_ID = null;
+  public String ARTIFACT_ID = null;
+  public String VERSION = null;
 
-  public static String GROUP_ID;
-  public static String ARTIFACT_ID;
-  public static String VERSION;
+  @LimbusComponent
+  private LimbusSecurity limbusSecurity;
 
   @LimbusComponent
   private SharedClasspathProvider sharedClassPathProvider;
@@ -113,17 +103,43 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
 
   @Override
   public String getEngineVersion() {
+    readMetaDataOnDemand();
     return VERSION;
   }
 
   @Override
   public String getEngineGroupId() {
+    readMetaDataOnDemand();
     return GROUP_ID;
   }
 
   @Override
   public String getEngineArtifactId() {
+    readMetaDataOnDemand();
     return ARTIFACT_ID;
+  }
+
+  private void readMetaDataOnDemand() {
+    if (isNull(GROUP_ID)) {
+      Properties p = new Properties();
+      InputStream inputStream = null;
+      try {
+        inputStream = getClass().getResourceAsStream("/version.properties");
+        p.load(inputStream);
+        GROUP_ID = p.getProperty("engine.groupId", "unkown");
+        ARTIFACT_ID = p.getProperty("engine.artifactId", "unkown");
+        VERSION = p.getProperty("engine.version", "unkown");
+      } catch (Exception e) {
+        GROUP_ID = UNKNOWN;
+        ARTIFACT_ID = UNKNOWN;
+        VERSION = UNKNOWN;
+        throw new IllegalStateException(
+            "No version information available. Please place a version.properties file in the classpath's root "
+                + "of this Limbus Engine implementation.");
+      } finally {
+        Lang.closeQuietly(inputStream);
+      }
+    }
   }
 
   @Override
@@ -225,20 +241,68 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
   }
 
   @Override
-  public <T extends LimbusPlugin> T getPlugin(Classpath classpath, String classname, Class<T> expectedType)
-      throws LimbusException, NoSuchDeploymentException {
-    checkState();
-    return getPlugin(classpath, classname, expectedType, null);
-  }
-
-  @Override
   public <T extends LimbusPlugin> T getPlugin(Classpath classpath, String classname, Class<T> expectedType,
-      LimbusLifecycleHook<T> lifecycleHook) throws LimbusException, NoSuchDeploymentException {
+      LimbusLifecycleHook<T> lifecycleHook, boolean initialize) throws LimbusException, NoSuchDeploymentException {
     checkState();
     if (deploymentMap.containsKey(classpath)) {
       Deployment deployment = deploymentMap.get(classpath);
-      return deployment.getPlugin(classname, expectedType, lifecycleHook);
+      return deployment.getPlugin(classname, expectedType, lifecycleHook, initialize);
     } else {
+      throw new NoSuchDeploymentException("The specified classpath is not deployed on this container.");
+    }
+  }
+
+  @Override
+  public <T extends LimbusPlugin, S extends T> S getPluginAsInterface(Classpath classpath, String classname,
+      Class<T> pluginInterface, Class<S>[] supportedIntefaces, ClassLoader toDefineIn,
+      LimbusLifecycleHook<T> lifecycleHook, boolean initialize) throws LimbusException {
+    checkState();
+    if (deploymentMap.containsKey(classpath)) {
+      Deployment deployment = deploymentMap.get(classpath);
+      return deployment.createPluginProxy(classname, pluginInterface, supportedIntefaces, toDefineIn, lifecycleHook,
+          initialize);
+    } else {
+      throw new NoSuchDeploymentException("The specified classpath is not deployed on this container.");
+    }
+  }
+
+  @SuppressWarnings({
+      "rawtypes"
+  })
+  @Override
+  public <T extends LimbusPlugin> InvocationResult invokePluginMethodReflectively(Classpath classpath, String classname,
+      Class<T> expectedType, LimbusLifecycleHook<T> lifecycleHook, boolean initialize, String name,
+      Class[] parameterTypes, Object[] parameters) throws LimbusException, NoSuchDeploymentException {
+
+    checkState();
+    if (deploymentMap.containsKey(classpath)) {
+      Deployment deployment = deploymentMap.get(classpath);
+      return deployment.invokePluginMethodReflectively(classname, expectedType, lifecycleHook, initialize, name,
+          parameterTypes, parameters);
+    } else {
+      throw new NoSuchDeploymentException("The specified classpath is not deployed on this container.");
+    }
+  }
+
+  @Override
+  public <T extends LimbusPlugin> void performPropertyInjection(Field field, T pluginInstance, Object value) {
+    if (Proxy.isProxyClass(pluginInstance.getClass())) {
+      InvocationHandler invocationHandler = Proxy.getInvocationHandler(pluginInstance);
+      @SuppressWarnings("unchecked")
+      LifecycleProxyHandler<LimbusPlugin> limbusProxyHandler = (LifecycleProxyHandler<LimbusPlugin>) invocationHandler;
+      limbusProxyHandler.performPropertyInjection(field, value);
+    }
+  }
+
+  /**
+   * Throws a {@link NoSuchDeploymentException} if the specified classpath does not exist.
+   * 
+   * @param classpath The specified classpath.
+   * @throws NoSuchDeploymentException if the specified classpath does not exist.
+   */
+  protected void denyClasspathNotDeployed(Classpath classpath) {
+    requireNonNull(classpath, "classpath must not be null!");
+    if (!deploymentMap.containsKey(classpath)) {
       throw new NoSuchDeploymentException("The specified classpath is not deployed on this container.");
     }
   }
@@ -343,6 +407,7 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
     Classpath sharedClasspath = sharedClassPathProvider.getSharedClasspath();
     this.sharedClassLoader = new SharedClassLoader(filesystem, LimbusEngine.class.getClassLoader(),
         getAllowedPackagePrefixes(), sharedClasspath.getClasspath());
+    this.sharedClassLoader.setPermissions(limbusSecurity.getSharedClasspathDefaultPermissions());
     Deployment sharedDeployment = new Deployment(sharedClasspath, sharedClassLoader);
     deploymentMap.put(sharedClasspath, sharedDeployment);
     try {
@@ -504,6 +569,11 @@ public abstract class LimbusEngineImpl extends Initializable<Exception> implemen
     checkState();
 
     return sharedClassPathProvider.getSharedClasspath();
+  }
+
+  @Override
+  public ClassLoader getSharedClassLoader() {
+    return sharedClassLoader;
   }
 
   @Override

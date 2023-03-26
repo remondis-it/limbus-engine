@@ -6,7 +6,7 @@ package com.remondis.limbus.api;
  * @author schuettec
  *
  */
-public class LimbusClasspathException extends Exception {
+public class LimbusClasspathException extends RuntimeException {
 
   /**
    *

@@ -6,11 +6,9 @@ import com.remondis.limbus.system.MockLimbusSystem;
 
 public class LimbusSystemStaging implements DefaultComponentsConsumer {
 
-  private LimbusStage stage;
   private MockLimbusSystem mockSystem;
 
-  public LimbusSystemStaging(LimbusStage stage) {
-    this.stage = stage;
+  public LimbusSystemStaging() {
     this.mockSystem = new MockLimbusSystem();
   }
 
@@ -19,8 +17,8 @@ public class LimbusSystemStaging implements DefaultComponentsConsumer {
    *         Environment.
    */
   public LimbusStage buildStage() {
-    this.stage.setSystem(mockSystem.getLimbusSystem());
-    return this.stage;
+    LimbusStage stage = new LimbusStage(mockSystem.getLimbusSystem());
+    return stage;
   }
 
   /*

@@ -10,6 +10,7 @@ import com.remondis.limbus.api.Classpath;
 import com.remondis.limbus.api.Initializable;
 import com.remondis.limbus.api.LimbusClasspathException;
 import com.remondis.limbus.engine.api.SharedClasspathProvider;
+import com.remondis.limbus.files.FileAccessException;
 import com.remondis.limbus.files.LimbusFileService;
 import com.remondis.limbus.system.api.LimbusComponent;
 
@@ -29,10 +30,10 @@ public class SharedFileSystemClasspath extends Initializable<Exception> implemen
    */
   public static final String LIB_FOLDER = "lib";
 
-  private Classpath classpath;
+  protected Classpath classpath;
 
   @LimbusComponent
-  private LimbusFileService filesystem;
+  protected LimbusFileService filesystem;
 
   @Override
   public Classpath getSharedClasspath() {
@@ -41,8 +42,9 @@ public class SharedFileSystemClasspath extends Initializable<Exception> implemen
 
   @Override
   public void checkClasspath() throws LimbusClasspathException {
+    checkState();
     try {
-      filesystem.createFolder(LIB_FOLDER, false);
+      createSharedClassPathFolder();
       List<URL> classpathURLs = filesystem.getFolderFiles(LIB_FOLDER);
       // Create the shared classpath with a speaking name to give hints about the creator.
       this.classpath = Classpath.create("sharedClassPath_" + getClass().getName())
@@ -51,6 +53,10 @@ public class SharedFileSystemClasspath extends Initializable<Exception> implemen
     } catch (Exception e) {
       throw new LimbusClasspathException(String.format("Cannot create or access the shared classpath."), e);
     }
+  }
+
+  protected void createSharedClassPathFolder() throws FileAccessException {
+    filesystem.createFolder(LIB_FOLDER, false);
   }
 
   @Override

@@ -3,15 +3,14 @@
  */
 package com.remondis.limbus.api;
 
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.junit.Test;
-
-import com.remondis.limbus.api.Initializable;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author schuettec
@@ -19,20 +18,22 @@ import com.remondis.limbus.api.Initializable;
  */
 public class InitializableTest {
 
-  @Test(expected = AlreadyInitializedException.class)
+  @Test
   public void test_init_multiple_times() throws Exception {
-    Initializable<Exception> mock = new Initializable<Exception>() {
+    assertThrows(AlreadyInitializedException.class, () -> {
+      Initializable<Exception> mock = new Initializable<Exception>() {
 
-      @Override
-      protected void performInitialize() throws Exception {
-      }
+        @Override
+        protected void performInitialize() throws Exception {
+        }
 
-      @Override
-      protected void performFinish() {
-      }
-    };
-    mock.initialize();
-    mock.initialize();
+        @Override
+        protected void performFinish() {
+        }
+      };
+      mock.initialize();
+      mock.initialize();
+    });
   }
 
   @Test
@@ -77,47 +78,50 @@ public class InitializableTest {
     }
   }
 
-  @Test(expected = NotInitializedException.class)
+  @Test
   public void test_NotInitializedAfterExceptionInFinish() throws Exception {
-    Initializable<Exception> testObject = new Initializable<Exception>() {
+    assertThrows(NotInitializedException.class, () -> {
+      Initializable<Exception> testObject = new Initializable<Exception>() {
 
-      @Override
-      protected void performInitialize() throws Exception {
+        @Override
+        protected void performInitialize() throws Exception {
+        }
+
+        @Override
+        protected void performFinish() {
+          throw new DummyRuntimeException("Thrown for test purposes.");
+        }
+      };
+
+      testObject.initialize();
+      testObject.checkState();
+      try {
+        testObject.finish();
+      } catch (Exception e) {
+        // Expected!
       }
 
-      @Override
-      protected void performFinish() {
-        throw new DummyRuntimeException("Thrown for test purposes.");
-      }
-    };
-
-    testObject.initialize();
-    testObject.checkState();
-    try {
-      testObject.finish();
-    } catch (Exception e) {
-      // Expected!
-    }
-
-    testObject.checkState();
-
+      testObject.checkState();
+    });
   }
 
-  @Test(expected = NotInitializedException.class)
+  @Test
   public void test_UseWithoutInit() {
-    Initializable<Exception> testObject = new Initializable<Exception>() {
+    assertThrows(NotInitializedException.class, () -> {
+      Initializable<Exception> testObject = new Initializable<Exception>() {
 
-      @Override
-      protected void performInitialize() throws Exception {
-      }
+        @Override
+        protected void performInitialize() throws Exception {
+        }
 
-      @Override
-      protected void performFinish() {
-      }
+        @Override
+        protected void performFinish() {
+        }
 
-    };
+      };
 
-    testObject.checkState();
+      testObject.checkState();
+    });
   }
 
   @Test
@@ -150,30 +154,32 @@ public class InitializableTest {
 
   }
 
-  @Test(expected = NotInitializedException.class)
+  @Test
   public void test_uninitedAfterFinish() throws Exception {
-    Initializable<Exception> testObject = new Initializable<Exception>() {
+    assertThrows(NotInitializedException.class, () -> {
+      Initializable<Exception> testObject = new Initializable<Exception>() {
 
-      @Override
-      protected void performInitialize() throws Exception {
+        @Override
+        protected void performInitialize() throws Exception {
+        }
+
+        @Override
+        protected void performFinish() {
+        }
+
+      };
+
+      try {
+        testObject.initialize();
+        testObject.checkState();
+        testObject.finish();
+      } catch (Exception e) {
+        fail("Unexpected exception.");
       }
 
-      @Override
-      protected void performFinish() {
-      }
-
-    };
-
-    try {
-      testObject.initialize();
+      // The NotInitializedException is expected here:
       testObject.checkState();
-      testObject.finish();
-    } catch (Exception e) {
-      fail("Unexpected exception.");
-    }
-
-    // The NotInitializedException is expected here:
-    testObject.checkState();
+    });
   }
 
   @Test

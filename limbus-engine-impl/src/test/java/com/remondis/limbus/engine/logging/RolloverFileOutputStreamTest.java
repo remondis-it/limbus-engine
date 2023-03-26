@@ -1,18 +1,17 @@
 package com.remondis.limbus.engine.logging;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.UUID;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import com.remondis.limbus.engine.logging.RolloverFileOutputStream;
 import com.remondis.limbus.files.FileAccessException;
 import com.remondis.limbus.files.InMemoryFilesystemImpl;
 import com.remondis.limbus.files.LimbusFileService;
@@ -40,13 +39,13 @@ public class RolloverFileOutputStreamTest {
 
   }
 
-  @Before
+  @BeforeEach
   public void before() throws Exception {
     this.fs = new InMemoryFilesystemImpl();
     this.fs.initialize();
   }
 
-  @After
+  @AfterEach
   public void after() {
     this.fs.finish();
   }

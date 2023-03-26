@@ -5,8 +5,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Arrays;
 import java.util.HashSet;
-//import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -49,17 +47,20 @@ public class ApplicationBuilder {
       importBundles(applicationClass, configuration);
     }
 
-    addComponentConfigurationFromPackage(applicationClass, configuration);
+    // schuettec 04.06.2021 - Disabled automatic package scan due to the fact that the method name does not imply
+    // that a package scan is intended.
+    // addComponentConfigurationFromPackage(applicationClass, configuration);
 
-    getComponentConfigurationFromAnnotations(applicationClass).stream()
-        .forEach(compConf -> {
-          if (compConf.isPublicComponent()) {
-            if (configuration.hasPrivateComponent(compConf.getComponentType())) {
-              configuration.removePrivateComponent(compConf.getComponentType());
-            }
-          }
-          configuration.addComponentConfiguration(compConf);
-        });
+    addComponentConfigurationFromAnnotations(applicationClass, configuration);
+    // .stream()
+    // .forEach(compConf -> {
+    // if (compConf.isPublicComponent()) {
+    // if (configuration.hasPrivateComponent(compConf.getComponentType())) {
+    // configuration.removePrivateComponent(compConf.getComponentType());
+    // }
+    // }
+    // configuration.addComponentConfiguration(compConf);
+    // });
     return configuration;
   }
 
@@ -89,7 +90,7 @@ public class ApplicationBuilder {
                 .findFirst();
             if (requestType.isPresent()) {
               // TODO: We should support failOnError. Maybe with @LimbusComponent(failOnError=...) on components.
-              configuration.addComponentConfiguration(new ComponentConfiguration(requestType.get(), cls, true));
+              configuration.addComponentConfiguration(new ComponentConfigurationImpl(requestType.get(), cls, true));
               return false;
             } else {
               return true;
@@ -97,7 +98,7 @@ public class ApplicationBuilder {
           })
           .forEach(cls ->
           // TODO: We should support failOnError. Maybe with @LimbusComponent(failOnError=...) on components.
-          configuration.addComponentConfiguration(new ComponentConfiguration(cls, true)));
+          configuration.addComponentConfiguration(new ComponentConfigurationImpl(cls, true)));
 
     } catch (Exception e) {
       throw new LimbusSystemException("Cannot determine classes for package " + packageName, e);
@@ -136,30 +137,35 @@ public class ApplicationBuilder {
     Arrays.stream(applicationClass.getAnnotationsByType(ImportBundle.class))
         .forEach(importBundle -> {
           Arrays.stream(importBundle.value())
-              .map(ApplicationBuilder::getComponentConfigurationFromAnnotations)
-              .flatMap(List::stream)
-              .forEach(configuration::addComponentConfiguration);
+              .forEach(cls -> ApplicationBuilder.addComponentConfigurationFromAnnotations(cls, configuration));
         });
   }
 
-  private static List<ComponentConfiguration> getComponentConfigurationFromAnnotations(Class<?> type) {
-    List<ComponentConfiguration> confs = new LinkedList<>();
+  private static void addComponentConfigurationFromAnnotations(Class<?> type, SystemConfiguration configuration) {
     Arrays.stream(type.getAnnotationsByType(PrivateComponent.class))
-        .forEach(privateComponent -> confs.add(getConfigurationComponentFromPrivateAnnotation(privateComponent)));
+        .forEach(privateComponent -> configuration
+            .addComponentConfiguration(getConfigurationComponentFromPrivateAnnotation(privateComponent)));
     Arrays.stream(type.getAnnotationsByType(PublicComponent.class))
-        .forEach(publicComponent -> confs.add(getConfigurationComponentFromPublicAnnotation(publicComponent)));
-    return confs;
+        .forEach(publicComponent -> {
+          if (publicComponent.override()) {
+            configuration
+                .addAndOverrideComponentConfiguration(getConfigurationComponentFromPublicAnnotation(publicComponent));
+
+          } else {
+            configuration.addComponentConfiguration(getConfigurationComponentFromPublicAnnotation(publicComponent));
+          }
+        });
   }
 
   @SuppressWarnings("unchecked")
   private static ComponentConfiguration getConfigurationComponentFromPublicAnnotation(PublicComponent publicComponent) {
     Class requestType = publicComponent.requestType();
-    return new ComponentConfiguration(requestType, publicComponent.type(), publicComponent.failOnError());
+    return new ComponentConfigurationImpl(requestType, publicComponent.type(), publicComponent.failOnError());
   }
 
   private static ComponentConfiguration getConfigurationComponentFromPrivateAnnotation(
       PrivateComponent privateComponent) {
-    return new ComponentConfiguration(privateComponent.value(), privateComponent.failOnError());
+    return new ComponentConfigurationImpl(privateComponent.value(), privateComponent.failOnError());
   }
 
   private static Predicate<? super Class> filterLimbusComponentAnnotation() {

@@ -1,12 +1,12 @@
 package com.remondis.limbus.system;
 
+import static java.util.stream.Collectors.toList;
+
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.remondis.limbus.api.IInitializable;
@@ -32,10 +32,7 @@ public final class SystemConfiguration implements Serializable {
    */
   protected ObjectFactory objectFactory;
 
-  transient Map<Class<?>, Set<Class>> publicComponents = new Hashtable<>();
-  transient Set<Class<?>> privateComponents = new HashSet<>();
-
-  public List<ComponentConfiguration> components;
+  protected List<ComponentConfiguration> components;
 
   /**
    * Creates a new {@link SystemConfiguration} containig all component configurations from the specified configuration.
@@ -71,17 +68,7 @@ public final class SystemConfiguration implements Serializable {
    */
   public void addComponentConfiguration(ComponentConfiguration component) {
     Lang.denyNull("component", component);
-    // schuettec - 27.03.2017 : Due to the fact that the Limbus System mocking API must be able to replace
-    // ComponentConfigurations, we have to update existing configurations!
-    if (components.contains(component)) {
-      components.remove(component);
-    }
     components.add(component);
-  }
-
-  public boolean containsComponentConfiguration(ComponentConfiguration component) {
-    Lang.denyNull("component", component);
-    return components.contains(component);
   }
 
   /**
@@ -90,20 +77,19 @@ public final class SystemConfiguration implements Serializable {
    * @param component
    *        The component configuration to add.
    */
-  public void removeComponentConfiguration(ComponentConfiguration component) {
+  public void addAndOverrideComponentConfiguration(ComponentConfiguration component) {
     Lang.denyNull("component", component);
-    if (components.contains(component)) {
-      components.remove(component);
-    }
+    this.removePublicComponent(component.getRequestType());
+    components.add(component);
   }
 
   /**
    * Removes a component configuration by request type.
    */
-  <T extends IInitializable<?>> void removeByRequestType(Class<T> requestType) {
+  <T extends IInitializable<?>> void removePublicComponent(Class<T> requestType) {
     Lang.denyNull("requestType", requestType);
-    ComponentConfiguration conf = new ComponentConfiguration(requestType, null);
-    components.remove(conf);
+    components.removeIf(compConf -> compConf.isPublicComponent() && compConf.getRequestType()
+        .equals(requestType));
   }
 
   /**
@@ -128,19 +114,6 @@ public final class SystemConfiguration implements Serializable {
     return new LinkedList<>(components);
   }
 
-  /**
-   * Checks if the specified request type is already added to the {@link SystemConfiguration}.
-   *
-   * @param requestType
-   *        The request type to check for.
-   * @return Returns <code>true</code> if the specified request type is already added to the {@link SystemConfiguration}
-   *         , otherwise <code>false</code> is returned.
-   */
-  public <T extends IInitializable<?>> boolean containsRequestType(Class<T> requestType) {
-    Lang.denyNull("requestType", requestType);
-    return containsComponentConfiguration(new ComponentConfiguration(requestType, null));
-  }
-
   /*
    * (non-Javadoc)
    *
@@ -159,7 +132,7 @@ public final class SystemConfiguration implements Serializable {
   /**
    * @return Returns a {@link Set} of all known request types.
    */
-  public Set<Class> getKnownRequestTypes() {
+  public Set<Class<?>> getKnownRequestTypes() {
     return components.stream()
         .filter(ComponentConfiguration::isPublicComponent)
         .map(ComponentConfiguration::getRequestType)
@@ -168,12 +141,24 @@ public final class SystemConfiguration implements Serializable {
 
   public boolean hasPrivateComponent(Class<? extends IInitializable<?>> componentType) {
     Lang.denyNull("componentType", componentType);
-    return containsComponentConfiguration(new ComponentConfiguration(null, componentType));
+    return getAllPrivateComponentTypes().contains(componentType);
+  }
+
+  private List<Class<?>> getAllPrivateComponentTypes() {
+    return components.stream()
+        .filter(Predicate.not(ComponentConfiguration::isPublicComponent))
+        .map(ComponentConfiguration::getComponentType)
+        .collect(toList());
   }
 
   public void removePrivateComponent(Class<? extends IInitializable<?>> componentType) {
     Lang.denyNull("componentType", componentType);
-    removeComponentConfiguration(new ComponentConfiguration(null, componentType));
+    components.removeIf(compConf -> compConf.getComponentType()
+        .equals(componentType));
+  }
+
+  public boolean containsRequestType(Class<?> requestType) {
+    return getKnownRequestTypes().contains(requestType);
   }
 
 }
